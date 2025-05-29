@@ -209,7 +209,7 @@ class PurchaseController extends Controller
             return response()->json(['success' => false, 'message' => 'Pedido não encontrado!']);
         }
 
-        SDK::setAccessToken('TEST-6944010139683119-112717-fd72b92f1ef7b047c01a02ac15f234ae-271609950');
+        SDK::setAccessToken($this->keyMercadoPago);
        
         $payment = new Payment();
         $payment->transaction_amount = (double) round($purchase->price,2);;
@@ -218,10 +218,10 @@ class PurchaseController extends Controller
         $payment->installments = (int) $request->installments;
         $payment->payment_method_id = $request->paymentMethodId;
         $payment->payer = [
-            "email" => 'lorrangamer81@gmail.com',
+            "email" => $purchase->email,
             'identification' => [
                 "type" => "CPF",
-                "number" => '71169459463'
+                "number" => $purchase->cpf
             ],
             
         ];
@@ -238,6 +238,9 @@ class PurchaseController extends Controller
 
 
         if ($payment->status == 'approved') {
+            // atualizar status da compra
+            $purchase->status = 'approved';
+            $purchase->save();
             return response()->json(['success' => true, 'message' => 'Pagamento aprovado!']);
         } else {
             return response()->json(['success' => false, 'message' => $payment->status_detail]);

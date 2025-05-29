@@ -1488,7 +1488,7 @@ function ocultarCamposContato() {
             }
 
             // Cria o formulário do MercadoPago dinamicamente
-            const mp = new MercadoPago('TEST-f667c1f4-2be4-46ff-853f-510f864ad962');
+            const mp = new MercadoPago('APP_USR-0994e00d-a445-4b70-a5dc-f17ebc7a268a');
             const cardForm = mp.cardForm({
                 amount: amount.toString(), // Passa o valor como string
                 iframe: true,
