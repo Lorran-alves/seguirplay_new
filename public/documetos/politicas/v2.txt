@@ -1,0 +1,79 @@
+Políticas de privacidade
+ATUALIZADA EM 1 DE OUTUBRO DE 2023
+
+
+Introdução
+Esta Política de Privacidade tem como objetivo esclarecer as práticas de coleta, uso e armazenamento de informações pessoais dos usuários que utilizam os serviços da SEGUIR PLAY
+
+Bases Legais para o Processamento de Dados
+O tratamento de seus dados pessoais será fundamentado nas seguintes bases legais:
+
+Contrato: Para a execução de contrato firmado entre você e a SEGUIR PLAY.
+Obrigações Legais: Para cumprimento de exigências legais e regulatórias.
+Interesses Legítimos: Para desenvolvimento e marketing de nossos produtos e serviços
+Consentimento: Conforme exigido pela Lei Geral de Proteção de Dados (LGPD).
+Seus Direitos
+Você tem o direito de acessar, corrigir, alterar e excluir seus dados pessoais. Para exercer esses direitos entre em contato conosco pelo e-mail fornecido em nosso site: www.seguirplay.com
+
+Armazenamento e Compartilhamento de Dados
+A SEGUIR PLAY opera sob as leis brasileiras e mantém todos os dados em conformidade com as normas vigentes. Seus dados não são compartilhados com terceiros, exceto quando necessário para fornecimento de nossos serviços, como processamento de pagamentos.
+
+Como e por quanto tempo seus dados são armazenados?
+Seus dados pessoais coletados pela SEGUIR PLAYserão utilizados e armazenados durante o tempo necessário para a prestação do serviço ou para que as finalidades elencadas nesta Política de Privacidade sejam atingidas, considerando os direitos dos titulares dos dados e da própria SEGUIR PLAY.
+
+De modo geral, a coleta de dados é mínima, apenas necessário para suporte, e-mail e telefone, seus dados serão mantidos enquanto perdurar a relação contratual entre você e a SEGUIR PLAY Após esse período, os dados coletados serão excluídos de nossas bases de dados ou anonimizados, ressalvadas as hipóteses legalmente previstas no artigo 16 da Lei Geral de Proteção de Dados (LGPD):
+
+Cumprimento de obrigação legal ou regulatória pela SEGUIR PLAY;
+Estudo por órgão de pesquisa, garantida, sempre que possível, a anonimização dos dados pessoais;
+Transferência a terceiro, desde que respeitados os requisitos de tratamento de dados dispostos nesta Lei;
+Uso exclusivo da SEGUIR PLAY, vedado seu acesso por terceiros, e desde que anonimizados os dados
+Mesmo limitando a coleta de dados pessoais ao estritamente necessário, como nome, e-mail e telefone para fins de suporte ao usuário, a SEGUIR PLAY mantém um rigoroso compromisso com a segurança e a privacidade dessas informações. Implementamos soluções técnicas avançadas que asseguram a confidencialidade, integridade e inviolabilidade dos seus dados. Adicionalmente, medidas de segurança alinhadas aos riscos envolvidos estão em vigor, incluindo protocolos de controle de acesso às informações armazenadas.
+
+Segurança dos Dados
+Utilizamos tecnologias atualizadas para garantir a segurança dos seus dados. No entanto, nenhum método de transmissão ou armazenamento é 100% seguro. Em caso de incidente de segurança, informaremos aos envolvidos e à Autoridade Nacional de Proteção de Dados conforme o artigo 48 da LGPD.
+
+Responsabilidades
+Ao utilizar nossos serviços, você se compromete a fornecer informações verdadeiras e mantê-las atualizadas, conforme estipulado em nosso Termo de Uso.
+
+Conceituação Técnica de Cookies e Sessões em PHP
+$_SESSION no PHP: Considera-se um Cookie?
+
+A função $_SESSION do PHP não é tecnicamente um cookie, mas utiliza cookies como mecanismo auxiliar para seu funcionamento. Especificamente, as sessões em PHP dependem de um cookie de identificação de sessão , denominado por padrão como PHPSESSID. Este cookie armazena exclusivamente o ID da sessão , que serve como uma chave para associar o navegador do usuário aos dados armazenados no servidor.
+
+Diferença Fundamental entre Sessões e Cookies
+
+Sessões : Os dados são armazenados no lado do servidor. O cookie de sessão (PHPSESSID) atua apenas como um identificador para recuperar esses dados.
+Cookies : Os dados são armazenados diretamente no navegador do usuário, sem necessidade de interação com o servidor após a configuração inicial.
+Tipologia dos Cookies
+
+Cookies Funcionais : Estes cookies permitem que o sistema recupere preferências do usuário, como idioma, região ou outras configurações personalizadas, proporcionando uma experiência adaptada às necessidades do cliente.
+Finalidade do Uso de Cookies
+
+Os cookies são utilizados principalmente para:
+
+Armazenar produtos pré-selecionados pelo usuário.
+Manter itens adicionados ao carrinho de compras durante a navegação.
+Gerenciamento de Cookies
+
+O gerenciamento de cookies neste contexto é restrito à funcionalidade de salvamento de itens no carrinho de compras durante 2 horaS (DUAS HORAS) "SOMENTE". Não há uso adicional ou secundário dos cookies além deste propósito.
+
+Disposições Finais
+
+Os cookies implementados têm como única finalidade o suporte ao salvamento de itens no carrinho de compras, garantindo a persistência dessas informações durante a sessão do usuário.
+
+Alteração desta Política de Privacidade
+A versão atual desta Política de Privacidade foi formulada e atualizada pela última vez em 11 de fevereiro de 2024.
+
+A SEGUIR PLAY reserva-se o direito de alterar esta Política de Privacidade a qualquer momento, especialmente para adaptá-la a eventuais mudanças em nosso site ou em legislação aplicável. É altamente recomendável que você revise este documento frequentemente.
+
+Qualquer modificação nesta Política entrará em vigor imediatamente após sua publicação em nosso site. Sempre informaremos a você sobre qualquer alteração nesta Política.
+
+Ao continuar utilizando nossos serviços e fornecendo seus dados pessoais após tais alterações, você estará consentindo com as novas diretrizes.
+
+Contato e DPO
+Para quaisquer dúvidas ou para exercer seus direitos, entre em contato conosco ou com nosso Encarregado de Proteção de Dados Pessoais pelo e-mail: dpo@seguirplay.com
+
+Para assegurar que você seja corretamente identificado como o titular dos dados pessoais objeto da solicitação, mesmo que minimamente coletados, podemos requerer documentos ou outras evidências que comprovem sua identidade. Caso isso seja necessário, você será previamente notificado.
+
+Isenção de Responsabilidade
+Não somos responsáveis por qualquer resultado decorrente de negligência, imprudência ou imperícia dos usuários em relação à segurança e ao tratamento de seus dados pessoais.

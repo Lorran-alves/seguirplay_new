@@ -1,0 +1,15 @@
+RewriteEngine On
+RewriteRule ^([0-9A-Za-z-_]+)$ /$1.html
+RewriteRule ^([^\.]+)$ $1.html [NC,L]
+RewriteCond %{THE_REQUEST} ^[A-Z]{3,}\s([^.]+)\.html [NC]
+RewriteRule ^ %1 [R,NC]
+RewriteEngine on
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}\.php -f
+RewriteRule ^(.*)$ $1.php
+
+# php -- BEGIN cPanel-generated handler, do not edit
+# Defina o pacote “ea-php82” como a linguagem padrão de programação “PHP”.
+<IfModule mime_module>
+</IfModule>
+# php -- END cPanel-generated handler, do not edit

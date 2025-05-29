@@ -1,0 +1,266 @@
+/* Estilo global */
+body {
+    font-family: 'Poppins', sans-serif !important;
+    margin: 0;
+    padding: 0;
+    background-color: #fff;
+    color: #333;
+    text-align: center;
+    display: flex; /* Flexbox para organizar o layout */
+    flex-direction: column; /* Coloca os elementos em coluna */
+    min-height: 100vh; /* Garante que o body ocupe pelo menos a altura total da tela */
+    overflow-x: hidden; /* Remove a barra de rolagem horizontal */
+}
+
+main {
+    flex: 1; /* Faz o main ocupar o espaço restante entre o header e o footer */
+    padding: 40px 20px;
+    overflow: hidden; /* Evita rolagem dentro do main */
+}
+
+
+/* Header com logo */
+header {
+    background-color: #ff6f00; /* Laranja vibrante */
+    color: white;
+    padding: 20px 0;
+}
+
+header img {
+    max-width: 250px;
+    margin-bottom: 10px;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 2rem;
+}
+
+/* Seção principal */
+main {
+    padding: 40px 20px;
+}
+
+main h2 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    color: #ff6f00;
+}
+
+/* Botão de Suporte */
+.support-button {
+    margin-top: 20px; /* Espaçamento entre os botões de download e o botão de suporte */
+}
+
+.support-button button {
+    background-color: #007bff; /* Azul para diferenciar do laranja */
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    font-size: 1rem;
+    cursor: pointer;
+    border-radius: 50px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    width: auto; /* Remove a largura fixa para desktop/tablet */
+    max-width: none; /* Remove a largura máxima */
+    margin: 0 auto; /* Centraliza o botão */
+    display: block; /* Garante que o botão seja exibido como um bloco */
+    font-family: 'Poppins', sans-serif !important;
+}
+
+.support-button button:hover {
+    background-color: #0056b3; /* Escurece o azul ao passar o mouse */
+    transform: scale(1.05);
+}
+
+
+/* Botões */
+.buttons {
+    display: flex;
+    justify-content: center; /* Centraliza os botões horizontalmente */
+    gap: 20px; /* Espaçamento entre os botões */
+    margin-top: 30px;
+    flex-wrap: wrap; /* Permite que os botões quebrem linha em telas menores */
+}
+
+.buttons button {
+    background-color: #ff6f00;
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    font-size: 1rem;
+    cursor: pointer;
+    border-radius: 50px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    width: auto; /* Remove a largura fixa para desktop/tablet */
+    max-width: none; /* Remove a largura máxima */
+    margin: 0; /* Remove margens automáticas */
+    font-family: 'Poppins', sans-serif !important;
+}
+
+.buttons button:hover {
+    background-color: #e65c00;
+    transform: scale(1.05);
+}
+
+/* Modal */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    overflow-y: auto; /* Adiciona barra de rolagem vertical se necessário */
+}
+
+.modal-content {
+    background-color: white;
+    margin: 5% auto; /* Ajuste para dar espaço na parte superior */
+    padding: 30px;
+    border-radius: 15px;
+    width: 80%;
+    max-width: 600px;
+    text-align: center;
+    position: relative;
+    max-height: 80vh; /* Limita a altura máxima do modal */
+    overflow-y: auto; /* Adiciona barra de rolagem dentro do modal, se necessário */
+    font-family: 'Poppins', sans-serif !important;
+}
+
+.close {
+    position: absolute;
+    right: 15px;
+    top: 10px;
+    color: #aaa;
+    font-size: 2rem;
+    font-weight: bold;
+    cursor: pointer;
+    font-family: 'Poppins', sans-serif !important;
+}
+
+.close:hover {
+    color: #ff6f00;
+}
+
+video {
+    width: 100%;
+    max-width: 500px;
+    margin-top: 20px;
+    border-radius: 10px;
+}
+
+/* Botão de download nos modais */
+.download-btn {
+    display: inline-block;
+    background-color: #ff6f00;
+    color: white;
+    text-decoration: none;
+    padding: 15px 30px;
+    font-size: 1rem;
+    border-radius: 50px;
+    margin-top: 20px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.download-btn:hover {
+    background-color: #e65c00;
+    transform: scale(1.05);
+}
+
+/* Lista de instruções */
+.modal-content ol {
+    text-align: left;
+    margin: 20px auto;
+    padding-left: 20px;
+    max-width: 500px;
+}
+
+.modal-content li {
+    margin-bottom: 10px;
+    font-size: 1rem;
+    line-height: 1.5;
+}
+
+/* Footer */
+footer {
+    background-color: #ff6f00;
+    color: white;
+    padding: 15px 0;
+    margin-top: auto; /* Empurra o footer para o final da página */
+    font-family: 'Poppins', sans-serif !important;
+}
+
+footer p {
+    margin: 0;
+    font-size: 0.9rem;
+}
+
+/* Media Queries para responsividade */
+@media (max-width: 768px) {
+    /* Ajustes para tablets */
+    header h1 {
+        font-size: 1.5rem;
+    }
+
+    main h2 {
+        font-size: 1.5rem;
+    }
+
+    .buttons button {
+        font-size: 0.9rem;
+        padding: 12px 25px;
+    }
+}
+
+/* Media Queries para responsividade */
+@media (max-width: 480px) {
+    /* Ajustes para celulares */
+    .support-button button {
+        font-size: 0.8rem;
+        padding: 10px 20px;
+        width: 100%; /* Ocupa toda a largura em telas pequenas */
+        max-width: 300px; /* Limita a largura máxima */
+        margin: 0 auto; /* Centraliza o botão */
+    }
+}
+
+
+@media (max-width: 480px) {
+    /* Ajustes para celulares */
+    header img {
+        max-width: 220px;
+    }
+
+    header h1 {
+        font-size: 1.2rem;
+    }
+
+    main h2 {
+        font-size: 1.2rem;
+    }
+
+    .buttons button {
+        font-size: 0.8rem;
+        padding: 10px 20px;
+        width: 100%; /* Botões ocupam toda a largura em telas pequenas */
+        max-width: 300px; /* Limita a largura máxima */
+        margin: 0 auto; /* Centraliza os botões */
+    }
+
+    footer p {
+        font-size: 0.8rem;
+    }
+
+    /* Remove a barra de rolagem no modo celular */
+    body {
+        overflow-x: hidden; /* Remove a barra de rolagem horizontal */
+        overflow-y: auto; /* Mantém apenas a rolagem vertical, se necessário */
+    }
+
+    .modal {
+        overflow-y: auto; /* Barra de rolagem apenas no modal, se necessário */
+    }
+}

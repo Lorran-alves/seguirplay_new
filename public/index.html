@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seguir Play - Aumente sua visibilidade no Facebook</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<style>
+/* Estilos Globais */
+:root {
+    --primary-color: #1877f2;
+    --secondary-color: #42b72a;
+    --text-color: #1c1e21;
+    --light-bg: #f0f2f5;
+    --white: #ffffff;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    line-height: 1.6;
+    color: var(--text-color);
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Layout de Seção com Imagem */
+.section-content {
+    display: flex;
+    align-items: center;
+    gap: 50px;
+    margin: 40px 0;
+}
+
+.section-content.reverse {
+    flex-direction: row-reverse;
+}
+
+.section-text {
+    flex: 1;
+}
+
+.section-image {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.section-image img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.section-image img:hover {
+    transform: translateY(-10px);
+}
+
+/* Hero Section */
+.hero {
+    background: linear-gradient(135deg, var(--primary-color), #0d47a1);
+    color: var(--white);
+    padding: 100px 0;
+}
+
+.hero-content {
+    display: flex;
+    align-items: center;
+    gap: 50px;
+}
+
+.hero-text {
+    flex: 1;
+    text-align: left;
+}
+
+.hero-image {
+    flex: 1;
+}
+
+.hero-image img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.hero h1 {
+    font-size: 3rem;
+    margin-bottom: 20px;
+    line-height: 1.2;
+}
+
+.hero .subheadline {
+    font-size: 1.5rem;
+    margin-bottom: 40px;
+    opacity: 0.9;
+}
+
+/* Botões CTA */
+.cta-button {
+    display: inline-block;
+    padding: 15px 30px;
+    background-color: var(--secondary-color);
+    color: var(--white);
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: 1.2rem;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.cta-button:hover {
+    transform: translateY(-2px);
+    background-color: #3aa520;
+}
+
+/* Seções Gerais */
+section {
+    padding: 80px 0;
+}
+
+section h2 {
+    font-size: 2.5rem;
+    margin-bottom: 30px;
+    text-align: left;
+}
+
+/* Services Section */
+.services {
+    background-color: var(--white);
+}
+
+.benefits-grid, .features-grid, .ideal-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+    margin-top: 40px;
+}
+
+.benefit-item, .feature-item, .ideal-item {
+    background-color: var(--light-bg);
+    padding: 20px;
+    border-radius: 10px;
+    text-align: left;
+    transition: transform 0.3s ease;
+}
+
+.benefit-item:hover, .feature-item:hover, .ideal-item:hover {
+    transform: translateY(-5px);
+}
+
+/* How it Works Section */
+.how-it-works {
+    background-color: var(--light-bg);
+}
+
+/* FAQ Section */
+.faq {
+    background-color: var(--white);
+}
+
+.faq-grid {
+    display: grid;
+    gap: 30px;
+    max-width: 800px;
+}
+
+.faq-item {
+    background-color: var(--light-bg);
+    padding: 30px;
+    border-radius: 10px;
+}
+
+.faq-item h3 {
+    margin-bottom: 15px;
+    color: var(--primary-color);
+}
+
+/* Final CTA Section */
+.final-cta {
+    background: linear-gradient(135deg, var(--primary-color), #0d47a1);
+    color: var(--white);
+}
+
+.security-note {
+    margin: 20px 0;
+    font-size: 1.2rem;
+}
+
+/* Responsividade */
+@media (max-width: 968px) {
+    .section-content, .hero-content {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .section-content.reverse {
+        flex-direction: column;
+    }
+
+    .section-text, .hero-text {
+        text-align: center;
+    }
+
+    section h2 {
+        text-align: center;
+    }
+
+    .hero h1 {
+        font-size: 2.5rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .hero h1 {
+        font-size: 2rem;
+    }
+
+    .hero .subheadline {
+        font-size: 1.2rem;
+    }
+
+    section h2 {
+        font-size: 2rem;
+    }
+
+    .benefits-grid, .features-grid, .ideal-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .container {
+        padding: 0 15px;
+    }
+}
+
+/* Animações */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+section {
+    animation: fadeIn 0.8s ease-out forwards;
+} 
+
+</style>
+<body>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h1>Mais alcance, mais interações, mais relevância para sua marca no Facebook.</h1>
+                    <p class="subheadline">Potencialize sua presença com estratégias seguras, direcionadas e eficazes para atrair mais atenção ao seu conteúdo.</p>
+                    <a href="https://seguirplay.com/" class="cta-button">Quero ampliar minha presença no Facebook</a>
+                </div>
+                <div class="hero-image">
+                    <img src="images/instagram.jpg" alt="Facebook Marketing">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- O que fazemos Section -->
+    <section class="services">
+        <div class="container">
+            <div class="section-content">
+                <div class="section-text">
+                    <h2>📘 Você publica, nós maximizamos o alcance.</h2>
+                    <p>Ajudamos marcas, criadores e empreendedores a se destacarem no Facebook por meio de ações que aumentam a entrega dos conteúdos e melhoram a percepção do público.</p>
+                    <div class="benefits-grid">
+                        <div class="benefit-item">✔️ Maior entrega das publicações</div>
+                        <div class="benefit-item">✔️ Mais visibilidade para páginas e postagens</div>
+                        <div class="benefit-item">✔️ Engajamento real e segmentado</div>
+                        <div class="benefit-item">✔️ Técnicas que impulsionam a relevância orgânica</div>
+                        <div class="benefit-item">✔️ Otimização da autoridade digital</div>
+                    </div>
+                </div>
+                <div class="section-image">
+                    <img src="images/services-facebook.png" alt="Serviços Facebook">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Como funciona Section -->
+    <section class="how-it-works">
+        <div class="container">
+            <div class="section-content reverse">
+                <div class="section-text">
+                    <h2>Como funciona</h2>
+                    <p>Trabalhamos com inteligência de exibição e comportamento.</p>
+                    <p>Nos bastidores, aplicamos estratégias que conectam seus conteúdos com públicos reais e engajados, aumentando a chance de interação, comentários e compartilhamentos — tudo isso respeitando as regras da plataforma.</p>
+                    <div class="features-grid">
+                        <div class="feature-item">💡 Entregas assistidas de postagens</div>
+                        <div class="feature-item">💡 Amplificação de visibilidade por rede segmentada</div>
+                        <div class="feature-item">💡 Otimização contínua com base no desempenho</div>
+                    </div>
+                </div>
+                <div class="section-image">
+                    <img src="images/how-it-works.png" alt="Como Funciona">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Ideal para Section -->
+    <section class="ideal-for">
+        <div class="container">
+            <div class="section-content">
+                <div class="section-text">
+                    <h2>Ideal para...</h2>
+                    <div class="ideal-grid">
+                        <div class="ideal-item">✔️ Marcas que querem gerar mais engajamento com seus conteúdos</div>
+                        <div class="ideal-item">✔️ Negócios locais que precisam se destacar no feed da comunidade</div>
+                        <div class="ideal-item">✔️ Criadores que desejam aumentar a relevância das postagens</div>
+                        <div class="ideal-item">✔️ Páginas que estão estagnadas e querem voltar a crescer</div>
+                        <div class="ideal-item">✔️ Campanhas com foco em reconhecimento e autoridade</div>
+                    </div>
+                </div>
+                <div class="section-image">
+                    <img src="images/ideal-for.png" alt="Ideal Para">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Benefícios Section -->
+    <section class="benefits">
+        <div class="container">
+            <div class="section-content reverse">
+                <div class="section-text">
+                    <h2>Benefícios Reais</h2>
+                    <div class="benefits-grid">
+                        <div class="benefit-item">📢 Publicações alcançando mais pessoas</div>
+                        <div class="benefit-item">🤝 Mais engajamento em postagens estratégicas</div>
+                        <div class="benefit-item">👁️‍🗨️ Reconhecimento da sua marca ou projeto</div>
+                        <div class="benefit-item">🔍 Melhor posicionamento no feed dos seguidores</div>
+                        <div class="benefit-item">📲 Perfil ou página mais atrativa para novos visitantes</div>
+                    </div>
+                </div>
+                <div class="section-image">
+                    <img src="images/instagram.jpg" alt="Benefícios">
+                </div>
+            </div>
+        </div>ssss
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq">
+        <div class="container">
+            <div class="section-content">
+                <div class="section-text">
+                    <h2>Perguntas Frequentes</h2>
+                    <div class="faq-grid">
+                        <div class="faq-item">
+                            <h3>🚫 Isso fere as políticas do Facebook?</h3>
+                            <p>De forma alguma. Utilizamos métodos inteligentes e seguros que respeitam os limites da plataforma e priorizam a experiência do usuário.</p>
+                        </div>
+                        <div class="faq-item">
+                            <h3>🔐 Meu perfil ou página corre algum risco?</h3>
+                            <p>Não. Nossa atuação é baseada em estratégias seguras e adaptadas ao comportamento orgânico.</p>
+                        </div>
+                        <div class="faq-item">
+                            <h3>📈 É só para quem vende algo?</h3>
+                            <p>Não! Serve para criadores, negócios, eventos, páginas pessoais... Qualquer pessoa que queira visibilidade no Facebook.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="section-image">
+                    <img src="images/faq.png" alt="Perguntas Frequentes">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Final CTA Section -->
+    <section class="final-cta">
+        <div class="container">
+            <div class="section-content">
+                <div class="section-text">
+                    <h2>Sua página no Facebook pode (e deve) ir além.</h2>
+                    <p>Aumente a visibilidade dos seus posts, melhore sua autoridade e ganhe espaço no feed de quem mais importa.</p>
+                    <p class="security-note">📲 Comece hoje mesmo, com segurança.</p>
+                    <a href="https://seguirplay.com/" class="cta-button">Quero impulsionar minha página no Facebook</a>
+                </div>
+                <div class="section-image">
+                    <img src="images/final-cta.png" alt="Comece Agora">
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+</html> 

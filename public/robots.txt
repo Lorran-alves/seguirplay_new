@@ -1,0 +1,5 @@
+User-agent: *
+Disallow: /dashboard/
+
+# Endereço do Sitemap
+Sitemap: https://seguirplay.com/sitemap.xml
