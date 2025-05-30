@@ -358,9 +358,11 @@ class PurchaseController extends Controller
         fwrite($fp, '=============================================================');
         fwrite($fp, PHP_EOL);
         fwrite($fp, $purchase->id);
+         fwrite($fp, PHP_EOL);
         fwrite($fp, json_encode($request->all()));
         fwrite($fp, PHP_EOL);
         fwrite($fp, 'Data:' . now());
+         fwrite($fp, PHP_EOL);
         fwrite($fp, json_encode($payment->toArray()));
         fwrite($fp, PHP_EOL);
         fwrite($fp, '=============================================================');
