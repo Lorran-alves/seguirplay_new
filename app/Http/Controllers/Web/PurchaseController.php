@@ -353,16 +353,15 @@ class PurchaseController extends Controller
 
   			$payment->save();
 
-   $fp = fopen("pix_logs_mercado_pago.txt","a");
+        $fp = fopen("pix_logs_mercado_pago.txt","a");
+        fwrite($fp, '=============================================================');
         fwrite($fp, $purchase->id);
-		
         fwrite($fp, json_encode($request->all()));
         fwrite($fp, PHP_EOL);
-        fwrite($fp, '=============================================================');
-        fwrite($fp, PHP_EOL);
-        fwrite($fp, '=============================================================');
+        fwrite($fp, 'Data:' . now());
         fwrite($fp, json_encode($payment->toArray()));
         fwrite($fp, PHP_EOL);
+         fwrite($fp, '=============================================================');
         fclose($fp);
 		
         $payment->point_of_interaction->purchase = $purchase->id;
