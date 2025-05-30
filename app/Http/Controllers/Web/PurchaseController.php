@@ -356,6 +356,7 @@ class PurchaseController extends Controller
         $fp = fopen("pix_logs_mercado_pago.txt","a");
         fwrite($fp, PHP_EOL);
         fwrite($fp, '=============================================================');
+        fwrite($fp, PHP_EOL);
         fwrite($fp, $purchase->id);
         fwrite($fp, json_encode($request->all()));
         fwrite($fp, PHP_EOL);
@@ -363,6 +364,7 @@ class PurchaseController extends Controller
         fwrite($fp, json_encode($payment->toArray()));
         fwrite($fp, PHP_EOL);
         fwrite($fp, '=============================================================');
+        fwrite($fp, PHP_EOL);
         fwrite($fp, PHP_EOL);
         fclose($fp);
 		
