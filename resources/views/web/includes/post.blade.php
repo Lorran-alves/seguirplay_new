@@ -105,6 +105,10 @@
     .ocutar{
         display: none;
     }
+
+    #paymentForm input {
+        text-align: center !important;
+    }
 </style>
 <!-- Modal -->
 <div class="modal fade" id="passo01" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
@@ -563,15 +567,15 @@
                     @csrf
                     <div class="mb-3">
                         <label for="cpf" class="form-label">CPF</label>
-                        <input type="text" class="form-control" id="cpf" placeholder="Digite o CPF" required value="71169459463">
+                        <input type="text" class="form-control" id="cpf" placeholder="Digite o CPF" required >
                     </div>
                     <div class="mb-3">
                         <label for="nomeCompleto" class="form-label">Nome Completo</label>
-                        <input type="text" class="form-control" id="nomeCompleto" placeholder="Nome Completo" value="Lorran Alves">
+                        <input type="text" class="form-control" id="nomeCompleto" placeholder="Nome Completo">
                     </div>
                     <div class="mb-3">
                         <label for="dataNascimento" class="form-label">Data de Nascimento</label>
-                        <input type="date" class="form-control" id="dataNascimento" value="25/06/2003">
+                        <input type="date" class="form-control" id="dataNascimento">
                     </div>
                     <button type="button" class="btn btn-primary" onclick="prosseguirCardPagamento() ">Prosseguir</button>
                 </form>
@@ -1524,7 +1528,7 @@ function ocultarCamposContato() {
                     },
                     identificationNumber: {
                         id: "paymentForm__identificationNumber",
-                        placeholder: "Número do CPF",
+                        placeholder: "CPF do titular",
                     },
                     cardholderEmail: {
                         id: "paymentForm__cardholderEmail",
@@ -1567,14 +1571,19 @@ function ocultarCamposContato() {
                         processData: false,
                         contentType: false,
                         success: function (data) {
-                            if (data.success) {
-                                alert('Pagamento realizado com sucesso!');
-                                // if (typeof urlRedirectSuccess !== 'undefined') {
-                                //     window.location.href = urlRedirectSuccess;
-                                // }
-                            } else {
-                                // alert('Erro ao processar pagamento: ' + (data.message || 'Erro desconhecido'));
+                            
+                            const obj = JSON.parse(response);
+                            if (obj.status === true) {
+                                window.location.href = urlRedirectSuccess;
+                                return;
                             }
+                                
+                            // em caso de erro, exibe mensagem
+                            Swal.fire(
+                                'Erro',
+                                'Erro ao processar o pagamento: ' + obj.message,
+                                'error'
+                            );
                         },
                         error: function (xhr, status, error) {
                             console.error('Erro ao enviar pagamento:', error);
