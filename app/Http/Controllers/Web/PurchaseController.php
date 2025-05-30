@@ -327,27 +327,7 @@ class PurchaseController extends Controller
             $coment->coment =  $request->input('cmnt_'.$i);
             $coment->save();
         }
-        $fp = fopen("pix_logs_mercado_pago.txt","a");
-        fwrite($fp, $purchase->id);
-		fwrite($fp, PHP_EOL);
-		fwrite($fp, $plan->quantity_min);
-        fwrite($fp, PHP_EOL);
-		fwrite($fp, $plan->price);
-        fwrite($fp, PHP_EOL);
-		fwrite($fp, $request->quantity);
-        fwrite($fp, PHP_EOL);
-		fwrite($fp, $plan->price * $request->quantity);
-        fwrite($fp, PHP_EOL);
-		fwrite($fp, $purchase->price);
-        fwrite($fp, PHP_EOL);
-		fwrite($fp, (double) round($purchase->price,2));
-        fwrite($fp, PHP_EOL);
-        fwrite($fp, json_encode($request->all()));
-        fwrite($fp, PHP_EOL);
-        fwrite($fp, '=============================================================');
-        fwrite($fp, PHP_EOL);
-        fclose($fp);
-        
+       
         SDK::setAccessToken($this->keyMercadoPago); 
         
         $payment = new Payment();
@@ -372,6 +352,18 @@ class PurchaseController extends Controller
   			);
 
   			$payment->save();
+
+   $fp = fopen("pix_logs_mercado_pago.txt","a");
+        fwrite($fp, $purchase->id);
+		
+        fwrite($fp, json_encode($request->all()));
+        fwrite($fp, PHP_EOL);
+        fwrite($fp, '=============================================================');
+        fwrite($fp, PHP_EOL);
+        fwrite($fp, '=============================================================');
+        fwrite($fp, json_encode($payment->toArray()));
+        fwrite($fp, PHP_EOL);
+        fclose($fp);
 		
         $payment->point_of_interaction->purchase = $purchase->id;
         echo json_encode($payment->point_of_interaction);

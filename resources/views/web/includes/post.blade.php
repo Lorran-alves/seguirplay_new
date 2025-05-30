@@ -107,7 +107,7 @@
     }
 
     #paymentForm input {
-        text-align: center !important;
+        text-align: left !important;
     }
 </style>
 <!-- Modal -->
