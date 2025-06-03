@@ -21,7 +21,7 @@
             <div class="row">
                 <div class="col-lg-8 mauto">
                     <h2 class="menor">Termos de Serviços e Utilização da Seguir Play</h2>
-                    <p>ATUALIZADA EM 19 DE DEZEMBRO DE 2024<p>
+                    <p>ATUALIZADA EM 30 DE MAIO DE 2025<p>
                     <p class="cor-site">Por favor, leia com a devida atenção os Termos e Condições de Uso dos nossos serviços.</p>
 
                     <p>
@@ -331,7 +331,9 @@
                         <span class="cor-site">10.2.1. </span>No entanto, é fundamental destacar que não serão
                         aceitas solicitações de reembolso motivadas por arrependimento após o início da execução dos serviços. Portanto, recomendamos que aquisições de serviços sejam realizadas somente se o CLIENTE estiver em total acordo com os termos estipulados.
                     </p>
-
+                    <p>
+                        <span class="cor-site">10.3.1. </span><span class="cor-laranja">Como as devoluções de pagamentos feitos com cartão de crédito e débito funcionam?</span> A devolução de um pagamento (total ou parcial) feito com cartão de crédito ou débito começa com uma solicitação. Quando é autoriza a devolução do dinheiro, é enviado a solicitação de cancelamento para o  <a href="https://www.mercadopago.com.br/ajuda/32094" class="cor-laranja">Mercado pago</a> é enviado ao banco emissor do seu cartão. O banco vai receber a solicitação e será o responsável por processar a devolução do dinheiro e determinar os prazos. <span class="cor-laranja">O processo pode levar entre 7 e 10 dias úteis a partir da data em que o pagamento foi cancelado.</span> Essas mesmas regras e prazos também se aplicam a pagamentos com o Cartão Mercado Pago. Se você precisar de mais informações sobre uma devolução de pagamento ou não encontrá-la na sua conta bancária, recomendamos que entre em contato com o banco emissor do seu cartão.
+                    </p>
                     <p>
                         <span class="cor-site">10.3. </span>O CLIENTE também reconhece e concorda que, uma vez iniciada a execução dos serviços contratados, não serão aceitas solicitações de reembolso motivadas por arrependimento.
                     </p>
@@ -346,7 +348,6 @@
                         <span class="cor-site">10.4.1 </span>Para esse fim, a SEGUIR PLAY disponibiliza um canal de comunicação via <a href="https://typebot.io/seguirplay" class="cor-laranja">Chat Online</a> na plataforma, bem como através do endereço de e-mail <a href="mailto:contato@seguirplay.com" class="cor-laranja">contato@seguirplay.com</a>.
                         
                     </p>
-
 
 
                     <p class="cor-site">11. Vigência e Alterações do Termo de Uso</p>

@@ -37,78 +37,7 @@
     .swal2-cancel{
         background-color: rgb(125, 37, 93) !important;
     }
-    
-    .video {
-        position: relative;
-        width: 100%;
-        padding-top: 56.25%; /* Proporção 16:9 */
-        background-size: cover;
-        background-position: center;
-        border-radius: 8px;
-        cursor: pointer;
-        transition: transform 0.3s ease;
-    }
 
-    .video:hover {
-        transform: scale(1.05);
-    }
-
-    .video input[type="checkbox"] {
-        position: absolute;
-        top: 10px;
-        right: 10px;
-        transform: scale(1.5);
-        opacity: 0.8;
-        width: 10px;
-        height: auto;
-    }
-
-    .video.selected {
-        border: 3px solid #0d6efd; /* Borda azul para selecionados */
-    }
-
-    #videoGrid {
-        list-style-type: none;
-        padding: 0;
-        margin: 0;
-    }
-    .page-link{
-        color: #0d6efd !important;
-    }
-    .div-card{
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
-    .container-div-form-card{
-        width: 375px;
-        height: 55px;
-        font-family: 'Manrope';
-        font-style: normal;
-        font-weight: 400;
-        font-size: 18px;
-        line-height: 25px;
-        color: #666666;
-        background: #FFFFFF;
-        border: 1px solid #ECECEC;
-        border-radius: 5px;
-        text-align: center;
-        margin: auto;
-        margin-bottom: 15px;
-    }
-
-    .select-form-card{
-        width: 375px;
-        margin: auto;
-        margin-bottom: 15px;
-    }
-    .ocutar{
-        display: none;
-    }
-
-    #paymentForm input {
-        text-align: left !important;
-    }
 </style>
 <!-- Modal -->
 <div class="modal fade" id="passo01" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
@@ -209,7 +138,7 @@
                 <!-- Descrição -->
                 <p class="text-muted mb-4" id="socialDescription"></p>
 
-             <!-- Frase de confirmação -->
+             <!-- Frase de confirmação  -->
                 <h5 class="mb-3 text-dark fw-semibold">Esse é seu perfil?</h5>
 
                 <!-- Botão continuar -->
@@ -1065,7 +994,7 @@ function ocultarCamposContato() {
         //segundo modal
         if(modal == 2){
             $('#passo02').modal('hide');
-            $('#passo022').modal('hide');
+           // $('#passo022').modal('hide');
             console.log(buttonServiceClick);
             buttonServiceClick.click()
 
