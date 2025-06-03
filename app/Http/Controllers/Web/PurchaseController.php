@@ -501,7 +501,7 @@ class PurchaseController extends Controller
                 });
 
                 if ($cupomEncontrado) {
-                    $valorOriginal = (empty($plan->quantity_min) ? $plan->price : $plan->price * $c->quantity);
+                    $valorOriginal = (empty($plan->quantity_min) ? $plan->price : $plan->price * $c['quantity']);
                     $descontoPorcentagem = $cupomEncontrado['desconto'] / 100; // Usa o desconto do banco
                     $purchase->price = $valorOriginal - ($valorOriginal * $descontoPorcentagem);
 
