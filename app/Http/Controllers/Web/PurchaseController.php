@@ -136,7 +136,10 @@ class PurchaseController extends Controller
     
             $purchase->price_tot = (empty($plan->quantity_min) ? $plan->price : $plan->price * $request->quantity);
     
-    
+            // aumenta 12% para o valor total
+            $purchase->price_tot += ($purchase->price_tot * 0.12);
+            $purchase->price += ($purchase->price * 0.12);
+            $purchase->price_sale += ($purchase->price_sale * 0.12);
     
             // APLICA CUPOM CASO NÃO VIM VAZIO'
             if(isset($request->cupom) && !empty($request->cupom)) {
@@ -236,7 +239,7 @@ class PurchaseController extends Controller
             'full_response' => $payment->toArray()
         ]);
 
-
+        var_dump($payment->toArray());die;
         if ($payment->status == 'approved') {
             // atualizar status da compra
             $purchase->status = 'approved';

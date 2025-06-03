@@ -1,80 +1,84 @@
 <style>
-   #ipt-value{
-   height: 42px;
-   width: 100%;
-   text-align: center;
-   border-radius: 5px;
-   background: #f7f7f7;
-   border: 1px solid #dddddd;
-   font-family: 'Manrope';
-   font-style: normal;
-   font-weight: 800;
-   font-size: 16px;
-   line-height: 25px;
-   color: #131313;
-   }
-   button.voltar{
-   width: 40px;
-   height: 20px;
-   text-align: center;
-   justify-content: center;
-   display: flex;
-   align-items: center;
-   }
-   i.voltar{
-   color: #9A9A9A;
-   font-size: 20px
-   }
-   .block {
-   display: block;
-   }
-   .none {
-   display: none
-   }
-   .swal2-confirm{
-   background-color:#FF6E04 !important;
-   }
-   .swal2-cancel{
-   background-color: rgb(125, 37, 93) !important;
-   }
-   .video {
-   position: relative;
-   width: 100%;
-   padding-top: 56.25%; /* Proporção 16:9 */
-   background-size: cover;
-   background-position: center;
-   border-radius: 8px;
-   cursor: pointer;
-   transition: transform 0.3s ease;
-   }
-   .video:hover {
-   transform: scale(1.05);
-   }
+    #ipt-value{
+        height: 42px;
+        width: 100%;
+        text-align: center;
+        border-radius: 5px;
+        background: #f7f7f7;
+        border: 1px solid #dddddd;
+        font-family: 'Manrope';
+        font-style: normal;
+        font-weight: 800;
+        font-size: 16px;
+        line-height: 25px;
+        color: #131313;
+    }
+    button.voltar{
+        width: 40px;
+        height: 20px;
+        text-align: center;
+        justify-content: center;
+        display: flex;
+        align-items: center;
+    }
+    i.voltar{
+        color: #9A9A9A;
+        font-size: 20px
+    }
+    .block {
+        display: block;
+    }
+    .none {
+        display: none
+    }
+    .swal2-confirm{
+        background-color:#FF6E04 !important;
+    }
+    .swal2-cancel{
+        background-color: rgb(125, 37, 93) !important;
+    }
+    .video {
+        position: relative;
+        width: 100%;
+        padding-top: 56.25%; /* Proporção 16:9 */
+        background-size: cover;
+        background-position: center;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: transform 0.3s ease;
+    }
+    .video:hover {
+        transform: scale(1.05);
+    }
    .video input[type="checkbox"] {
-   position: absolute;
-   top: 10px;
-   right: 10px;
-   transform: scale(1.5);
-   opacity: 0.8;
-   width: 10px;
-   height: auto;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    transform: scale(1.5);
+    opacity: 0.8;
+    width: 10px;
+    height: auto;
    }
    .video.selected {
-   border: 3px solid #0d6efd; /* Borda azul para selecionados */
+    border: 3px solid #0d6efd; /* Borda azul para selecionados */
    }
    #videoGrid {
-   list-style-type: none;
-   padding: 0;
-   margin: 0;
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
    }
    .page-link{
-   color: #0d6efd !important;
+    color: #0d6efd !important;
    }
    .div-card{
-   display: flex;
-   flex-direction: column;
-   align-items: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
    }
+
+    #paymentForm input {
+        text-align: left !important;
+    }
 </style>
 <!-- Modal -->
 <div class="modal fade" id="passo01" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
@@ -1471,19 +1475,145 @@
            cardCart(cpf, nomeCompleto, dataNascimento);
            return;
        }
-   
-       $.post($('#formPurchase').attr('action') + '/buyCard', $('#formPurchase').serializeArray() , function(response){
-   
-           if(response.status){
-               $('#modalInfoCard').modal('hide');
+   $.post($('#formPurchase').attr('action') + '/buyCard', $('#formPurchase').serializeArray() , function(response){
+
+            if(response.status){
+                $('#modalInfoCard').modal('hide');
                 $("#purchase_id").val(response.purchase_id);
-               $("#card").modal('show');
-               return;
-           }
-   
-           alert('Erro ao processar o pagamento, tente novamente mais tarde.');
-   
-       });  
+
+            // Cria o formulário do MercadoPago
+            const amount = parseFloat($('#amount').val()); // Valor da compra
+
+            // aumentar 12% no amount
+            amount *= 1.12;
+
+            // Verifica se o valor é válido
+            if (isNaN(amount) || amount <= 0) {
+                alert('Valor de pagamento inválido');
+                return;
+            }
+
+            // Cria o formulário do MercadoPago dinamicamente
+            const mp = new MercadoPago('APP_USR-0994e00d-a445-4b70-a5dc-f17ebc7a268a');
+            const cardForm = mp.cardForm({
+                amount: amount.toString(), // Passa o valor como string
+                iframe: true,
+                form: {
+                    id: "paymentForm",
+                    cardNumber: {
+                        id: "paymentForm__cardNumber",
+                        placeholder: "Número do cartão",
+                    },
+                    expirationDate: {
+                        id: "paymentForm__expirationDate",
+                        placeholder: "MM/YY",
+                    },
+                    securityCode: {
+                        id: "paymentForm__securityCode",
+                        placeholder: "Código de segurança",
+                    },
+                    cardholderName: {
+                        id: "paymentForm__cardholderName",
+                        placeholder: "Titular do cartão",
+                    },
+                    issuer: {
+                        id: "paymentForm__issuer",
+                        placeholder: "Banco emissor",
+                    },
+                    installments: {
+                        id: "paymentForm__installments",
+                        placeholder: "Parcelas",
+                    },
+                    identificationType: {
+                        id: "paymentForm__identificationType",
+                        placeholder: "Tipo de documento",
+                    },
+                    identificationNumber: {
+                        id: "paymentForm__identificationNumber",
+                        placeholder: "CPF do titular",
+                    },
+                    cardholderEmail: {
+                        id: "paymentForm__cardholderEmail",
+                        placeholder: "E-mail",
+                    },
+                },
+                callbacks: {
+                    onFormMounted: error => {
+                        if (error) return console.warn("Form Mounted handling error: ", error);
+                        console.log("Form mounted");
+                    },
+                    onSubmit: event => {
+                        event.preventDefault();
+
+                        const {
+                            paymentMethodId: payment_method_id,
+                            issuerId: issuer_id,
+                            cardholderEmail: email,
+                            amount,
+                            token,
+                            installments,
+                            identificationNumber,
+                            identificationType,
+                        } = cardForm.getCardFormData();
+
+                        const formData = new FormData();
+                        formData.append('token_card', token);
+                        formData.append('installments', installments);
+                        formData.append('paymentMethodId', payment_method_id);
+                        formData.append('email', email);
+                        formData.append('cpf', identificationNumber);
+                        formData.append('purchase_id', $('#purchase_id').val());
+                        formData.append('_token', "{{ csrf_token() }}");
+
+
+                        $.ajax({
+                        url: urlProcessPaymentCard, // Sua rota Laravel para processar o pagamento
+                        method: 'POST',
+                        data: formData,
+                        processData: false,
+                        contentType: false,
+                        success: function (data) {
+                            
+                            const obj = JSON.parse(response);
+                            if (obj.status === true) {
+                                window.location.href = urlRedirectSuccess;
+                                return;
+                            }
+                                
+                            // em caso de erro, exibe mensagem
+                            Swal.fire(
+                                'Erro',
+                                'Erro ao processar o pagamento: ' + obj.message,
+                                'error'
+                            );
+                        },
+                        error: function (xhr, status, error) {
+                            console.error('Erro ao enviar pagamento:', error);
+                            alert('Erro na requisição AJAX');
+                        }
+                    });
+                    },
+                    onFetching: (resource) => {
+                        console.log("Fetching resource: ", resource);
+
+                        // Animate progress bar
+                        const progressBar = document.querySelector(".progress-bar");
+                        progressBar.removeAttribute("value");
+
+                        return () => {
+                            progressBar.setAttribute("value", "0");
+                        };
+                    }
+                },
+            });
+
+                $("#card").modal('show');
+                return;
+            }
+
+            alert('Erro ao processar o pagamento, tente novamente mais tarde.');
+
+        });  
    
    }
    
