@@ -1482,7 +1482,7 @@
                 $("#purchase_id").val(response.purchase_id);
 
             // Cria o formulário do MercadoPago
-            const amount = parseFloat($('#amount').val()); // Valor da compra
+            let amount = parseFloat($('#amount').val()); // Valor da compra
 
             // aumentar 12% no amount
             amount *= 1.12;
