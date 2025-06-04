@@ -76,8 +76,13 @@
     align-items: center;
    }
 
-    #paymentForm input {
+    #paymentForm input, select {
         text-align: left !important;
+        width: 100% !important;
+        height: auto !important; 
+        padding: 20px 0 20px 5px !important;
+        background: #FFFFFF !important;
+        border: 1px solid #ECECEC !important;
     }
 </style>
 <!-- Modal -->
