@@ -76,7 +76,7 @@
     align-items: center;
    }
 
-    #paymentForm input, select {
+    #paymentForm input, select, #paymentForm__cardNumber input, #paymentForm__expirationDate input, #paymentForm__securityCode input {
         text-align: left !important;
         width: 100% !important;
         height: auto !important; 
@@ -85,7 +85,7 @@
         border: 1px solid #ECECEC !important;
         margin-bottom: 10px !important;
     }
-    #paymentForm__cardNumber, #paymentForm__expirationDate, #paymentForm__securityCode {
+    /* #paymentForm__cardNumber, #paymentForm__expirationDate, #paymentForm__securityCode {
         padding: 20px 0 20px 5px !important;
         border: 1px solid #ECECEC !important;
         font-family: 'Manrope';
@@ -98,7 +98,7 @@
         border: 1px solid #ECECEC;
         border-radius: 5px;
         margin-bottom: 15px;
-    }
+    } */
         
 
 </style>
