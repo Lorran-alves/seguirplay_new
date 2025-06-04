@@ -374,33 +374,20 @@
             <img class="icons img-category" src="{{ asset('web_assets/img/value-icon01.png') }}">
             <h2>Realize seu pagamento via Cartão de Crédito</h2>
             <div class="div-card">
-               <form id="paymentForm" action="{{ route('web.purchases.processPaymentCard') }}">
-                  @csrf
-                  <input type="hidden" name="purchase_id" id="purchase_id" value="">
-                  <input type="hidden" id="paymentMethodId" name="paymentMethodId">
-                  <div class="mb-3">
-                     <label for="cardNumber" class="form-label">Número do Cartão</label>
-                     <input type="text" class="form-control" id="cardNumber" data-checkout="cardNumber" placeholder="1234 5678 9012 3456" required>
-                  </div>
-                  <div class="mb-3">
-                     <label for="cardHolder" class="form-label">Nome no Cartão</label>
-                     <input type="text" class="form-control" id="cardHolder" data-checkout="cardholderName" placeholder="Nome Completo" required>
-                  </div>
-                  <div class="mb-3">
-                     <label for="expiryDate" class="form-label">Data de Validade</label>
-                     <input type="text" class="form-control" id="expiryDate" placeholder="MM/AA" required>
-                  </div>
-                  <div class="mb-3">
-                     <label for="cvv" class="form-label">CVV</label>
-                     <input type="text" class="form-control" id="cvv" data-checkout="securityCode" placeholder="123" required>
-                  </div>
-                  <div class="mb-3">
-                     <label for="installments" class="form-label">Parcelas</label>
-                     <select id="installments" name="installments" class="form-control" data-checkout="installments"></select>
-                  </div>
-                  <input type="hidden" id="cardToken" name="cardToken">
-                  <button type="button" class="btn btn-primary" id="payButton">Pagar</button>
-               </form>
+               <form id="paymentForm">
+                    <div id="paymentForm__cardNumber" class="container-div-form-card"></div>
+                    <div id="paymentForm__expirationDate" class="container-div-form-card"></div>
+                    <div id="paymentForm__securityCode" class="container-div-form-card"></div>
+                    <input type="text" id="paymentForm__cardholderName"/>
+                    <select id="paymentForm__issuer" class="form-control select-form-card ocutar"></select>
+                    <select id="paymentForm__installments" class="form-control select-form-card"></select>
+                    <select id="paymentForm__identificationType" class="form-control select-form-card ocutar"></select>
+                    <input type="text" id="paymentForm__identificationNumber"/>
+                    <input type="email" id="paymentForm__cardholderEmail"/>
+                    <button type="submit" id="paymentForm__submit">Pagar</button>
+                        <progress value="0" class="progress-bar ocutar">Carregando...</progress>
+
+                </form>
             </div>
          </div>
       </div>
@@ -1505,25 +1492,26 @@
    
    function prosseguirCardPagamento() 
    {
-       const cpf = $('#cpf').val();
-       const nomeCompleto = $('#nomeCompleto').val();
-       const dataNascimento = $('#dataNascimento').val();
+        const cpf = $('#cpf').val();
+        const nomeCompleto = $('#nomeCompleto').val();
+        const dataNascimento = $('#dataNascimento').val();
    
-       if (!cpf || !nomeCompleto || !dataNascimento) {
-           alert('Preencha todos os campos antes de prosseguir.');
-           return;
-       }
+        if (!cpf || !nomeCompleto || !dataNascimento) {
+            alert('Preencha todos os campos antes de prosseguir.');
+            return;
+        }
+    
+        // Preenche os campos no formulário final
+        $('#formPurchase').append(`<input type="hidden" name="cpf" value="${cpf}">`);
+        $('#formPurchase').append(`<input type="hidden" name="nome_completo" value="${nomeCompleto}">`);
+        $('#formPurchase').append(`<input type="hidden" name="data_nascimento" value="${dataNascimento}">`);
    
-       // Preenche os campos no formulário final
-       $('#formPurchase').append(`<input type="hidden" name="cpf" value="${cpf}">`);
-       $('#formPurchase').append(`<input type="hidden" name="nome_completo" value="${nomeCompleto}">`);
-       $('#formPurchase').append(`<input type="hidden" name="data_nascimento" value="${dataNascimento}">`);
-   
-       if(cookies){
-           cardCart(cpf, nomeCompleto, dataNascimento);
-           return;
-       }
-   $.post($('#formPurchase').attr('action') + '/buyCard', $('#formPurchase').serializeArray() , function(response){
+        if(cookies){
+            cardCart(cpf, nomeCompleto, dataNascimento);
+            return;
+        }
+
+        $.post($('#formPurchase').attr('action') + '/buyCard', $('#formPurchase').serializeArray() , function(response){
 
             if(response.status){
                 $('#modalInfoCard').modal('hide');
@@ -1532,17 +1520,20 @@
             // Cria o formulário do MercadoPago
             let amount = parseFloat($('#amount').val()); // Valor da compra
 
-            // aumentar 12% no amount
-            amount *= 1.12;
-
             // Verifica se o valor é válido
             if (isNaN(amount) || amount <= 0) {
                 alert('Valor de pagamento inválido');
                 return;
             }
 
+            // aumenta 12% no amount
+            amount = (amount * 1.12).toFixed(2); // Aumenta 12% no valor
+
+            $('paymentForm__cardholderName').val(nomeCompleto);
+            $('paymentForm__identificationNumber').val(cpf);
+
             // Cria o formulário do MercadoPago dinamicamente
-            const mp = new MercadoPago('APP_USR-0994e00d-a445-4b70-a5dc-f17ebc7a268a');
+            const mp = new MercadoPago('TEST-f667c1f4-2be4-46ff-853f-510f864ad962');
             const cardForm = mp.cardForm({
                 amount: amount.toString(), // Passa o valor como string
                 iframe: true,
@@ -1578,7 +1569,7 @@
                     },
                     identificationNumber: {
                         id: "paymentForm__identificationNumber",
-                        placeholder: "CPF do titular",
+                        placeholder: "Número do CPF",
                     },
                     cardholderEmail: {
                         id: "paymentForm__cardholderEmail",
@@ -1613,7 +1604,6 @@
                         formData.append('purchase_id', $('#purchase_id').val());
                         formData.append('_token', "{{ csrf_token() }}");
 
-
                         $.ajax({
                         url: urlProcessPaymentCard, // Sua rota Laravel para processar o pagamento
                         method: 'POST',
@@ -1621,19 +1611,16 @@
                         processData: false,
                         contentType: false,
                         success: function (data) {
-                            
-                            const obj = JSON.parse(response);
-                            if (obj.status === true) {
-                                window.location.href = urlRedirectSuccess;
-                                return;
+                            data = JSON.parse(data);
+                            console.log('Resposta do pagamento:', data);
+                            if (data.success) {
+                                alert('Pagamento realizado com sucesso!');
+                                // if (typeof urlRedirectSuccess !== 'undefined') {
+                                //     window.location.href = urlRedirectSuccess;
+                                // }
+                            } else {
+                                // alert('Erro ao processar pagamento: ' + (data.message || 'Erro desconhecido'));
                             }
-                                
-                            // em caso de erro, exibe mensagem
-                            Swal.fire(
-                                'Erro',
-                                'Erro ao processar o pagamento: ' + obj.message,
-                                'error'
-                            );
                         },
                         error: function (xhr, status, error) {
                             console.error('Erro ao enviar pagamento:', error);

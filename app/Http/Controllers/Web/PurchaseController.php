@@ -238,8 +238,8 @@ class PurchaseController extends Controller
             'message' => $payment->status_detail,
             'full_response' => $payment->toArray()
         ]);
-
-        var_dump($payment->toArray());die;
+        return response()->json(['success' => true, 'message' => 'Pagamento aprovado!', 'payment' => $payment->toArray()]);
+        // var_dump($payment->toArray());die;
         if ($payment->status == 'approved') {
             // atualizar status da compra
             $purchase->status = 'approved';
