@@ -83,7 +83,24 @@
         padding: 20px 0 20px 5px !important;
         background: #FFFFFF !important;
         border: 1px solid #ECECEC !important;
+        margin-bottom: 10px !important;
     }
+    #paymentForm__cardNumber, #paymentForm__expirationDate, #paymentForm__securityCode {
+        padding: 20px 0 20px 5px !important;
+        border: 1px solid #ECECEC !important;
+        font-family: 'Manrope';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 18px;
+        line-height: 25px;
+        color: #666666;
+        background: #FFFFFF;
+        border: 1px solid #ECECEC;
+        border-radius: 5px;
+        margin-bottom: 15px;
+    }
+        
+
 </style>
 <!-- Modal -->
 <div class="modal fade" id="passo01" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
