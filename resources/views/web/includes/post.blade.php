@@ -598,6 +598,7 @@
    
    let isValid = false;
    
+    // Ricardo - mexendo - corrigindo os link
    const validators = {
        instagram: {
            profile: link => {
@@ -609,39 +610,82 @@
            },
            post: link => /^https:\/\/(www\.)?instagram\.com\/(p|reel|tv)\/[A-Za-z0-9_-]+\/?(?:\?.*)?$/.test(link)
        },
-       tiktok: {
-           profile: link =>
-               /^@?[\w.-]+$/.test(link) || // Apenas @usuario ou usuario
-               /^https:\/\/(www\.)?tiktok\.com\/@[\w.-]+\/?$/.test(link),
-           post: link =>
-               /^https:\/\/(www\.)?tiktok\.com\/@[\w.-]+\/video\/\d+\/?(?:\?.*)?$/.test(link)
-       },
-       kwai: {
-           profile: link =>
-               /^@?[\w.-]+$/.test(link) ||
-               /^https:\/\/(www\.)?kwai\.com\/@[\w.-]+\/?$/.test(link),
-           post: link =>
-                /^https:\/\/(www\.)?kwai\.com\/(@[\w.-]+\/video|short-video)\/[\w-]+\/?(?:\?.*)?$/.test(link)
-       },
-       youtube: {
-           profile: link =>
-               /^@?[\w.-]+$/.test(link) ||
-               /^https:\/\/(www\.)?youtube\.com\/(c|channel|@)[\w.-]+\/?$/.test(link),
-           post: link =>
-               /^https:\/\/(www\.)?youtube\.com\/watch\?v=[\w-]+(?:&[\w=&-]*)?$/.test(link)
-       },
-       facebook: {
-           profile: link =>
-               /^@?[\w.-]+$/.test(link) ||
-               /^https:\/\/(www\.)?facebook\.com\/[A-Za-z0-9._-]+\/?$/.test(link),
-           post: link =>
-               /^https:\/\/(www\.)?facebook\.com\/[A-Za-z0-9._-]+\/posts\/\d+(?:\?.*)?$/.test(link)
-       },
-       twitch: {
-           profile: link =>
-               /^@?[\w]+$/.test(link) ||
-               /^https:\/\/(www\.)?twitch\.tv\/[A-Za-z0-9_]+\/?$/.test(link),
-           post: () => false
+        tiktok: {
+            profile: link =>
+                /^@?[\w.-]+$/.test(link) ||
+                /^https:\/\/(www\.)?tiktok\.com\/@[\w.-]+(\/live)?\/?$/.test(link),
+        
+            post: link =>
+                /^https:\/\/(www\.)?tiktok\.com\/@[\w.-]+\/video\/\d+\/?(?:\?.*)?$/.test(link)
+        },
+            kwai: {
+                profile: link =>
+                // 1. Formato local: @nome.usuario ou nome.usuario
+                /^@?[\w.-]+$/.test(link) ||
+        
+                // 2. Formato web padrão: https://www.kwai.com/@nome.usuario
+                /^https:\/\/(www\.)?kwai\.com\/@[\w.-]+\/?$/.test(link) ||
+        
+                // 3. Formato k.kwai.com com barra após @: https://k.kwai.com/u/@/nome.usuario
+                // (Revertido para [\w.-] para permitir pontos, consistência com o novo padrão)
+                /^https:\/\/k\.kwai\.com\/u\/@\/[\w.-]+\/?$/.test(link) ||
+        
+                // 4. NOVO Formato k.kwai.com com nome e código: https://k.kwai.com/u/@nome.usuario/codigoaleatorio
+                /^https:\/\/k\.kwai\.com\/u\/@[\w.-]+\/[\w-]+\/?$/.test(link),
+                post: link => // (supondo que a validação de post permanece a mesma da sua solicitação anterior)
+                    /^https:\/\/(www\.)?kwai\.com\/(@[\w.-]+\/video|short-video)\/[\w-]+\/?(?:\?.*)?$/.test(link) ||
+                    /^https:\/\/k\.kwai\.com\/p\/[\w-]+\/?(?:\?.*)?$/.test(link)
+            },
+        youtube: {
+            profile: link =>
+                /^@?[\w.-]+$/.test(link) ||
+                /^https:\/\/(www\.)?youtube\.com\/(c|channel|@)[\w.-]+\/?$/.test(link),
+        
+            post: link =>
+                /^https:\/\/(www\.)?youtube\.com\/(watch\?v=|shorts\/|live\/)[\w-]+(?:\?[\w=&-]*)?$/.test(link)
+        },
+        facebook: {
+            profile: link =>
+                // 1. Formato genérico de nome de usuário
+                /^@?[\w.-]+$/.test(link) ||
+        
+                // 2. Perfil padrão: facebook.com/nome.usuario
+                /^https:\/\/(www\.)?facebook\.com\/[A-Za-z0-9._-]+\/?$/.test(link) ||
+        
+                // 3. Perfil por ID numérico: facebook.com/profile.php?id=100001234567890
+                /^https:\/\/(www\.)?facebook\.com\/profile\.php\?id=\d+(?:&.*)?\/?$/.test(link) ||
+        
+                // 4. Links de compartilhamento (ex: facebook.com/share/1EWMoC3Wrb/)
+                /^https:\/\/(www\.)?facebook\.com\/share\/[\w-]+\/?(?:\?.*)?$/.test(link) ||
+        
+                // 5. NOVO: Links de Grupo: facebook.com/groups/NOME_OU_ID_DO_GRUPO/
+                /^https:\/\/(www\.)?facebook\.com\/groups\/[A-Za-z0-9._-]+\/?(?:\?.*)?$/.test(link),
+        
+            post: link =>
+                // 1. Post padrão: facebook.com/username/posts/IDPOST ou facebook.com/USER_ID/posts/POST_ID/
+                /^https:\/\/(www\.)?facebook\.com\/[A-Za-z0-9._-]+\/posts\/\d+\/?(?:\?.*)?$/.test(link) ||
+        
+                // 2. Links de Foto (via fbid): facebook.com/photo/?fbid=IDFBID ou photo.php?fbid=IDFBID
+                /^https:\/\/(www\.)?facebook\.com\/(?:photo\.php|photo\/)\?(?:[^#]*&)?fbid=\d+(?:&[^#]*)?$/.test(link) ||
+        
+                // 3. Links de Reel: facebook.com/reel/REEL_ID
+                /^https:\/\/(www\.)?facebook\.com\/reel\/\d+\/?(?:\?.*)?$/.test(link) ||
+        
+                // 4. Links de Vídeo (Watch): facebook.com/watch/?v=VIDEO_ID ou facebook.com/watch?v=VIDEO_ID
+                /^https:\/\/(www\.)?facebook\.com\/watch\/?\?(?:[^#]*&)?v=\d+(?:&[^#]*)?$/.test(link)
+        },            
+        twitch: {
+            profile: link =>
+                /^@?[\w]+$/.test(link) ||
+                /^https:\/\/(www\.)?twitch\.tv\/\w+\/?$/.test(link), // Usando \w para consistência
+        
+            post: link =>
+                // 1. Links de Clipes: twitch.tv/USERNAME/clip/CLIP_ID
+                //    (Também lida com a variação twitch.tv//USERNAME/clip/CLIP_ID)
+                /^https:\/\/(www\.)?twitch\.tv\/(?:\/)?\w+\/clip\/[\w-]+\/?(?:\?.*)?$/.test(link) ||
+        
+                // 2. Links de Vídeos (VODs): twitch.tv/videos/VIDEO_ID (numérico)
+                /^https:\/\/(www\.)?twitch\.tv\/videos\/\d+\/?(?:\?.*)?$/.test(link)
        },
        rumble: {
            profile: link =>
@@ -664,7 +708,11 @@
        },
        whatsapp: {
            profile: link =>
-               /^https:\/\/wa\.me\/\d{8,15}\/?$/.test(link),
+            // 1. Links "wa.me" para iniciar conversa com número de telefone
+            /^https:\/\/wa\.me\/\d{8,15}\/?$/.test(link) ||
+    
+            // 2. NOVO: Links para Canais do WhatsApp
+            /^https:\/\/whatsapp\.com\/channel\/[\w.-]+\/?(?:\?.*)?$/.test(link),
            post: () => false
        },
        telegram: {
