@@ -101,7 +101,10 @@
         margin-bottom: 15px;
         height: 60px;
     }
-        
+    
+    .ocutar {
+        display: none;
+    }
 
 </style>
 <!-- Modal -->
@@ -127,6 +130,7 @@
             <form id="formUserPurchase">
                <input id="linkEmbed" type="text" placeholder="Cole o link aqui" autocapitalize="none" autocomplete="none">
                <input type="hidden" id="urlEscolhida">
+               <input type="hidden" id="purchase_id">
                <p class="text-danger d-none">Preencha esse campo</p>
                <p class="text-danger" id="retornoVerificaLink"tyle="display: none;"></p>
                <div id="divRetornoDadosApi" style="display: none;"></div>
@@ -409,7 +413,7 @@
                     <input type="text" id="paymentForm__identificationNumber"/>
                     <input type="email" id="paymentForm__cardholderEmail"/>
                     <button type="submit" id="paymentForm__submit">Pagar</button>
-                        <progress value="0" class="progress-bar ocutar">Carregando...</progress>
+                    <progress value="0" class="progress-bar ocutar">Carregando...</progress>
 
                 </form>
             </div>
@@ -1689,7 +1693,8 @@
                data_nascimento: dataNascimento
            },
            success: function(response) {
-   
+                console.log(response);
+                
                if(response.status){
                    $('#modalInfoCard').modal('hide');
                    $("#card").modal('show');
