@@ -80,14 +80,14 @@
         text-align: left !important;
         width: 100% !important;
         height: 60px !important;
-        padding: 20px 0 20px 5px !important;
+        padding: 20px 0 15px 5px !important;
         background: #FFFFFF !important;
         border: 1px solid #ECECEC !important;
         margin-bottom: 10px !important;
         color: #666666 !important;
     }
     #paymentForm__cardNumber, #paymentForm__expirationDate, #paymentForm__securityCode {
-        padding: 20px 0 20px 5px !important;
+        padding: 20px 0 15px 5px !important;
         border: 1px solid #ECECEC !important;
         font-family: 'Manrope';
         font-style: normal;
@@ -567,6 +567,14 @@
       </div>
    </div>
 </div>
+<!-- Overlay de loading -->
+<div id="loading" style="display: none;position: fixed;z-index: 9999;top: 0;left: 0;    width: 100%;    height: 100%;    background: rgba(0, 0, 0, 0.2);  justify-content: center;    align-items: center;">
+    <div class="spinner-border text-light" role="status" style="width: 3rem; height: 3rem;">
+        <span class="sr-only">Carregando...</span>
+    </div>
+</div>
+
+
 @endforeach
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
@@ -615,16 +623,22 @@
    
     // Ricardo - mexendo - corrigindo os link
    const validators = {
-       instagram: {
-           profile: link => {
-               const cleaned = link.trim();
-               return (
-                   /^@?[A-Za-z0-9._]+$/.test(cleaned) || // @kauan ou kauan
-                   /^https:\/\/(www\.)?instagram\.com\/[A-Za-z0-9._]+\/?$/.test(cleaned)
-               );
-           },
-           post: link => /^https:\/\/(www\.)?instagram\.com\/(p|reel|tv)\/[A-Za-z0-9_-]+\/?(?:\?.*)?$/.test(link)
-       },
+        instagram: {
+            profile: link => {
+                const cleaned = link.trim();
+                return (
+                    // Valida nomes de usuário (ex: @usuario ou usuario)
+                    /^@?[A-Za-z0-9._]+$/.test(cleaned) ||
+                    // Valida URLs de perfil do Instagram sem parâmetros de consulta
+                    // (ex: https://www.instagram.com/usuario ou https://www.instagram.com/usuario/)
+                    /^https:\/\/(www\.)?instagram\.com\/[A-Za-z0-9._]+\/?$/.test(cleaned) ||
+                    // Adicionado: Valida URLs de perfil do Instagram com parâmetros de consulta
+                    // (ex: https://www.instagram.com/usuario?igsh=xxxx&utm_source=qr)
+                    /^https:\/\/(www\.)?instagram\.com\/[A-Za-z0-9._]+\/?\?.+$/.test(cleaned)
+                );
+            },
+            post: link => /^https:\/\/(www\.)?instagram\.com\/(p|reel|tv)\/[A-Za-z0-9_-]+\/?(?:\?.*)?$/.test(link)
+        },
         tiktok: {
             profile: link =>
                 /^@?[\w.-]+$/.test(link) ||
@@ -633,7 +647,7 @@
             post: link =>
                 /^https:\/\/(www\.)?tiktok\.com\/@[\w.-]+\/video\/\d+\/?(?:\?.*)?$/.test(link)
         },
-            kwai: {
+        kwai: {
                 profile: link =>
                 // 1. Formato local: @nome.usuario ou nome.usuario
                 /^@?[\w.-]+$/.test(link) ||
@@ -650,14 +664,17 @@
                 post: link => // (supondo que a validação de post permanece a mesma da sua solicitação anterior)
                     /^https:\/\/(www\.)?kwai\.com\/(@[\w.-]+\/video|short-video)\/[\w-]+\/?(?:\?.*)?$/.test(link) ||
                     /^https:\/\/k\.kwai\.com\/p\/[\w-]+\/?(?:\?.*)?$/.test(link)
-            },
+        },
         youtube: {
-            profile: link =>
-                /^@?[\w.-]+$/.test(link) ||
-                /^https:\/\/(www\.)?youtube\.com\/(c|channel|@)[\w.-]+\/?$/.test(link),
+             profile: link =>
+                // @username direto
+                /^@?[\w.-]+$/.test(link) ||
         
-            post: link =>
-                /^https:\/\/(www\.)?youtube\.com\/(watch\?v=|shorts\/|live\/)[\w-]+(?:\?[\w=&-]*)?$/.test(link)
+                 // URLs padrão do YouTube com /c/, /channel/, ou /@ e nomes válidos
+                 /^https:\/\/(www\.)?youtube\.com\/(c\/[\w.-]+|@[\w.-]+|channel\/[A-Za-z0-9_-]{24})\/?$/.test(link),
+        
+             post: link =>
+                 /^https:\/\/(www\.)?youtube\.com\/(watch\?v=|shorts\/|live\/)[\w-]+(?:[&?][\w=.-]*)*$/.test(link)
         },
         facebook: {
             profile: link =>
@@ -1561,7 +1578,7 @@
             $('paymentForm__identificationNumber').val(cpf);
 
             // Cria o formulário do MercadoPago dinamicamente
-            const mp = new MercadoPago('TEST-f667c1f4-2be4-46ff-853f-510f864ad962');
+            const mp = new MercadoPago('APP_USR-0994e00d-a445-4b70-a5dc-f17ebc7a268a');
             const cardForm = mp.cardForm({
                 amount: amount.toString(), // Passa o valor como string
                 iframe: true,
@@ -1638,21 +1655,21 @@
                         data: formData,
                         processData: false,
                         contentType: false,
+                        beforeSend: function () {
+                            $('#loading').css('display', 'flex'); // Mostra o loading
+                        },
                         success: function (data) {
-                            data = JSON.parse(data);
                             console.log('Resposta do pagamento:', data);
                             if (data.success) {
-                                alert('Pagamento realizado com sucesso!');
-                                // if (typeof urlRedirectSuccess !== 'undefined') {
-                                //     window.location.href = urlRedirectSuccess;
-                                // }
-                            } else {
-                                // alert('Erro ao processar pagamento: ' + (data.message || 'Erro desconhecido'));
+                                window.location.href = urlRedirectSuccess;
                             }
                         },
                         error: function (xhr, status, error) {
                             console.error('Erro ao enviar pagamento:', error);
-                            alert('Erro na requisição AJAX');
+                            // alert('Erro na requisição AJAX');
+                        },
+                        complete: function () {
+                            $('#loading').css('display', 'none'); // Mostra o loading
                         }
                     });
                     },

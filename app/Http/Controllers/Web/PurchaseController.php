@@ -212,7 +212,7 @@ class PurchaseController extends Controller
             return response()->json(['success' => false, 'message' => 'Pedido não encontrado!']);
         }
 
-        SDK::setAccessToken('TEST-6944010139683119-112717-fd72b92f1ef7b047c01a02ac15f234ae-271609950');
+        SDK::setAccessToken($this->keyMercadoPago);
        
         $payment = new Payment();
         $payment->transaction_amount = (double) round($purchase->price,2);;
@@ -231,17 +231,12 @@ class PurchaseController extends Controller
 
         $payment->save();
 
-        return response()->json([
-            'success' => false,
-            'status' => $payment->status,
-            'status_detail' => $payment->status_detail,
-            'message' => $payment->status_detail,
-            'full_response' => $payment->toArray()
-        ]);
-        return response()->json(['success' => true, 'message' => 'Pagamento aprovado!', 'payment' => $payment->toArray()]);
-        // var_dump($payment->toArray());die;
         if ($payment->status == 'approved') {
             // atualizar status da compra
+            
+            session_start();
+            $_SESSION['purchase_id'] = $purchase->id;
+            
             $purchase->status = 'approved';
             $purchase->save();
             return response()->json(['success' => true, 'message' => 'Pagamento aprovado!']);
