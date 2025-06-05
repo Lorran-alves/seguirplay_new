@@ -212,7 +212,7 @@ class PurchaseController extends Controller
             return response()->json(['success' => false, 'message' => 'Pedido não encontrado!']);
         }
 
-        SDK::setAccessToken($this->keyMercadoPago);
+        SDK::setAccessToken('TEST-6944010139683119-112717-fd72b92f1ef7b047c01a02ac15f234ae-271609950');
        
         $payment = new Payment();
         $payment->transaction_amount = (double) round($purchase->price,2);;
