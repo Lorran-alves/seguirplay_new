@@ -77,7 +77,11 @@
                 <p>Copyright © {{ date('Y') }} {{ config('app.name') }}. Todos os direitos reservados. </p>
             </div>
         </div>
-        
+        <div style="text-align:center">
+            
+        <p>Não somos endossados ou certificados por nenhuma das plataformas de mídia social mencionadas neste site. Todos os logotipos e marcas registradas exibidos são de propriedade de seus respectivos proprietários. As imagens apresentadas são meramente ilustrativas e não indicam parcerias ou afiliações. O uso do nosso site constitui aceitação dos nossos termos de uso.</p>
+
+        </div>
 
         <!-- Ricardo dia 07/09/2023
         

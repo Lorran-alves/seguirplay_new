@@ -1,0 +1,222 @@
+[08-Jun-2025 13:24:36 America/Fortaleza] PHP Warning:  Undefined variable $pdo in /home1/seguir00/seguirplay/public/blog/admin/dashboard.php on line 173
+[08-Jun-2025 13:24:36 America/Fortaleza] PHP Fatal error:  Uncaught Error: Call to a member function query() on null in /home1/seguir00/seguirplay/public/blog/admin/dashboard.php:166
+Stack trace:
+#0 /home1/seguir00/seguirplay/public/blog/admin/dashboard.php(173): get_all_posts(NULL)
+#1 {main}
+  thrown in /home1/seguir00/seguirplay/public/blog/admin/dashboard.php on line 166
+[08-Jun-2025 13:34:14 America/Fortaleza] PHP Parse error:  Unmatched '}' in /home1/seguir00/seguirplay/public/blog/admin/dashboard.php on line 108
+[08-Jun-2025 13:34:20 America/Fortaleza] PHP Parse error:  Unmatched '}' in /home1/seguir00/seguirplay/public/blog/admin/dashboard.php on line 108
+[08-Jun-2025 13:36:01 America/Fortaleza] PHP Parse error:  Unmatched '}' in /home1/seguir00/seguirplay/public/blog/admin/dashboard.php on line 108
+[08-Jun-2025 13:37:07 America/Fortaleza] PHP Parse error:  Unmatched '}' in /home1/seguir00/seguirplay/public/blog/admin/dashboard.php on line 121
+[08-Jun-2025 13:37:10 America/Fortaleza] PHP Parse error:  Unmatched '}' in /home1/seguir00/seguirplay/public/blog/admin/dashboard.php on line 121
+[08-Jun-2025 13:38:22 America/Fortaleza] PHP Warning:  Undefined variable $pdo in /home1/seguir00/seguirplay/public/blog/admin/dashboard.php on line 181
+[08-Jun-2025 13:38:22 America/Fortaleza] PHP Fatal error:  Uncaught Error: Call to a member function query() on null in /home1/seguir00/seguirplay/public/blog/admin/dashboard.php:172
+Stack trace:
+#0 /home1/seguir00/seguirplay/public/blog/admin/dashboard.php(181): get_all_posts(NULL)
+#1 {main}
+  thrown in /home1/seguir00/seguirplay/public/blog/admin/dashboard.php on line 172
+[08-Jun-2025 13:39:28 America/Fortaleza] PHP Warning:  Undefined variable $pdo in /home1/seguir00/seguirplay/public/blog/admin/dashboard.php on line 181
+[08-Jun-2025 13:39:28 America/Fortaleza] PHP Fatal error:  Uncaught Error: Call to a member function query() on null in /home1/seguir00/seguirplay/public/blog/admin/dashboard.php:172
+Stack trace:
+#0 /home1/seguir00/seguirplay/public/blog/admin/dashboard.php(181): get_all_posts(NULL)
+#1 {main}
+  thrown in /home1/seguir00/seguirplay/public/blog/admin/dashboard.php on line 172
+[08-Jun-2025 14:01:58 America/Fortaleza] Erro ao buscar usuários: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'seguir00_blog.users' doesn't exist
+[08-Jun-2025 14:04:07 America/Fortaleza] Erro ao buscar usuários: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'seguir00_blog.users' doesn't exist
+[08-Jun-2025 14:04:11 America/Fortaleza] Erro ao buscar usuários: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'seguir00_blog.users' doesn't exist
+[08-Jun-2025 14:08:26 America/Fortaleza] Erro ao buscar usuários: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'seguir00_blog.users' doesn't exist
+[08-Jun-2025 14:08:44 America/Fortaleza] Erro ao buscar usuários: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'seguir00_blog.users' doesn't exist
+[08-Jun-2025 14:12:32 America/Fortaleza] Erro ao buscar usuários: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'seguir00_blog.users' doesn't exist
+[08-Jun-2025 14:15:05 America/Fortaleza] Erro ao buscar usuários: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'seguir00_blog.users' doesn't exist
+[08-Jun-2025 14:15:18 America/Fortaleza] Erro ao buscar usuários: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'seguir00_blog.users' doesn't exist
+[08-Jun-2025 14:18:46 America/Fortaleza] Erro ao buscar usuários: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'seguir00_blog.users' doesn't exist
+[08-Jun-2025 14:22:11 America/Fortaleza] Erro ao buscar usuários: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'seguir00_blog.users' doesn't exist
+[08-Jun-2025 14:22:28 America/Fortaleza] Erro ao buscar usuários: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'seguir00_blog.users' doesn't exist
+[08-Jun-2025 14:22:42 America/Fortaleza] Erro ao buscar usuários: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'seguir00_blog.users' doesn't exist
+[08-Jun-2025 14:24:21 America/Fortaleza] Erro ao buscar usuários: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'seguir00_blog.users' doesn't exist
+[08-Jun-2025 14:24:35 America/Fortaleza] Erro ao buscar usuários: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'seguir00_blog.users' doesn't exist
+[08-Jun-2025 14:24:56 America/Fortaleza] Erro ao buscar usuários: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'seguir00_blog.users' doesn't exist
+[08-Jun-2025 14:25:02 America/Fortaleza] Erro ao buscar usuários: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'seguir00_blog.users' doesn't exist
+[08-Jun-2025 14:34:45 America/Fortaleza] Erro ao buscar usuários: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'seguir00_blog.users' doesn't exist
+[08-Jun-2025 14:34:57 America/Fortaleza] Erro ao buscar usuários: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'seguir00_blog.users' doesn't exist
+[08-Jun-2025 14:35:21 America/Fortaleza] Erro ao buscar usuários: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'seguir00_blog.users' doesn't exist
+[08-Jun-2025 14:35:25 America/Fortaleza] Erro ao buscar usuários: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'seguir00_blog.users' doesn't exist
+[08-Jun-2025 14:41:02 America/Fortaleza] Erro ao buscar usuários: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'seguir00_blog.users' doesn't exist
+[08-Jun-2025 14:41:05 America/Fortaleza] Erro ao buscar usuários: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'seguir00_blog.users' doesn't exist
+[08-Jun-2025 14:41:07 America/Fortaleza] Erro ao buscar usuários: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'seguir00_blog.users' doesn't exist
+[08-Jun-2025 14:41:08 America/Fortaleza] Erro ao buscar usuários: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'seguir00_blog.users' doesn't exist
+[08-Jun-2025 14:41:18 America/Fortaleza] Erro ao buscar usuários: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'seguir00_blog.users' doesn't exist
+[08-Jun-2025 14:41:21 America/Fortaleza] Erro ao buscar usuários: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'seguir00_blog.users' doesn't exist
+[08-Jun-2025 14:41:31 America/Fortaleza] Erro ao buscar usuários: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'seguir00_blog.users' doesn't exist
+[08-Jun-2025 14:41:34 America/Fortaleza] Erro ao buscar usuários: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'seguir00_blog.users' doesn't exist
+[08-Jun-2025 14:41:37 America/Fortaleza] Erro ao buscar usuários: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'seguir00_blog.users' doesn't exist
+[08-Jun-2025 14:46:54 America/Fortaleza] Erro ao buscar usuários: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'seguir00_blog.users' doesn't exist
+[08-Jun-2025 14:47:10 America/Fortaleza] Erro ao buscar usuários: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'seguir00_blog.users' doesn't exist
+[08-Jun-2025 14:47:19 America/Fortaleza] Erro ao buscar usuários: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'seguir00_blog.users' doesn't exist
+[08-Jun-2025 15:27:48 America/Fortaleza] Erro ao buscar utilizadores: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'seguir00_blog.users' doesn't exist
+[08-Jun-2025 15:29:33 America/Fortaleza] Erro ao buscar utilizadores: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'seguir00_blog.users' doesn't exist
+[08-Jun-2025 15:30:00 America/Fortaleza] Erro ao buscar utilizadores: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'seguir00_blog.users' doesn't exist
+[08-Jun-2025 15:30:09 America/Fortaleza] Erro ao buscar utilizadores: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'seguir00_blog.users' doesn't exist
+[08-Jun-2025 15:32:35 America/Fortaleza] Erro ao buscar utilizadores: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'seguir00_blog.users' doesn't exist
+[08-Jun-2025 16:25:01 America/Fortaleza] auth.php: Ponto de Depuração 1: Início do script auth.php
+[08-Jun-2025 16:25:01 America/Fortaleza] PHP Warning:  session_start(): Session cannot be started after headers have already been sent in /home1/seguir00/seguirplay/public/blog/admin/auth.php on line 12
+[08-Jun-2025 16:25:01 America/Fortaleza] auth.php: Ponto de Depuração 2: Antes de incluir db_config.php
+[08-Jun-2025 16:25:51 America/Fortaleza] auth.php: Ponto de Depuração 1: Início do script auth.php
+[08-Jun-2025 16:25:51 America/Fortaleza] PHP Warning:  session_start(): Session cannot be started after headers have already been sent in /home1/seguir00/seguirplay/public/blog/admin/auth.php on line 12
+[08-Jun-2025 16:25:51 America/Fortaleza] auth.php: Ponto de Depuração 2: Antes de incluir db_config.php
+[08-Jun-2025 16:26:43 America/Fortaleza] auth.php: Ponto de Depuração 1: Início do script auth.php
+[08-Jun-2025 16:26:43 America/Fortaleza] auth.php: Ponto de Depuração 2: Antes de incluir db_config.php
+[08-Jun-2025 16:26:47 America/Fortaleza] auth.php: Ponto de Depuração 1: Início do script auth.php
+[08-Jun-2025 16:26:47 America/Fortaleza] auth.php: Ponto de Depuração 2: Antes de incluir db_config.php
+[08-Jun-2025 16:28:35 America/Fortaleza] auth.php: Ponto de Depuração 1: Início do script auth.php
+[08-Jun-2025 16:28:35 America/Fortaleza] auth.php: Ponto de Depuração 2: Antes de incluir db_config.php
+[08-Jun-2025 16:28:40 America/Fortaleza] auth.php: Ponto de Depuração 1: Início do script auth.php
+[08-Jun-2025 16:28:40 America/Fortaleza] auth.php: Ponto de Depuração 2: Antes de incluir db_config.php
+[08-Jun-2025 16:29:14 America/Fortaleza] auth.php: Ponto de Depuração 1: Início do script auth.php
+[08-Jun-2025 16:29:14 America/Fortaleza] auth.php: Ponto de Depuração 2: Antes de incluir db_config.php
+[08-Jun-2025 16:29:18 America/Fortaleza] auth.php: Ponto de Depuração 1: Início do script auth.php
+[08-Jun-2025 16:29:18 America/Fortaleza] auth.php: Ponto de Depuração 2: Antes de incluir db_config.php
+[08-Jun-2025 16:30:00 America/Fortaleza] auth.php: Ponto de Depuração 1: Início do script auth.php
+[08-Jun-2025 16:30:00 America/Fortaleza] auth.php: Ponto de Depuração 2: Antes de incluir db_config.php
+[08-Jun-2025 16:30:05 America/Fortaleza] auth.php: Ponto de Depuração 1: Início do script auth.php
+[08-Jun-2025 16:30:05 America/Fortaleza] auth.php: Ponto de Depuração 2: Antes de incluir db_config.php
+[08-Jun-2025 16:30:26 America/Fortaleza] auth.php: Ponto de Depuração 1: Início do script auth.php
+[08-Jun-2025 16:30:26 America/Fortaleza] auth.php: Ponto de Depuração REQUEST_METHOD: GET, POST_login_isset: false
+[08-Jun-2025 16:30:26 America/Fortaleza] PHP Warning:  session_start(): Session cannot be started after headers have already been sent in /home1/seguir00/seguirplay/public/blog/admin/auth.php on line 23
+[08-Jun-2025 16:30:26 America/Fortaleza] auth.php: Ponto de Depuração 2: Antes de incluir db_config.php
+[08-Jun-2025 16:30:38 America/Fortaleza] auth.php: Ponto de Depuração 1: Início do script auth.php
+[08-Jun-2025 16:30:38 America/Fortaleza] auth.php: Ponto de Depuração REQUEST_METHOD: GET, POST_login_isset: false
+[08-Jun-2025 16:30:38 America/Fortaleza] PHP Warning:  session_start(): Session cannot be started after headers have already been sent in /home1/seguir00/seguirplay/public/blog/admin/auth.php on line 23
+[08-Jun-2025 16:30:38 America/Fortaleza] auth.php: Ponto de Depuração 2: Antes de incluir db_config.php
+[08-Jun-2025 16:30:44 America/Fortaleza] auth.php: Ponto de Depuração 1: Início do script auth.php
+[08-Jun-2025 16:30:44 America/Fortaleza] auth.php: Ponto de Depuração REQUEST_METHOD: GET, POST_login_isset: false
+[08-Jun-2025 16:30:44 America/Fortaleza] PHP Warning:  session_start(): Session cannot be started after headers have already been sent in /home1/seguir00/seguirplay/public/blog/admin/auth.php on line 23
+[08-Jun-2025 16:30:44 America/Fortaleza] auth.php: Ponto de Depuração 2: Antes de incluir db_config.php
+[08-Jun-2025 16:31:44 America/Fortaleza] auth.php: Ponto de Depuração 1: Início do script auth.php
+[08-Jun-2025 16:31:44 America/Fortaleza] auth.php: Ponto de Depuração REQUEST_METHOD: GET, POST_login_isset: false
+[08-Jun-2025 16:31:44 America/Fortaleza] PHP Warning:  session_start(): Session cannot be started after headers have already been sent in /home1/seguir00/seguirplay/public/blog/admin/auth.php on line 23
+[08-Jun-2025 16:31:44 America/Fortaleza] auth.php: Ponto de Depuração 2: Antes de incluir db_config.php
+[08-Jun-2025 16:31:45 America/Fortaleza] auth.php: Ponto de Depuração 1: Início do script auth.php
+[08-Jun-2025 16:31:45 America/Fortaleza] auth.php: Ponto de Depuração REQUEST_METHOD: GET, POST_login_isset: false
+[08-Jun-2025 16:31:45 America/Fortaleza] PHP Warning:  session_start(): Session cannot be started after headers have already been sent in /home1/seguir00/seguirplay/public/blog/admin/auth.php on line 23
+[08-Jun-2025 16:31:45 America/Fortaleza] auth.php: Ponto de Depuração 2: Antes de incluir db_config.php
+[08-Jun-2025 16:32:36 America/Fortaleza] auth.php: Ponto de Depuração 1: Início do script auth.php
+[08-Jun-2025 16:32:36 America/Fortaleza] auth.php: Ponto de Depuração REQUEST_METHOD: GET, POST_login_isset: false
+[08-Jun-2025 16:32:36 America/Fortaleza] auth.php: Ponto de Depuração 2: Antes de incluir db_config.php
+[08-Jun-2025 16:32:44 America/Fortaleza] auth.php: Ponto de Depuração 1: Início do script auth.php
+[08-Jun-2025 16:32:44 America/Fortaleza] auth.php: Ponto de Depuração REQUEST_METHOD: GET, POST_login_isset: false
+[08-Jun-2025 16:32:44 America/Fortaleza] auth.php: Ponto de Depuração 2: Antes de incluir db_config.php
+[08-Jun-2025 16:34:33 America/Fortaleza] auth.php: Ponto de Depuração 1: Início do script auth.php
+[08-Jun-2025 16:34:33 America/Fortaleza] auth.php: Ponto de Depuração REQUEST_METHOD: GET, POST_login_isset: false, Session_loggedin: UNDEFINED
+[08-Jun-2025 16:34:33 America/Fortaleza] auth.php: Ponto de Depuração 2: Antes de incluir db_config.php
+[08-Jun-2025 16:34:43 America/Fortaleza] auth.php: Ponto de Depuração 1: Início do script auth.php
+[08-Jun-2025 16:34:43 America/Fortaleza] auth.php: Ponto de Depuração REQUEST_METHOD: GET, POST_login_isset: false, Session_loggedin: UNDEFINED
+[08-Jun-2025 16:34:43 America/Fortaleza] auth.php: Ponto de Depuração 2: Antes de incluir db_config.php
+[08-Jun-2025 16:34:53 America/Fortaleza] auth.php: Ponto de Depuração 1: Início do script auth.php
+[08-Jun-2025 16:34:53 America/Fortaleza] auth.php: Ponto de Depuração REQUEST_METHOD: GET, POST_login_isset: false, Session_loggedin: UNDEFINED
+[08-Jun-2025 16:34:53 America/Fortaleza] auth.php: Ponto de Depuração 2: Antes de incluir db_config.php
+[08-Jun-2025 16:35:11 America/Fortaleza] auth.php: Ponto de Depuração REQUEST_METHOD: GET, POST_login_isset: false, Session_loggedin: UNDEFINED
+[08-Jun-2025 16:35:11 America/Fortaleza] auth.php: Ponto de Depuração 2: Antes de incluir db_config.php
+[08-Jun-2025 16:44:04 America/Fortaleza] auth.php: Ponto de Depuração 1: Início do script auth.php
+[08-Jun-2025 16:44:04 America/Fortaleza] auth.php: Ponto de Depuração REQUEST_METHOD: GET, POST_login_isset: false, Session_loggedin: UNDEFINED
+[08-Jun-2025 16:44:04 America/Fortaleza] auth.php: Ponto de Depuração 2: Antes de incluir db_config.php
+[08-Jun-2025 16:44:19 America/Fortaleza] auth.php: Ponto de Depuração 1: Início do script auth.php
+[08-Jun-2025 16:44:19 America/Fortaleza] auth.php: Ponto de Depuração REQUEST_METHOD: GET, POST_login_isset: false, Session_loggedin: UNDEFINED
+[08-Jun-2025 16:44:19 America/Fortaleza] auth.php: Ponto de Depuração 2: Antes de incluir db_config.php
+[08-Jun-2025 16:44:35 America/Fortaleza] auth.php: Ponto de Depuração 1: Início do script auth.php
+[08-Jun-2025 16:44:35 America/Fortaleza] auth.php: Ponto de Depuração REQUEST_METHOD: GET, POST_login_isset: false, Session_loggedin: UNDEFINED
+[08-Jun-2025 16:44:35 America/Fortaleza] auth.php: Ponto de Depuração 2: Antes de incluir db_config.php
+[08-Jun-2025 16:44:48 America/Fortaleza] auth.php: Ponto de Depuração 1: Início do script auth.php
+[08-Jun-2025 16:44:48 America/Fortaleza] auth.php: Ponto de Depuração REQUEST_METHOD: GET, POST_login_isset: false, Session_loggedin: UNDEFINED
+[08-Jun-2025 16:44:48 America/Fortaleza] auth.php: Ponto de Depuração 2: Antes de incluir db_config.php
+[08-Jun-2025 16:45:37 America/Fortaleza] auth.php: Ponto de Depuração 1: Início do script auth.php
+[08-Jun-2025 16:45:37 America/Fortaleza] auth.php: Ponto de Depuração REQUEST_METHOD: GET, POST_login_isset: false, Session_loggedin: UNDEFINED
+[08-Jun-2025 16:45:37 America/Fortaleza] auth.php: Ponto de Depuração 2: Antes de incluir db_config.php
+[08-Jun-2025 16:45:42 America/Fortaleza] auth.php: Ponto de Depuração 1: Início do script auth.php
+[08-Jun-2025 16:45:42 America/Fortaleza] auth.php: Ponto de Depuração REQUEST_METHOD: GET, POST_login_isset: false, Session_loggedin: UNDEFINED
+[08-Jun-2025 16:45:42 America/Fortaleza] auth.php: Ponto de Depuração 2: Antes de incluir db_config.php
+[08-Jun-2025 16:46:15 America/Fortaleza] auth.php: Ponto de Depuração 1: Início do script auth.php
+[08-Jun-2025 16:46:15 America/Fortaleza] auth.php: Ponto de Depuração REQUEST_METHOD: GET, POST_login_isset: false, Session_loggedin: UNDEFINED
+[08-Jun-2025 16:46:15 America/Fortaleza] auth.php: Ponto de Depuração 2: Antes de incluir db_config.php
+[08-Jun-2025 16:46:28 America/Fortaleza] auth.php: Ponto de Depuração 1: Início do script auth.php
+[08-Jun-2025 16:46:28 America/Fortaleza] auth.php: Ponto de Depuração 2: Antes de incluir db_config.php
+[08-Jun-2025 16:46:34 America/Fortaleza] auth.php: Ponto de Depuração 1: Início do script auth.php
+[08-Jun-2025 16:46:34 America/Fortaleza] auth.php: Ponto de Depuração 2: Antes de incluir db_config.php
+[08-Jun-2025 16:46:47 America/Fortaleza] auth.php: Ponto de Depuração 1: Início do script auth.php
+[08-Jun-2025 16:46:47 America/Fortaleza] auth.php: Ponto de Depuração 2: Antes de incluir db_config.php
+[08-Jun-2025 16:46:47 America/Fortaleza] auth.php: Ponto de Depuração 1: Início do script auth.php
+[08-Jun-2025 16:46:47 America/Fortaleza] auth.php: Ponto de Depuração 2: Antes de incluir db_config.php
+[08-Jun-2025 16:46:48 America/Fortaleza] auth.php: Ponto de Depuração 1: Início do script auth.php
+[08-Jun-2025 16:46:48 America/Fortaleza] auth.php: Ponto de Depuração 2: Antes de incluir db_config.php
+[08-Jun-2025 16:46:48 America/Fortaleza] auth.php: Ponto de Depuração 1: Início do script auth.php
+[08-Jun-2025 16:46:48 America/Fortaleza] auth.php: Ponto de Depuração 2: Antes de incluir db_config.php
+[08-Jun-2025 16:46:48 America/Fortaleza] auth.php: Ponto de Depuração 1: Início do script auth.php
+[08-Jun-2025 16:46:48 America/Fortaleza] auth.php: Ponto de Depuração 2: Antes de incluir db_config.php
+[08-Jun-2025 16:46:48 America/Fortaleza] auth.php: Ponto de Depuração 1: Início do script auth.php
+[08-Jun-2025 16:46:48 America/Fortaleza] auth.php: Ponto de Depuração 2: Antes de incluir db_config.php
+[08-Jun-2025 16:46:48 America/Fortaleza] auth.php: Ponto de Depuração 1: Início do script auth.php
+[08-Jun-2025 16:46:48 America/Fortaleza] auth.php: Ponto de Depuração 2: Antes de incluir db_config.php
+[08-Jun-2025 16:46:49 America/Fortaleza] auth.php: Ponto de Depuração 1: Início do script auth.php
+[08-Jun-2025 16:46:49 America/Fortaleza] auth.php: Ponto de Depuração 2: Antes de incluir db_config.php
+[08-Jun-2025 16:46:51 America/Fortaleza] auth.php: Ponto de Depuração 1: Início do script auth.php
+[08-Jun-2025 16:46:51 America/Fortaleza] auth.php: Ponto de Depuração 2: Antes de incluir db_config.php
+[08-Jun-2025 16:47:08 America/Fortaleza] auth.php: Ponto de Depuração 1: Início do script auth.php
+[08-Jun-2025 16:47:08 America/Fortaleza] auth.php: Ponto de Depuração 2: Antes de incluir db_config.php
+[08-Jun-2025 16:47:10 America/Fortaleza] auth.php: Ponto de Depuração 1: Início do script auth.php
+[08-Jun-2025 16:47:10 America/Fortaleza] auth.php: Ponto de Depuração 2: Antes de incluir db_config.php
+[08-Jun-2025 16:47:12 America/Fortaleza] auth.php: Ponto de Depuração 1: Início do script auth.php
+[08-Jun-2025 16:47:12 America/Fortaleza] auth.php: Ponto de Depuração 2: Antes de incluir db_config.php
+[08-Jun-2025 16:47:23 America/Fortaleza] auth.php: Ponto de Depuração 1: Início do script auth.php
+[08-Jun-2025 16:47:23 America/Fortaleza] auth.php: Ponto de Depuração 2: Antes de incluir db_config.php
+[08-Jun-2025 16:50:57 America/Fortaleza] auth.php: Ponto de Depuração 1: Início do script auth.php
+[08-Jun-2025 16:50:57 America/Fortaleza] auth.php: Ponto de Depuração 2: Antes de incluir db_config.php
+[08-Jun-2025 16:51:03 America/Fortaleza] auth.php: Ponto de Depuração 1: Início do script auth.php
+[08-Jun-2025 16:51:03 America/Fortaleza] auth.php: Ponto de Depuração 2: Antes de incluir db_config.php
+[08-Jun-2025 16:51:36 America/Fortaleza] auth.php: Ponto de Depuração 1: Início do script auth.php
+[08-Jun-2025 16:51:36 America/Fortaleza] auth.php: Ponto de Depuração 2: Antes de incluir db_config.php
+[08-Jun-2025 16:51:36 America/Fortaleza] auth.php: Ponto de Depuração 1: Início do script auth.php
+[08-Jun-2025 16:51:36 America/Fortaleza] auth.php: Ponto de Depuração 2: Antes de incluir db_config.php
+[08-Jun-2025 16:51:49 America/Fortaleza] auth.php: Ponto de Depuração 1: Início do script auth.php
+[08-Jun-2025 16:51:49 America/Fortaleza] auth.php: Ponto de Depuração 2: Antes de incluir db_config.php
+[08-Jun-2025 16:51:49 America/Fortaleza] auth.php: Ponto de Depuração 1: Início do script auth.php
+[08-Jun-2025 16:51:49 America/Fortaleza] auth.php: Ponto de Depuração 2: Antes de incluir db_config.php
+[08-Jun-2025 16:51:53 America/Fortaleza] auth.php: Ponto de Depuração 1: Início do script auth.php
+[08-Jun-2025 16:51:53 America/Fortaleza] auth.php: Ponto de Depuração 2: Antes de incluir db_config.php
+[08-Jun-2025 17:01:45 America/Fortaleza] auth.php: Ponto de Depuração 1: Início do script auth.php
+[08-Jun-2025 17:01:45 America/Fortaleza] auth.php: Ponto de Depuração 2: Antes de incluir db_config.php
+[08-Jun-2025 17:01:50 America/Fortaleza] auth.php: Ponto de Depuração 1: Início do script auth.php
+[08-Jun-2025 17:01:50 America/Fortaleza] auth.php: Ponto de Depuração 2: Antes de incluir db_config.php
+[08-Jun-2025 17:04:01 America/Fortaleza] auth.php: Ponto de Depuração 1: Início do script auth.php
+[08-Jun-2025 17:04:01 America/Fortaleza] auth.php: Ponto de Depuração 2: Antes de incluir db_config.php
+[08-Jun-2025 17:04:26 America/Fortaleza] auth.php: Ponto de Depuração 1: Início do script auth.php
+[08-Jun-2025 17:04:26 America/Fortaleza] auth.php: Ponto de Depuração 2: Antes de incluir db_config.php
+[08-Jun-2025 17:04:26 America/Fortaleza] auth.php: Ponto de Depuração 1: Início do script auth.php
+[08-Jun-2025 17:04:26 America/Fortaleza] auth.php: Ponto de Depuração 2: Antes de incluir db_config.php
+[08-Jun-2025 17:05:26 America/Fortaleza] auth.php: Ponto de Depuração 1: Início do script auth.php
+[08-Jun-2025 17:05:26 America/Fortaleza] auth.php: Ponto de Depuração 2: Antes de incluir db_config.php
+[08-Jun-2025 17:05:26 America/Fortaleza] auth.php: Ponto de Depuração 1: Início do script auth.php
+[08-Jun-2025 17:05:26 America/Fortaleza] auth.php: Ponto de Depuração 2: Antes de incluir db_config.php
+[08-Jun-2025 17:05:30 America/Fortaleza] auth.php: Ponto de Depuração 1: Início do script auth.php
+[08-Jun-2025 17:05:30 America/Fortaleza] auth.php: Ponto de Depuração 2: Antes de incluir db_config.php
+[08-Jun-2025 17:05:36 America/Fortaleza] auth.php: Ponto de Depuração 1: Início do script auth.php
+[08-Jun-2025 17:05:36 America/Fortaleza] auth.php: Ponto de Depuração 2: Antes de incluir db_config.php
+[08-Jun-2025 17:06:09 America/Fortaleza] auth.php: Ponto de Depuração 1: Início do script auth.php
+[08-Jun-2025 17:06:09 America/Fortaleza] auth.php: Ponto de Depuração 2: Antes de incluir db_config.php
+[08-Jun-2025 17:06:18 America/Fortaleza] auth.php: Ponto de Depuração 1: Início do script auth.php
+[08-Jun-2025 17:06:18 America/Fortaleza] auth.php: Ponto de Depuração 2: Antes de incluir db_config.php
+[08-Jun-2025 17:06:31 America/Fortaleza] auth.php: Ponto de Depuração 1: Início do script auth.php
+[08-Jun-2025 17:06:31 America/Fortaleza] auth.php: Ponto de Depuração 2: Antes de incluir db_config.php
+[08-Jun-2025 17:06:35 America/Fortaleza] auth.php: Ponto de Depuração 1: Início do script auth.php
+[08-Jun-2025 17:06:35 America/Fortaleza] auth.php: Ponto de Depuração 2: Antes de incluir db_config.php
+[08-Jun-2025 17:06:36 America/Fortaleza] auth.php: Ponto de Depuração 1: Início do script auth.php
+[08-Jun-2025 17:06:36 America/Fortaleza] auth.php: Ponto de Depuração 2: Antes de incluir db_config.php
+[08-Jun-2025 17:07:11 America/Fortaleza] auth.php: Ponto de Depuração 1: Início do script auth.php
+[08-Jun-2025 17:07:11 America/Fortaleza] auth.php: Ponto de Depuração 2: Antes de incluir db_config.php
+[08-Jun-2025 17:07:11 America/Fortaleza] auth.php: Ponto de Depuração 1: Início do script auth.php
+[08-Jun-2025 17:07:11 America/Fortaleza] auth.php: Ponto de Depuração 2: Antes de incluir db_config.php
+[08-Jun-2025 17:07:12 America/Fortaleza] auth.php: Ponto de Depuração 1: Início do script auth.php
+[08-Jun-2025 17:07:12 America/Fortaleza] auth.php: Ponto de Depuração 2: Antes de incluir db_config.php
+[08-Jun-2025 17:07:16 America/Fortaleza] auth.php: Ponto de Depuração 1: Início do script auth.php
+[08-Jun-2025 17:07:16 America/Fortaleza] auth.php: Ponto de Depuração 2: Antes de incluir db_config.php
+[08-Jun-2025 17:08:06 America/Fortaleza] auth.php: Ponto de Depuração 1: Início do script auth.php
+[08-Jun-2025 17:08:06 America/Fortaleza] auth.php: Ponto de Depuração 2: Antes de incluir db_config.php

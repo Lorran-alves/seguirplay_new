@@ -1,6 +1,6 @@
 @extends('web.templates.master')
 @section('title', 'Políticas de privacidade')
-@section('description', 'Esta Política de Privacidade tem como objetivo esclarecer as práticas de coleta, uso e armazenamento de informações pessoais dos usuários que utilizam os serviços da SEGUIR PLAY.')
+@section('description', 'Estes Termos de Uso e Política de Privacidade ("Termos") descrevem como coletamos, usamos, armazenamos e protegemos suas informações aqui na SEGUIR PLAY.')
 
 @section('content')
     <header class="header">
@@ -21,7 +21,7 @@
                 <div class="col-lg-8 mauto">
                     <h2>Políticas de privacidade</h2>
 
-                    <p>ATUALIZADA EM 11 DE FEVEREIRO DE 2025<p>
+                    <p>ATUALIZADA EM 30 DE MAIO DE 2025<p>
 
                     <h3>Introdução</h3>
                     <p>Esta Política de Privacidade tem como objetivo esclarecer as práticas de coleta, uso e armazenamento de informações pessoais dos usuários que utilizam os serviços da SEGUIR PLAY</p>
@@ -108,13 +108,37 @@
                     <h3>Alteração desta Política de Privacidade</h3>
                     <p>A versão atual desta Política de Privacidade foi formulada e atualizada pela última vez em 11 de fevereiro de 2025.</p>
 
-
+                    <class="ul-politicas" id="Compra-no-Cartão-de-Crédito">
                     <p>A <span class="cor-site">SEGUIR PLAY</span>  reserva-se o direito de alterar esta Política de Privacidade a qualquer momento, especialmente para adaptá-la a eventuais mudanças em nosso site ou em legislação aplicável. <span class="cor-site">É altamente recomendável que você revise este documento frequentemente.</span></p>
-
+                    
                     <p>Qualquer modificação nesta Política entrará em vigor imediatamente após sua publicação em nosso site. Sempre informaremos a você sobre qualquer alteração nesta Política.</p>
 
                     <p>Ao continuar utilizando nossos serviços e fornecendo seus dados pessoais após tais alterações, você estará consentindo com as novas diretrizes.</p>
-
+                    
+                    <h3>Dados Coletados Durante a Compra com Cartão de Crédito</h3>
+                    <p>Ao comprar com cartão de crédito na <span class="cor-site">SEGUIR PLAY</span>, coletamos seu <span class="cor-site">Nome Completo, CPF e Data de Nascimento</span> para garantir a segurança da sua transação e cumprir com a lei.</p>
+                    <p>Por Que Coletamos Seus Dados?</p>
+                    <p>Nós usamos essas informações para:</p>
+                    <ul class="ul-politicas">
+                        <li>Identificação e Prevenção de Fraudes: Confirmar que é você mesmo quem está comprando, protegendo sua segurança e a nossa.</li>
+                        <li>Processamento da Sua Compra: Para que o pagamento seja efetivado e sua compra concluída.</li>
+                        <li>Emissão de Nota Fiscal: Cumprir com as obrigações fiscais exigidas por lei.</li>
+                     </ul>
+                    <p>Como a LGPD Garante Seus Direitos?</p>
+                    <p>A Lei Geral de Proteção de Dados (LGPD) nos orienta a coletar e usar seus dados de forma transparente e segura. Nós os tratamos com base na execução do contrato de compra, para cumprir obrigações legais e em nosso legítimo interesse em prevenir fraudes.</p>
+                    <p>Compartilhamento e Segurança</p>
+                    <p>Seus dados são compartilhados apenas com parceiros de pagamento (como <a href="https://www.mercadopago.com.br/privacidade" class="cor-laranja">Mercado Pago</a>) e outros prestadores de serviço essenciais para a transação, sempre com foco na segurança e conformidade. Nós não vendemos seus dados para marketing. Empregamos medidas de segurança robustas, incluindo criptografia, para proteger suas informações.</p>
+                    <p>Seus Direitos</p> 
+                    <p>Você tem o direito de:</p>
+                     <ul class="ul-politicas">
+                         <li>Acessar seus dados;</li>
+                         <li>Corrigir informações incorretas;</li>
+                         <li>Solicitar a exclusão ou anonimização de dados desnecessários;</li>
+                         <li>Revogar seu consentimento (quando aplicável);</li>
+                         <li>E muito mais, conforme previsto na LGPD.</li>
+                     </ul>
+                     <p>Para exercer esses direitos ou tirar dúvidas, entre em contato conosco pelo <a href="mailto:dpo@seguirplay.com" class="cor-laranja">dpo@seguirplay.com</a>.</p>
+                     
                     <h3>Contato e DPO</h3>
 
                     <p>Para quaisquer dúvidas ou para exercer seus direitos, entre em contato conosco ou com nosso Encarregado de Proteção de Dados Pessoais pelo e-mail: <a href="mailto:dpo@seguirplay.com" class="cor-laranja">dpo@seguirplay.com</a> </p>

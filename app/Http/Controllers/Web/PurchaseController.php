@@ -136,7 +136,10 @@ class PurchaseController extends Controller
     
             $purchase->price_tot = (empty($plan->quantity_min) ? $plan->price : $plan->price * $request->quantity);
     
-    
+            // aumenta 12% para o valor total
+            $purchase->price_tot += ($purchase->price_tot * 0.12);
+            $purchase->price += ($purchase->price * 0.12);
+            $purchase->price_sale += ($purchase->price_sale * 0.12);
     
             // APLICA CUPOM CASO NÃO VIM VAZIO'
             if(isset($request->cupom) && !empty($request->cupom)) {
@@ -228,17 +231,12 @@ class PurchaseController extends Controller
 
         $payment->save();
 
-        return response()->json([
-            'success' => false,
-            'status' => $payment->status,
-            'status_detail' => $payment->status_detail,
-            'message' => $payment->status_detail,
-            'full_response' => $payment->toArray()
-        ]);
-
-
         if ($payment->status == 'approved') {
             // atualizar status da compra
+            
+            session_start();
+            $_SESSION['purchase_id'] = $purchase->id;
+            
             $purchase->status = 'approved';
             $purchase->save();
             return response()->json(['success' => true, 'message' => 'Pagamento aprovado!']);
@@ -501,7 +499,7 @@ class PurchaseController extends Controller
                 });
 
                 if ($cupomEncontrado) {
-                    $valorOriginal = (empty($plan->quantity_min) ? $plan->price : $plan->price * $c->quantity);
+                    $valorOriginal = (empty($plan->quantity_min) ? $plan->price : $plan->price * $c['quantity']);
                     $descontoPorcentagem = $cupomEncontrado['desconto'] / 100; // Usa o desconto do banco
                     $purchase->price = $valorOriginal - ($valorOriginal * $descontoPorcentagem);
 
