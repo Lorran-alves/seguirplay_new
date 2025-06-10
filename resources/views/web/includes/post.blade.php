@@ -1,112 +1,4 @@
-<style>
-    #ipt-value{
-        height: 42px;
-        width: 100%;
-        text-align: center;
-        border-radius: 5px;
-        background: #f7f7f7;
-        border: 1px solid #dddddd;
-        font-family: 'Manrope';
-        font-style: normal;
-        font-weight: 800;
-        font-size: 16px;
-        line-height: 25px;
-        color: #131313;
-    }
-    button.voltar{
-        width: 40px;
-        height: 20px;
-        text-align: center;
-        justify-content: center;
-        display: flex;
-        align-items: center;
-    }
-    i.voltar{
-        color: #9A9A9A;
-        font-size: 20px
-    }
-    .block {
-        display: block;
-    }
-    .none {
-        display: none
-    }
-    .swal2-confirm{
-        background-color:#FF6E04 !important;
-    }
-    .swal2-cancel{
-        background-color: rgb(125, 37, 93) !important;
-    }
-    .video {
-        position: relative;
-        width: 100%;
-        padding-top: 56.25%; /* Proporção 16:9 */
-        background-size: cover;
-        background-position: center;
-        border-radius: 8px;
-        cursor: pointer;
-        transition: transform 0.3s ease;
-    }
-    .video:hover {
-        transform: scale(1.05);
-    }
-   .video input[type="checkbox"] {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    transform: scale(1.5);
-    opacity: 0.8;
-    width: 10px;
-    height: auto;
-   }
-   .video.selected {
-    border: 3px solid #0d6efd; /* Borda azul para selecionados */
-   }
-   #videoGrid {
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-   }
-   .page-link{
-    color: #0d6efd !important;
-   }
-   .div-card{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-   }
 
-    #paymentForm input, select, #paymentForm__cardNumber input, #paymentForm__expirationDate input, #paymentForm__securityCode input {
-        text-align: left !important;
-        width: 100% !important;
-        height: 60px !important;
-        padding: 20px 0 15px 5px !important;
-        background: #FFFFFF !important;
-        border: 1px solid #ECECEC !important;
-        margin-bottom: 10px !important;
-        color: #666666 !important;
-    }
-    #paymentForm__cardNumber, #paymentForm__expirationDate, #paymentForm__securityCode {
-        padding: 20px 0 15px 5px !important;
-        border: 1px solid #ECECEC !important;
-        font-family: 'Manrope';
-        font-style: normal;
-        font-weight: 400;
-        font-size: 18px;
-        line-height: 25px;
-        color: #666666;
-        background: #FFFFFF;
-        border: 1px solid #ECECEC;
-        border-radius: 5px;
-        margin-bottom: 15px;
-        height: 60px;
-    }
-    
-    .ocutar {
-        display: none;
-    }
-
-</style>
 <!-- Modal -->
 <div class="modal fade" id="passo01" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
    aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -233,20 +125,7 @@
       </div>
    </div>
 </div>
-<style>
-   .selectable-img {
-   cursor: pointer;
-   border: 3px solid transparent;
-   transition: 0.3s ease;
-   }
-   .selectable-img:hover {
-   transform: scale(1.05);
-   }
-   .selectable-img.selected {
-   border-color: #0d6efd;
-   box-shadow: 0 0 0 4px rgba(13, 110, 253, 0.25);
-   }
-</style>
+
 <!-- Modal -->
 <div class="modal fade" id="passo02" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
    aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -348,8 +227,8 @@
          <div class="modal-body text-center">
             <img class="icons img-category" src="{{ asset('web_assets/img/value-icon01.png') }}">
             <h2 class="userInstagram"></h2>
-            <button id="btnCard" class="mb-3" style="display:none;">Pagar com Cartão - R$<span class="valor-botao-cartao" style="color: white"></span> <i class="fas fa-arrow-right"></i></button>
             <button id="btnPIX" class="mb-3">Pagar com PIX - R$<span class="valor-botao-pix" style="color: white"></span> <i class="fas fa-arrow-right"></i></button>
+            <button id="btnCard" class="mb-3" style="display:none;">Pagar com Cartão - R$<span class="valor-botao-cartao" style="color: white"></span> <i class="fas fa-arrow-right"></i></button>
             <p class="modal_paragraf">
                <b>
                   Como pagar pelo PIX ou Cartão de Crédito
