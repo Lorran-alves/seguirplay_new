@@ -1,266 +1,207 @@
-/* Estilo global */
-body {
-    font-family: 'Poppins', sans-serif !important;
-    margin: 0;
-    padding: 0;
-    background-color: #fff;
-    color: #333;
-    text-align: center;
-    display: flex; /* Flexbox para organizar o layout */
-    flex-direction: column; /* Coloca os elementos em coluna */
-    min-height: 100vh; /* Garante que o body ocupe pelo menos a altura total da tela */
-    overflow-x: hidden; /* Remove a barra de rolagem horizontal */
-}
 
-main {
-    flex: 1; /* Faz o main ocupar o espaço restante entre o header e o footer */
-    padding: 40px 20px;
-    overflow: hidden; /* Evita rolagem dentro do main */
-}
+        /* Estilos personalizados para o corpo, usando o gradiente da Seguir Play */
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(257.28deg, #952852 0.51%, #781F60 104.36%);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between; /* Para empurrar header e footer para as pontas */
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+            color: #333; /* Cor de texto padrão */
+        }
 
+        /* Estilo para a logo no cabeçalho */
+        .logo-header {
+            filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.15)); /* Sombra para o logo */
+        }
+        .logo-header:hover {
+            transform: scale(1.05); /* Leve zoom no hover */
+            transition: transform 0.3s ease-in-out;
+        }
 
-/* Header com logo */
-header {
-    background-color: #ff6f00; /* Laranja vibrante */
-    color: white;
-    padding: 20px 0;
-}
+        /* Classes personalizadas para os botões usando as cores da Seguir Play */
+        .btn-custom {
+            font-weight: bold;
+            padding: 0.25rem 2.5rem; /* Padding para um toque maior e mais proporcional */
+            border-radius: 0.75rem; /* Cantos arredondados */
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2); /* Sombra mais destacada */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease-in-out; /* Transição suave para efeitos */
+            text-align: center;
+            letter-spacing: 0.05em; /* Espaçamento de letras sutil */
+            color: white; /* Cor do texto do botão */
+        }
 
-header img {
-    max-width: 250px;
-    margin-bottom: 10px;
-}
+        .btn-custom:hover {
+            transform: translateY(-5px) scale(1.02); /* Leve levantamento e aumento no hover */
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3); /* Sombra mais intensa no hover */
+        }
 
-header h1 {
-    margin: 0;
-    font-size: 2rem;
-}
+        .btn-custom:active {
+            transform: translateY(0) scale(0.98); /* Efeito de "pressão" no active */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); /* Sombra menor no active */
+        }
 
-/* Seção principal */
-main {
-    padding: 40px 20px;
-}
+        .btn-ios {
+            background-color: #FF455B; /* Cor #FF455B */
+            border: 2px solid #FF455B; /* Borda para destaque */
+        }
+        .btn-ios:hover {
+            background-color: #c93749; /* Um tom mais escuro para o hover */
+            border-color: #c93749;
+        }
 
-main h2 {
-    font-size: 2rem;
-    margin-bottom: 20px;
-    color: #ff6f00;
-}
+        .btn-android {
+            background-color: #FF6E04; /* Cor #FF6E04 */
+            border: 2px solid #FF6E04; /* Borda para destaque */
+        }
+        .btn-android:hover {
+            background-color: #cc5800; /* Um tom mais escuro para o hover */
+            border-color: #cc5800;
+        }
 
-/* Botão de Suporte */
-.support-button {
-    margin-top: 20px; /* Espaçamento entre os botões de download e o botão de suporte */
-}
+        .btn-support {
+            background: linear-gradient(257.28deg, #952852 0.51%, #781F60 104.36%); /* Gradiente principal */
+            border: 2px solid #781F60; /* Borda para destaque */
+        }
+        .btn-support:hover {
+            opacity: 0.9; /* Pequena opacidade no hover */
+            border-color: #952852;
+        }
 
-.support-button button {
-    background-color: #007bff; /* Azul para diferenciar do laranja */
-    color: white;
-    border: none;
-    padding: 15px 30px;
-    font-size: 1rem;
-    cursor: pointer;
-    border-radius: 50px;
-    transition: background-color 0.3s ease, transform 0.3s ease;
-    width: auto; /* Remove a largura fixa para desktop/tablet */
-    max-width: none; /* Remove a largura máxima */
-    margin: 0 auto; /* Centraliza o botão */
-    display: block; /* Garante que o botão seja exibido como um bloco */
-    font-family: 'Poppins', sans-serif !important;
-}
+        /* Estilo do Modal */
+        .modal {
+            display: none; /* Escondido por padrão */
+            position: fixed; /* Fica no topo da tela */
+            z-index: 1000; /* Fica acima de tudo */
+            left: 0;
+            top: 0;
+            width: 100%; /* Largura total */
+            height: 100%; /* Altura total */
+            overflow: auto; /* Permite scroll se o conteúdo for muito grande */
+            background-color: rgba(0,0,0,0.6); /* Fundo semi-transparente preto */
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            box-sizing: border-box;
+        }
 
-.support-button button:hover {
-    background-color: #0056b3; /* Escurece o azul ao passar o mouse */
-    transform: scale(1.05);
-}
+        .modal-content {
+            background-color: #fff;
+            margin: auto;
+            padding: 30px;
+            border-radius: 1.5rem; /* Cantos arredondados */
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2); /* Sombra */
+            width: 90%;
+            max-width: 600px; /* Largura máxima para o modal */
+            position: relative;
+            animation: fadeInScale 0.4s ease-out; /* Animação de entrada com escala */
+        }
 
+        @keyframes fadeInScale {
+            from { opacity: 0; transform: translateY(-30px) scale(0.95); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
 
-/* Botões */
-.buttons {
-    display: flex;
-    justify-content: center; /* Centraliza os botões horizontalmente */
-    gap: 20px; /* Espaçamento entre os botões */
-    margin-top: 30px;
-    flex-wrap: wrap; /* Permite que os botões quebrem linha em telas menores */
-}
+        .close {
+            color: #aaa;
+            position: absolute;
+            top: 15px;
+            right: 25px;
+            font-size: 36px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.2s ease-in-out;
+        }
 
-.buttons button {
-    background-color: #ff6f00;
-    color: white;
-    border: none;
-    padding: 15px 30px;
-    font-size: 1rem;
-    cursor: pointer;
-    border-radius: 50px;
-    transition: background-color 0.3s ease, transform 0.3s ease;
-    width: auto; /* Remove a largura fixa para desktop/tablet */
-    max-width: none; /* Remove a largura máxima */
-    margin: 0; /* Remove margens automáticas */
-    font-family: 'Poppins', sans-serif !important;
-}
+        .close:hover,
+        .close:focus {
+            color: #333;
+            text-decoration: none;
+        }
 
-.buttons button:hover {
-    background-color: #e65c00;
-    transform: scale(1.05);
-}
+        /* Estilo para vídeos responsivos */
+        .video-container {
+            position: relative;
+            width: 100%;
+            padding-bottom: 177.5%; /* Para vídeos verticais (aprox. 9:16) */
+            height: 0;
+            overflow: hidden;
+            margin-top: 20px;
+            border-radius: 0.75rem; /* Cantos arredondados */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
 
-/* Modal */
-.modal {
-    display: none;
-    position: fixed;
-    z-index: 1;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.7);
-    overflow-y: auto; /* Adiciona barra de rolagem vertical se necessário */
-}
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
 
-.modal-content {
-    background-color: white;
-    margin: 5% auto; /* Ajuste para dar espaço na parte superior */
-    padding: 30px;
-    border-radius: 15px;
-    width: 80%;
-    max-width: 600px;
-    text-align: center;
-    position: relative;
-    max-height: 80vh; /* Limita a altura máxima do modal */
-    overflow-y: auto; /* Adiciona barra de rolagem dentro do modal, se necessário */
-    font-family: 'Poppins', sans-serif !important;
-}
+        /* Estilo para os links dentro dos tutoriais */
+        .tutorial-link {
+            color: #FF6E04; /* Cor #FF6E04 */
+            font-weight: 600;
+            text-decoration: underline;
+            transition: color 0.2s ease-in-out;
+        }
+        .tutorial-link:hover {
+            color: #cc5800;
+        }
 
-.close {
-    position: absolute;
-    right: 15px;
-    top: 10px;
-    color: #aaa;
-    font-size: 2rem;
-    font-weight: bold;
-    cursor: pointer;
-    font-family: 'Poppins', sans-serif !important;
-}
+        /* Estilo para o botão de download dentro do modal */
+        .modal-download-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #FF455B; /* Uma das cores da Seguir Play */
+            color: white;
+            font-weight: bold;
+            padding: 12px 24px;
+            border-radius: 0.75rem; /* Cantos arredondados */
+            text-decoration: none;
+            margin-top: 25px;
+            transition: all 0.3s ease-in-out;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .modal-download-btn:hover {
+            background-color: #c93749;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+        }
 
-.close:hover {
-    color: #ff6f00;
-}
-
-video {
-    width: 100%;
-    max-width: 500px;
-    margin-top: 20px;
-    border-radius: 10px;
-}
-
-/* Botão de download nos modais */
-.download-btn {
-    display: inline-block;
-    background-color: #ff6f00;
-    color: white;
-    text-decoration: none;
-    padding: 15px 30px;
-    font-size: 1rem;
-    border-radius: 50px;
-    margin-top: 20px;
-    transition: background-color 0.3s ease, transform 0.3s ease;
-}
-
-.download-btn:hover {
-    background-color: #e65c00;
-    transform: scale(1.05);
-}
-
-/* Lista de instruções */
-.modal-content ol {
-    text-align: left;
-    margin: 20px auto;
-    padding-left: 20px;
-    max-width: 500px;
-}
-
-.modal-content li {
-    margin-bottom: 10px;
-    font-size: 1rem;
-    line-height: 1.5;
-}
-
-/* Footer */
-footer {
-    background-color: #ff6f00;
-    color: white;
-    padding: 15px 0;
-    margin-top: auto; /* Empurra o footer para o final da página */
-    font-family: 'Poppins', sans-serif !important;
-}
-
-footer p {
-    margin: 0;
-    font-size: 0.9rem;
-}
-
-/* Media Queries para responsividade */
-@media (max-width: 768px) {
-    /* Ajustes para tablets */
-    header h1 {
-        font-size: 1.5rem;
-    }
-
-    main h2 {
-        font-size: 1.5rem;
-    }
-
-    .buttons button {
-        font-size: 0.9rem;
-        padding: 12px 25px;
-    }
-}
-
-/* Media Queries para responsividade */
-@media (max-width: 480px) {
-    /* Ajustes para celulares */
-    .support-button button {
-        font-size: 0.8rem;
-        padding: 10px 20px;
-        width: 100%; /* Ocupa toda a largura em telas pequenas */
-        max-width: 300px; /* Limita a largura máxima */
-        margin: 0 auto; /* Centraliza o botão */
-    }
-}
-
-
-@media (max-width: 480px) {
-    /* Ajustes para celulares */
-    header img {
-        max-width: 220px;
-    }
-
-    header h1 {
-        font-size: 1.2rem;
-    }
-
-    main h2 {
-        font-size: 1.2rem;
-    }
-
-    .buttons button {
-        font-size: 0.8rem;
-        padding: 10px 20px;
-        width: 100%; /* Botões ocupam toda a largura em telas pequenas */
-        max-width: 300px; /* Limita a largura máxima */
-        margin: 0 auto; /* Centraliza os botões */
-    }
-
-    footer p {
-        font-size: 0.8rem;
-    }
-
-    /* Remove a barra de rolagem no modo celular */
-    body {
-        overflow-x: hidden; /* Remove a barra de rolagem horizontal */
-        overflow-y: auto; /* Mantém apenas a rolagem vertical, se necessário */
-    }
-
-    .modal {
-        overflow-y: auto; /* Barra de rolagem apenas no modal, se necessário */
-    }
-}
+        /* Media queries para responsividade */
+        @media (max-width: 640px) {
+            .modal-content {
+                width: 95%;
+                padding: 20px;
+            }
+            .close {
+                font-size: 25px;
+                top: 10px;
+                right: 20px;
+            }
+            .video-container {
+                padding-bottom: 150%;
+            }
+        }
+        @media (min-width: 1024px) {
+            .hero-section {
+                flex-direction: row; /* Lado a lado em telas maiores */
+                text-align: left;
+            }
+            .hero-text-content {
+                padding-right: 3rem; /* Espaçamento entre texto e imagem */
+            }
+            .hero-buttons {
+                justify-content: flex-start; /* Alinha botões à esquerda */
+            }
+        }

@@ -80,14 +80,14 @@
         text-align: left !important;
         width: 100% !important;
         height: 60px !important;
-        padding: 20px 0 15px 5px !important;
+        padding: 20px 0 20px 5px !important;
         background: #FFFFFF !important;
         border: 1px solid #ECECEC !important;
         margin-bottom: 10px !important;
         color: #666666 !important;
     }
     #paymentForm__cardNumber, #paymentForm__expirationDate, #paymentForm__securityCode {
-        padding: 20px 0 15px 5px !important;
+        padding: 20px 0 20px 5px !important;
         border: 1px solid #ECECEC !important;
         font-family: 'Manrope';
         font-style: normal;
@@ -399,7 +399,7 @@
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onclick="closeModal()"></button>
          </div>
          <div class="modal-body text-center">
-            <img  src="{{ asset('web_assets/img/cart.svg') }}">
+            <img class="icons img-category" src="{{ asset('web_assets/img/value-icon01.png') }}">
             <h2>Realize seu pagamento via Cartão de Crédito</h2>
             <div class="div-card">
                <form id="paymentForm">
@@ -414,13 +414,8 @@
                     <input type="email" id="paymentForm__cardholderEmail"/>
                     <button type="submit" id="paymentForm__submit">Pagar</button>
                     <progress value="0" class="progress-bar ocutar">Carregando...</progress>
+
                 </form>
-            </div>
-            <div class="cow-footer"><hr class="divider" aria-hidden="true">
-                    <div><img width="100" alt="Logotipo &quot;from Seguir Play&quot;"  referrerpolicy="origin-when-cross-origin" src="{{ asset('web_assets/img/mercado_pago.png') }}"></div>
-                    <div class="cow-payment_summary__security-payment"><svg width="12" height="16" viewBox="0 0 12 16" fill="none"><path d="M7.18502 10.3949C7.18502 11.0549 6.65 11.5899 5.99002 11.5899C5.33004 11.5899 4.79502 11.0549 4.79502 10.3949C4.79502 9.7349 5.33004 9.19988 5.99002 9.19988C6.65 9.19988 7.18502 9.7349 7.18502 10.3949Z" fill="black" fill-opacity="0.55"></path><path fill-rule="evenodd" clip-rule="evenodd" d="M11.2012 6.20015H9.60941V3.80941C9.60941 1.81599 7.99343 0.200012 6.00002 0.200012C4.0066 0.200012 2.39062 1.81599 2.39062 3.80941V6.20015H0.798828V12.798C0.798828 14.4549 2.14197 15.798 3.79883 15.798H8.2012C9.85806 15.798 11.2012 14.4549 11.2012 12.798V6.20015ZM8.40941 3.80941V6.20015H3.59062V3.80941C3.59062 2.47873 4.66934 1.40001 6.00002 1.40001C7.33069 1.40001 8.40941 2.47873 8.40941 3.80941ZM1.99883 12.798V7.40015H10.0012V12.798C10.0012 13.7921 9.19532 14.598 8.2012 14.598H3.79883C2.80472 14.598 1.99883 13.7921 1.99883 12.798Z" fill="black" fill-opacity="0.55"></path></svg><span class="andes-typography andes-typography--type-body andes-typography--size-xs andes-typography--color-primary andes-typography--weight-semibold">Pagamento seguro</span></div>
-                    <span class="andes-visually-hidden">Processado pelo <a style="color:#781f60" href="https://www.mercadopago.com.br" target="_blank">Mercado Pago.</a>
-                </span>
             </div>
          </div>
       </div>
@@ -468,14 +463,13 @@
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onclick="recusarCard()"></button>
          </div>
          <div class="modal-body text-center">
-            <img src="{{ asset('web_assets/img/cart.svg') }}">
+            <img src="{{ asset('web_assets/img/cookes.png') }}">
             <p class="modal_paragraf">Termo de Utilização do CPF em Compras com Cartão de Crédito</p>
             <p class="modal_paragraf">Ao realizar uma compra com cartão de crédito em nosso site, o cliente concorda com a solicitação do número do CPF, que será utilizado exclusivamente para os seguintes fins:</p>
             <p class="modal_paragraf">Emissão de Nota Fiscal Eletrônica: conforme exigido pela legislação brasileira, é necessário informar o CPF para registrar a compra de forma legal.</p>
             <p class="modal_paragraf">Segurança da Compra: o CPF é utilizado para verificar a identidade do comprador, ajudando a prevenir fraudes e garantir que a transação seja segura.</p>
             <p class="modal_paragraf">Todos os dados fornecidos, incluindo o CPF, são tratados com confidencialidade e armazenados de forma segura, em conformidade com a Lei Geral de Proteção de Dados (LGPD).</p>
             <p class="modal_paragraf">Ao finalizar a compra, o cliente declara estar ciente e de acordo com a utilização do CPF conforme descrito neste termo.</p>
-            <p>Saiba mais em <a style="color:#781f60" href="https://seguirplay.com/politicas-de-privacidade/#Compra-no-Cartao-de-Credito" target="_blank">Políticas de privacidade</a></p>
             <button onclick="aceitarCard()">Prosseguir</button>
          </div>
       </div>
@@ -573,14 +567,6 @@
       </div>
    </div>
 </div>
-<!-- Overlay de loading -->
-<div id="loading" style="display: none;position: fixed;z-index: 9999;top: 0;left: 0;    width: 100%;    height: 100%;    background: rgba(0, 0, 0, 0.2);  justify-content: center;    align-items: center;">
-    <div class="spinner-border text-light" role="status" style="width: 3rem; height: 3rem;">
-        <span class="sr-only">Carregando...</span>
-    </div>
-</div>
-
-
 @endforeach
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
@@ -629,32 +615,23 @@
    
     // Ricardo - mexendo - corrigindo os link
    const validators = {
-        instagram: {
-            profile: link => {
-                const cleaned = link.trim();
-                return (
-                    // Valida nomes de usuário (ex: @usuario ou usuario)
-                    /^@?[A-Za-z0-9._]+$/.test(cleaned) ||
-                    // Valida URLs de perfil do Instagram sem parâmetros de consulta
-                    // (ex: https://www.instagram.com/usuario ou https://www.instagram.com/usuario/)
-                    /^https:\/\/(www\.)?instagram\.com\/[A-Za-z0-9._]+\/?$/.test(cleaned) ||
-                    // Adicionado: Valida URLs de perfil do Instagram com parâmetros de consulta
-                    // (ex: https://www.instagram.com/usuario?igsh=xxxx&utm_source=qr)
-                    /^https:\/\/(www\.)?instagram\.com\/[A-Za-z0-9._]+\/?\?.+$/.test(cleaned)
-                );
-            },
-            post: link => /^https:\/\/(www\.)?instagram\.com\/(p|reel|tv)\/[A-Za-z0-9_-]+\/?(?:\?.*)?$/.test(link)
-        },
+       instagram: {
+           profile: link => {
+               const cleaned = link.trim();
+               return (
+                   /^@?[A-Za-z0-9._]+$/.test(cleaned) || // @kauan ou kauan
+                   /^https:\/\/(www\.)?instagram\.com\/[A-Za-z0-9._]+\/?$/.test(cleaned)
+               );
+           },
+           post: link => /^https:\/\/(www\.)?instagram\.com\/(p|reel|tv)\/[A-Za-z0-9_-]+\/?(?:\?.*)?$/.test(link)
+       },
         tiktok: {
             profile: link =>
-                // @username direto ou URL de perfil/live
                 /^@?[\w.-]+$/.test(link) ||
                 /^https:\/\/(www\.)?tiktok\.com\/@[\w.-]+(\/live)?\/?$/.test(link),
         
             post: link =>
-                // Vídeos padrão ou links encurtados (vm.tiktok.com)
-                /^https:\/\/(www\.)?tiktok\.com\/@[\w.-]+\/video\/\d+\/?(?:\?.*)?$/.test(link) ||
-                /^https:\/\/vm\.tiktok\.com\/[\w/-]+\/?$/.test(link)
+                /^https:\/\/(www\.)?tiktok\.com\/@[\w.-]+\/video\/\d+\/?(?:\?.*)?$/.test(link)
         },
         kwai: {
                 profile: link =>
@@ -675,17 +652,15 @@
                     /^https:\/\/k\.kwai\.com\/p\/[\w-]+\/?(?:\?.*)?$/.test(link)
         },
         youtube: {
-            profile: link =>
-                // @username direto
-                /^@?[\w.-]+$/.test(link) ||
+             profile: link =>
+                // @username direto
+                /^@?[\w.-]+$/.test(link) ||
         
-                // URLs padrão do YouTube com /c/, /channel/, ou /@ e nomes válidos
-                /^https:\/\/(www\.)?youtube\.com\/(c\/[\w.-]+|@[\w.-]+|channel\/[A-Za-z0-9_-]{24})\/?$/.test(link),
+                 // URLs padrão do YouTube com /c/, /channel/, ou /@ e nomes válidos
+                 /^https:\/\/(www\.)?youtube\.com\/(c\/[\w.-]+|@[\w.-]+|channel\/[A-Za-z0-9_-]{24})\/?$/.test(link),
         
-            post: link =>
-                // watch?v=, shorts/, live/, ou youtu.be com ou sem parâmetros
-                /^https:\/\/(www\.)?youtube\.com\/(watch\?v=|shorts\/|live\/)[\w-]+(?:[&?][\w=.-]*)*$/.test(link) ||
-                /^https:\/\/youtu\.be\/[\w-]+(\?[A-Za-z0-9=&._-]+)?$/.test(link)
+             post: link =>
+                 /^https:\/\/(www\.)?youtube\.com\/(watch\?v=|shorts\/|live\/)[\w-]+(?:[&?][\w=.-]*)*$/.test(link)
         },
         facebook: {
             profile: link =>
@@ -1589,7 +1564,7 @@
             $('paymentForm__identificationNumber').val(cpf);
 
             // Cria o formulário do MercadoPago dinamicamente
-            const mp = new MercadoPago('APP_USR-0994e00d-a445-4b70-a5dc-f17ebc7a268a');
+            const mp = new MercadoPago('TEST-f667c1f4-2be4-46ff-853f-510f864ad962');
             const cardForm = mp.cardForm({
                 amount: amount.toString(), // Passa o valor como string
                 iframe: true,
@@ -1666,21 +1641,21 @@
                         data: formData,
                         processData: false,
                         contentType: false,
-                        beforeSend: function () {
-                            $('#loading').css('display', 'flex'); // Mostra o loading
-                        },
                         success: function (data) {
+                            data = JSON.parse(data);
                             console.log('Resposta do pagamento:', data);
                             if (data.success) {
-                                window.location.href = urlRedirectSuccess;
+                                alert('Pagamento realizado com sucesso!');
+                                // if (typeof urlRedirectSuccess !== 'undefined') {
+                                //     window.location.href = urlRedirectSuccess;
+                                // }
+                            } else {
+                                // alert('Erro ao processar pagamento: ' + (data.message || 'Erro desconhecido'));
                             }
                         },
                         error: function (xhr, status, error) {
                             console.error('Erro ao enviar pagamento:', error);
-                            // alert('Erro na requisição AJAX');
-                        },
-                        complete: function () {
-                            $('#loading').css('display', 'none'); // Mostra o loading
+                            alert('Erro na requisição AJAX');
                         }
                     });
                     },

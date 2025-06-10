@@ -1,0 +1,237 @@
+/* css/style.css */
+
+/* Custom styles for Seguir Play Blog */
+body {
+    font-family: 'Poppins', sans-serif !important; /* Aplicado Poppins com !important */
+    line-height: 1.6;
+    color: #333; /* Cor padrão para o modo claro */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* Dark Mode - Cores padrão Tailwind se não sobreescrito por utilities */
+html.dark {
+    background-color: #1a202c; /* Cor de fundo escura geral */
+    color: #e2e8f0; /* Cor de texto clara padrão para o modo escuro */
+}
+
+html.dark body {
+    background-color: #1a202c;
+    color: #e2e8f0; /* Garante que o texto do body fique claro */
+}
+
+html.dark .bg-gray-100 { /* Ajusta o fundo principal do body no modo escuro */
+    background-color: #1a202c !important;
+}
+
+html.dark .bg-white { /* Ajusta o fundo de cartões e seções no modo escuro */
+    background-color: #2d3748 !important; /* Um cinza mais escuro */
+    color: #e2e8f0 !important; /* Garante que o texto dentro de elementos .bg-white fique claro */
+}
+
+/* Regras específicas para garantir a cor do texto no modo escuro */
+html.dark .text-gray-800 {
+    color: #e2e8f0 !important;
+}
+
+html.dark .text-gray-900 {
+    color: #f7fafc !important; /* Para títulos e textos mais escuros no modo claro */
+}
+
+html.dark .text-gray-600 {
+    color: #a0aec0 !important; /* Para textos mais claros no modo claro (descrições, etc.) */
+}
+
+html.dark .text-gray-700 {
+    color: #cbd5e0 !important;
+}
+
+/* Regras para links no modo escuro (se quiser cores diferentes para links em dark mode) */
+html.dark .text-blue-600 { /* Ícones sociais */
+    color: #90cdf4 !important;
+}
+html.dark .text-blue-400 { /* Ícones sociais */
+    color: #a3bffa !important;
+}
+html.dark .text-blue-700 { /* Ícones sociais */
+    color: #7f9cf5 !important;
+}
+html.dark .text-green-500 { /* Ícones sociais */
+    color: #68d391 !important;
+}
+
+html.dark .border-gray-200 {
+    border-color: #4a5568 !important;
+}
+
+html.dark .hover\:bg-gray-100:hover {
+    background-color: #4a5568 !important;
+}
+
+/* Estilos para o toggle do dark mode */
+.bloglo-darkmode-toogle {
+    /* Estilos do background do switch */
+}
+.bloglo-darkmode-toogle:before {
+    /* Estilos do "dot" do switch */
+}
+/* Estilo para mover o dot do switch no modo escuro */
+html.dark .dot {
+    transform: translateX(100%);
+    background-color: #81e6d9; /* Cor do dot no modo escuro */
+}
+/* Fim Dark Mode */
+
+
+/* Custom animation for hero section */
+@keyframes fade-in-down {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fade-in-up {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animate-fade-in-down {
+    animation: fade-in-down 0.6s ease-out forwards;
+}
+
+.animate-fade-in-up {
+    animation: fade-in-up 0.6s ease-out forwards 0.2s; /* Delay for a staggered effect */
+}
+
+/* Ensure images cover their container without distortion */
+.object-cover {
+    object-fit: cover;
+}
+
+/* Line clamping for post descriptions */
+.line-clamp-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+/* Basic prose styles for post content (optional, Tailwind has @tailwindcss/typography plugin) */
+.prose {
+    font-size: 1.125rem; /* 18px */
+    line-height: 1.75; /* 28px */
+    font-family: 'Poppins', sans-serif !important;
+    color: #333; /* Cor padrão para o modo claro */
+}
+html.dark .prose { /* Garante que o texto do prose fique claro no modo escuro */
+    color: #e2e8f0 !important;
+}
+
+
+.prose h1, .prose h2, .prose h3, .prose h4, .prose h5, .prose h6 {
+    margin-top: 1.5em;
+    margin-bottom: 0.5em;
+    font-weight: 700;
+    font-family: 'Poppins', sans-serif !important;
+    color: #1a202c; /* Cor padrão para o modo claro */
+}
+html.dark .prose h1, html.dark .prose h2, html.dark .prose h3, 
+html.dark .prose h4, html.dark .prose h5, html.dark .prose h6 {
+    color: #f7fafc !important; /* Títulos claros no modo escuro */
+}
+
+
+.prose p {
+    margin-bottom: 1.25em;
+    font-family: 'Poppins', sans-serif !important;
+    color: #333; /* Cor padrão para o modo claro */
+}
+html.dark .prose p {
+    color: #e2e8f0 !important; /* Parágrafos claros no modo escuro */
+}
+
+
+.prose ul, .prose ol {
+    margin-bottom: 1.25em;
+    padding-left: 1.5em;
+    font-family: 'Poppins', sans-serif !important;
+    color: #333; /* Cor padrão para o modo claro */
+}
+html.dark .prose ul, html.dark .prose ol {
+    color: #e2e8f0 !important; /* Listas claras no modo escuro */
+}
+
+
+.prose ul li, .prose ol li {
+    margin-bottom: 0.5em;
+    font-family: 'Poppins', sans-serif !important;
+    color: #333; /* Cor padrão para o modo claro */
+}
+html.dark .prose ul li, html.dark .prose ol li {
+    color: #e2e8f0 !important; /* Itens de lista claros no modo escuro */
+}
+
+
+.prose a {
+    color: #FF455B; /* Seguir Play Accent Color */
+    text-decoration: none;
+    font-weight: 600;
+    font-family: 'Poppins', sans-serif !important;
+}
+html.dark .prose a {
+    color: #FF8A65 !important; /* Links de acento mais claros no modo escuro */
+}
+
+
+.prose a:hover {
+    text-decoration: underline;
+}
+
+.prose strong {
+    font-weight: 700;
+    font-family: 'Poppins', sans-serif !important;
+    color: #333; /* Cor padrão para o modo claro */
+}
+html.dark .prose strong {
+    color: #f7fafc !important; /* Negrito claro no modo escuro */
+}
+
+
+.prose blockquote {
+    border-left: 4px solid #FF455B;
+    padding-left: 1em;
+    margin-left: 0;
+    font-style: italic;
+    color: #666; /* Cor padrão para o modo claro */
+    font-family: 'Poppins', sans-serif !important;
+}
+html.dark .prose blockquote {
+    color: #a0aec0 !important; /* Citação clara no modo escuro */
+    border-left-color: #FF8A65 !important; /* Borda de citação clara no modo escuro */
+}
+
+
+/* Estilos para o ícone do menu no mobile (para o filter invert(1) funcionar) */
+#mobile-nav-toggler img {
+    filter: brightness(0) invert(1); /* Torna o SVG preto branco */
+}
+
+/* Estilos para os ícones sociais - ajustando a cor no modo escuro */
+.social-icon svg {
+    fill: currentColor; /* Faz com que a cor do SVG seja a cor do texto pai */
+}
+
+html.dark .social-icon svg {
+    fill: #e2e8f0; /* Cor do ícone no modo escuro */
+}

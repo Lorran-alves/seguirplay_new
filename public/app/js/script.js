@@ -1,39 +1,45 @@
-// Funções para abrir e fechar os modais
-function openIosModal() {
-    document.getElementById('iosModal').style.display = 'block';
-}
+ // Obtenha os elementos do modal
+        const iosModal = document.getElementById('iosModal');
+        const androidModal = document.getElementById('androidModal');
 
-function closeIosModal() {
-    document.getElementById('iosModal').style.display = 'none';
-}
+        // Obtenha os botões que abrem os modais
+        const iosButton = document.getElementById('iosButton');
+        const androidButton = document.getElementById('androidButton');
 
-function openAndroidModal() {
-    document.getElementById('androidModal').style.display = 'block';
-}
+        // Função para abrir o modal iOS
+        function openIosModal() {
+            iosModal.style.display = 'flex';
+            document.body.style.overflow = 'hidden'; // Impede o scroll do body
+        }
 
-function closeAndroidModal() {
-    document.getElementById('androidModal').style.display = 'none';
-}
+        // Função para fechar o modal iOS
+        function closeIosModal() {
+            iosModal.style.display = 'none';
+            document.body.style.overflow = 'auto'; // Permite o scroll do body novamente
+        }
 
-// Event listeners para os botões
-document.getElementById('iosButton').addEventListener('click', openIosModal);
-document.getElementById('androidButton').addEventListener('click', openAndroidModal);
+        // Função para abrir o modal Android
+        function openAndroidModal() {
+            androidModal.style.display = 'flex';
+            document.body.style.overflow = 'hidden'; // Impede o scroll do body
+        }
 
+        // Função para fechar o modal Android
+        function closeAndroidModal() {
+            androidModal.style.display = 'none';
+            document.body.style.overflow = 'auto'; // Permite o scroll do body novamente
+        }
 
-document.getElementById('supportButton').addEventListener('click', function() {
-    window.open('https://seguirplay.bio.link/', '_blank'); // Abre o link em uma nova aba
-})
+        // Quando o usuário clicar em qualquer lugar fora do conteúdo do modal, feche-o
+        window.onclick = function(event) {
+            if (event.target == iosModal) {
+                closeIosModal();
+            }
+            if (event.target == androidModal) {
+                closeAndroidModal();
+            }
+        }
 
-// Fecha o modal ao clicar fora dele
-window.onclick = function(event) {
-    const iosModal = document.getElementById('iosModal');
-    const androidModal = document.getElementById('androidModal');
-
-    if (event.target === iosModal) {
-        iosModal.style.display = 'none';
-    }
-
-    if (event.target === androidModal) {
-        androidModal.style.display = 'none';
-    }
-};
+        // Adiciona event listeners aos botões
+        iosButton.addEventListener('click', openIosModal);
+        androidButton.addEventListener('click', openAndroidModal);
