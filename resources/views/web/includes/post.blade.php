@@ -319,7 +319,7 @@
             <p id="feedbackCupom" style="color:red;"></p>
             <h2 id="totalInstagram" style="margin-bottom: 0"></h2>
             <h2 id="totalPrice" style="margin-bottom: 0"></h2>
-            <button data-bs-toggle="modal" data-bs-target="#passo04">
+            <button data-bs-toggle="modal" data-bs-target="#passo04" onclick="atualizarValorBotao()">
             Continuar
             <i class="fas fa-arrow-right"></i>
             </button>
@@ -348,8 +348,8 @@
          <div class="modal-body text-center">
             <img class="icons img-category" src="{{ asset('web_assets/img/value-icon01.png') }}">
             <h2 class="userInstagram"></h2>
-            <button id="btnCard" class="mb-3" style="display:none;">Pagar com Cartão <i class="fas fa-arrow-right"></i></button>
-            <button id="btnPIX" class="mb-3">Pagar com PIX <i class="fas fa-arrow-right"></i></button>
+            <button id="btnCard" class="mb-3" style="display:none;">Pagar com Cartão - R$<span class="valor-botao-cartao" style="color: white"></span> <i class="fas fa-arrow-right"></i></button>
+            <button id="btnPIX" class="mb-3">Pagar com PIX - R$<span class="valor-botao-pix" style="color: white"></span> <i class="fas fa-arrow-right"></i></button>
             <p class="modal_paragraf">
                <b>
                   Como pagar pelo PIX ou Cartão de Crédito
@@ -1513,6 +1513,7 @@
    function abrirModalCupom() {
        
        total = $("#totalCarrinhoSpan").text();
+       $('#amount').val(total.replace('R$ ', '').replace(',', '.'));
        $("#totalInstagram").text("Total: R$ " + total);
        $('#passo03').modal('show');
        $("#modalCart").modal('hide');
@@ -1737,5 +1738,25 @@
    
    }
    
+   function atualizarValorBotao() {
+       let valor = parseFloat($('#amount').val());
+
+        // valor-botao é o campo que contém o valor do botão
+        if (isNaN(valor) || valor <= 0) {
+              valor = 0; // Define um valor padrão se o valor for inválido
+        }
+
+        // Formata o valor para padrão BRL (ex: 1.234,56)
+        function formatBRL(value) {
+            return Number(value).toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        }
+
+        $('.valor-botao-pix').text(formatBRL(valor));
+
+        // cartão acrescenta 12%
+        valor = (valor * 1.12).toFixed(2); // Aumenta 12% no valor
+        $('.valor-botao-cartao').text(formatBRL(valor));
+        
+   }
    
 </script>
