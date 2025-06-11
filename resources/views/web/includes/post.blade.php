@@ -106,7 +106,7 @@
         display: none;
     }
 
-    .valor-botao-pix, .valor-botao-cartao{
+    #btnCard, #btnPIX{
         width:265px;
     }
 
@@ -1796,7 +1796,7 @@
         $('#nomeCompleto').val('');
         $('#dataNascimento').val('');
 
-        prosseguirCardPagamento = null; // Reseta a variável do formulário do MercadoPago
+        cardFormInstance = null; // Reseta a variável do formulário do MercadoPago
         
     }
 
