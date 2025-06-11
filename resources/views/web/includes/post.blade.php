@@ -1795,7 +1795,19 @@
         $('#cpf').val('');
         $('#nomeCompleto').val('');
         $('#dataNascimento').val('');
-
+        $('#paymentForm').html(`
+            <div id="paymentForm__cardNumber" class="container-div-form-card"></div>
+            <div id="paymentForm__expirationDate" class="container-div-form-card"></div>
+            <div id="paymentForm__securityCode" class="container-div-form-card"></div>
+            <input type="text"    id="paymentForm__cardholderName"/>
+            <select id="paymentForm__issuer" class="form-control select-form-card ocutar"></select>
+            <select id="paymentForm__installments" class="form-control select-form-card"></select>
+            <select id="paymentForm__identificationType" class="form-control select-form-card ocutar"></select>
+            <input type="text"    id="paymentForm__identificationNumber"/>
+            <input type="email"   id="paymentForm__cardholderEmail"/>
+            <button type="submit" id="paymentForm__submit">Pagar</button>
+            <progress value="0" class="progress-bar ocutar">Carregando...</progress>
+        `);
         cardFormInstance = null; // Reseta a variável do formulário do MercadoPago
         
     }
