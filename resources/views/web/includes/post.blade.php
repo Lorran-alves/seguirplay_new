@@ -118,17 +118,15 @@
          <div class="modal-body text-center">
             <img class="icons img-category" src="{{ asset('web_assets/img/value-icon01.png') }}">
             <h2 id="title01">Digite seu nome de usuário</h2>
-            <p class="modal_paragraf">Tem duvidas como solitar o pedido entra no <a style="color:#781f60" href="https://typebot.io/seguirplay" target="_blank">Chat Online</a>
             <p class="modal_paragraf"><a style="color:#781f60"target="_blank">ATENÇÃO!</a></p>
-            <p class="modal_paragraf">Em caso de seguidores, inscritos, lives, visualizações em stories, grupos e curtidas em páginas, coloque o link do canal, grupo ou perfil.</p>
-            <p class="modal_paragraf">Em caso de visualizações, curtidas, comentários, compartilhamentos, impressões, alcance, curtida em comentários específicos e horas assistidas. Coloque o link da publicação, comentários específicos ou vídeo/reels/shorts.</p>
+            <p class="modal_paragraf">Tem duvidas como solitar o pedido entra no <a style="color:#781f60" href="https://typebot.io/seguirplay" target="_blank">Chat Online</a>
             <p class="modal_paragraf">Prazo de entrega é de até 24 horas e pode chegar a até 72 horas em alguns casos, para fazer a entrega dos serviços.</p>
             <p class="modal_paragraf">Prazo de entrega em serviços em LIVES é de 10 minutos a 20 minutos.</p>
             <p class="modal_paragraf">Prazo de entrega para hora de exibições é de 7/30 dias, não é possível acelerar.</p>
             <p class="modal_paragraf">Necessário que o <a style="color:#781f60"target="_blank">PERFIL, CANAL, VIDEOS, GRUPO, FOTO OU REELS</a> esteje totalmente em <a style="color:#781f60"target="_blank">MODO PÚBLICO.</a></p>
             <p class="modal_paragraf">Ao solicitar este serviço, você concorda em ter lido e entendido os <a style="color:#781f60" href="https://seguirplay.com/termos-e-condicoes" target="_blank">Termos e condições</a> e <a style="color:#781f60" href="https://seguirplay.com/politicas-de-privacidade" target="_blank">Políticas de privacidade</a></p>
             <form id="formUserPurchase">
-               <input id="linkEmbed" type="text" placeholder="Cole o link aqui" autocapitalize="none" autocomplete="none">
+               <input id="linkEmbed" type="text" placeholder="Por favor, Insira o link aqui 🙂" autocapitalize="none" autocomplete="none">
                <input type="hidden" id="urlEscolhida">
                <input type="hidden" id="purchase_id">
                <p class="text-danger d-none">Preencha esse campo</p>
@@ -348,8 +346,8 @@
          <div class="modal-body text-center">
             <img class="icons img-category" src="{{ asset('web_assets/img/value-icon01.png') }}">
             <h2 class="userInstagram"></h2>
-            <button id="btnPIX" class="mb-3">Pagar com PIX - R$<span class="valor-botao-pix" style="color: white"></span> <i class="fas fa-arrow-right"></i></button>
-            <button id="btnCard" class="mb-3" style="display:none;">Pagar com Cartão - R$<span class="valor-botao-cartao" style="color: white"></span> <i class="fas fa-arrow-right"></i></button>
+            <button id="btnPIX" class="mb-3">Pagar com PIX - R$ <span class="valor-botao-pix" style="color: white"></span> <i class="fas fa-arrow-right"></i></button>
+            <button id="btnCard" class="mb-3" style="display:none;">Pagar com Cartão - R$ <span class="valor-botao-cartao" style="color: white"></span> <i class="fas fa-arrow-right"></i></button>
             <p class="modal_paragraf">
                <b>
                   Como pagar pelo PIX ou Cartão de Crédito
@@ -627,7 +625,6 @@
    
    let isValid = false;
    
-    // Ricardo - mexendo - corrigindo os link
    const validators = {
         instagram: {
             profile: link => {
@@ -779,18 +776,40 @@
        }
        };
    
+    // Verificação adicional para impedir QR PIX
+    const lowerInput = input.toLowerCase();
+    if (lowerInput.includes("pix") && lowerInput.includes("qr")) {
+        voltarAoModal(2);
+        alert('Ah, parece que você colou um QR Code do Pix. 😅 Para continuar, insira um link do conteúdo — links de pagamento não são aceitos por aqui.');
+        setTimeout(() => {
+            voltarAoModal(2);
+        }, 300);
+        return false;
+    }
+   
+   
    if (validators[social] && validators[social][type]) {
        isValid = validators[social][type](input);
    }
-   
-   if (!isValid) {
-       voltarAoModal(2)
-       alert('Por favor, insira um link válido para o serviço selecionado.');
-       setTimeout(() => {
-           voltarAoModal(2)
-       }, 300);
-       return false;
-   }
+    
+    // Verificação link's
+    if (!isValid) {
+        voltarAoModal(2);
+        
+        if (type === 'profile') {
+            alert('Opa! Esse link não parece ser de um perfil ou canal válido. Dá uma conferida no formato e tenta colar novamente! 😊');
+        } else if (type === 'post') {
+            alert('Hmm... Esse link não parece levar para uma foto ou vídeo válido. Que tal verificar rapidinho e tentar de novo! 📸🎥');
+        } else {
+            alert('Ei! Precisamos de um link válido para continuar com esse serviço. Dá uma olhadinha no link e tenta de novo! 😉');
+        }
+    
+        setTimeout(() => {
+            voltarAoModal(2);
+        }, 300);
+        
+        return false;
+    }
    
    // Se for Instagram + perfil, vamos validar na API
    if (social === 'instagram' && type === 'profile') {
@@ -805,7 +824,7 @@
            }
        }).done(function (response) {
            if (response.user.is_private) {
-               alert('O perfil está privado. Por favor, torne público para continuar.');
+               alert('Opa! Parece que o perfil está privado. Para seguirmos com o serviço, você pode deixá-lo público temporariamente? 🔓🙂');
                setTimeout(() => {
                    voltarAoModal(2)
                }, 300);
@@ -876,9 +895,6 @@
            $("#phone").attr("type", 'hidden');
            $(".iti").hide(); // Isso oculta o elemento de mascara do telefone
            $('.continuar-fluxo-normal').hide()
-   
-           
-   
        }
        
    })

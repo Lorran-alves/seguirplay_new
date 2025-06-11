@@ -105,6 +105,9 @@
     .ocutar {
         display: none;
     }
+    .valor-botao-pix, .valor-botao-cartao{
+        width:265px;
+    }
 
 </style>
 <!-- Modal -->
