@@ -352,7 +352,7 @@
             <img class="icons img-category" src="{{ asset('web_assets/img/value-icon01.png') }}">
             <h2 class="userInstagram"></h2>
             <button id="btnPIX" class="mb-3">Pagar com PIX - R$ <span class="valor-botao-pix" style="color: white"></span> <i class="fas fa-arrow-right"></i></button>
-            <button id="btnCard" class="mb-3" style="display:none;">Pagar com Cartão - R$ <span class="valor-botao-cartao" style="color: white"></span> <i class="fas fa-arrow-right"></i></button>
+            <button id="btnCard" class="mb-3">Pagar com Cartão - R$ <span class="valor-botao-cartao" style="color: white"></span> <i class="fas fa-arrow-right"></i></button>
             <p class="modal_paragraf">
                <b>
                   Como pagar pelo PIX ou Cartão de Crédito
@@ -399,7 +399,7 @@
    <div class="modal-dialog">
       <div class="modal-content">
          <div class="modal-header">
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onclick="closeModal()"></button>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onclick="closeModal(true)"></button>
          </div>
          <div class="modal-body text-center">
             <img  src="{{ asset('web_assets/img/cart.svg') }}">
@@ -1214,7 +1214,7 @@
    
    }
    
-   function closeModal(){
+   function closeModal( reload = false) {
    
        $("#linkEmbed").val('');
        $("#check_link").prop("checked", false);
@@ -1230,8 +1230,14 @@
        $("#feedbackCupom").text('');
        $("#phone").val();
        $("#divRetornoDadosApi").hide();
-       resetMercadoPagoForm();
-   }
+
+       if(reload){
+        // refresh na pagina do usuario
+        window.location.reload();
+       }
+
+
+    }
    
    $(document).ready(function () {
        
@@ -1788,31 +1794,5 @@
         $('.valor-botao-cartao').text(formatBRL(valor));
         
    }
-
-
-    function resetMercadoPagoForm() {
-        // Limpa os campos do formulário de data nascimento, CPF e nome completo
-        $('#cpf').val('');
-        $('#nomeCompleto').val('');
-        $('#dataNascimento').val('');
-        $('#paymentForm').html(`
-            <div id="paymentForm__cardNumber" class="container-div-form-card"></div>
-            <div id="paymentForm__expirationDate" class="container-div-form-card"></div>
-            <div id="paymentForm__securityCode" class="container-div-form-card"></div>
-            <input type="text"    id="paymentForm__cardholderName"/>
-            <select id="paymentForm__issuer" class="form-control select-form-card ocutar"></select>
-            <select id="paymentForm__installments" class="form-control select-form-card"></select>
-            <select id="paymentForm__identificationType" class="form-control select-form-card ocutar"></select>
-            <input type="text"    id="paymentForm__identificationNumber"/>
-            <input type="email"   id="paymentForm__cardholderEmail"/>
-            <button type="submit" id="paymentForm__submit">Pagar</button>
-            <progress value="0" class="progress-bar ocutar">Carregando...</progress>
-        `);
-        cardFormInstance = null; // Reseta a variável do formulário do MercadoPago
-        
-    }
-
-    
-
    
 </script>
