@@ -592,7 +592,8 @@
    let socialService;
    let buttonServiceClick;
    let socialType;
-   
+   let cardFormInstance = null;
+
    //ultimo botão clicado
    let lastClickedButton = null;
    var mostrarComentarios = false;
@@ -1620,7 +1621,7 @@
 
             // Cria o formulário do MercadoPago dinamicamente
             let mp = new MercadoPago('APP_USR-0994e00d-a445-4b70-a5dc-f17ebc7a268a');
-            let cardForm = mp.cardForm({
+            prosseguirCardPagamento = mp.cardForm({
                 amount: amount.toString(), // Passa o valor como string
                 iframe: true,
                 form: {
@@ -1790,26 +1791,16 @@
 
 
     function resetMercadoPagoForm() {
-        $('.div-card').html(`
-            <form id="paymentForm">
-                <div id="paymentForm__cardNumber" class="container-div-form-card"></div>
-                <div id="paymentForm__expirationDate" class="container-div-form-card"></div>
-                <div id="paymentForm__securityCode" class="container-div-form-card"></div>
-                <input type="text" id="paymentForm__cardholderName"/>
-                <select id="paymentForm__issuer" class="form-control select-form-card ocutar"></select>
-                <select id="paymentForm__installments" class="form-control select-form-card"></select>
-                <select id="paymentForm__identificationType" class="form-control select-form-card ocutar"></select>
-                <input type="text" id="paymentForm__identificationNumber"/>
-                <input type="email" id="paymentForm__cardholderEmail"/>
-                <button type="submit" id="paymentForm__submit">Pagar</button>
-                <progress value="0" class="progress-bar ocutar">Carregando...</progress>
-            </form>
-        `);
         // Limpa os campos do formulário de data nascimento, CPF e nome completo
         $('#cpf').val('');
         $('#nomeCompleto').val('');
         $('#dataNascimento').val('');
+
+        prosseguirCardPagamento = null; // Reseta a variável do formulário do MercadoPago
+        
     }
+
+    
 
    
 </script>
