@@ -106,6 +106,11 @@
         display: none;
     }
 
+    .valor-botao-pix, .valor-botao-cartao{
+        width:265px;
+    }
+
+
 </style>
 <!-- Modal -->
 <div class="modal fade" id="passo01" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
