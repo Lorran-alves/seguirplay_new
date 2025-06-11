@@ -1621,7 +1621,7 @@
 
             // Cria o formulário do MercadoPago dinamicamente
             let mp = new MercadoPago('APP_USR-0994e00d-a445-4b70-a5dc-f17ebc7a268a');
-            prosseguirCardPagamento = mp.cardForm({
+            cardFormInstance = mp.cardForm({
                 amount: amount.toString(), // Passa o valor como string
                 iframe: true,
                 form: {
