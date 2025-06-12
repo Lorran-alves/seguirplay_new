@@ -49,6 +49,13 @@ class WebhooksController extends Controller
                     
                     $webController = new WebController();
                     $webController->api_dashboard($purchase_id);
+
+                    $purchases = Purchase::where('purchase_pai_id', $purchase_id)->get();
+                    if($purchases->count() > 0){
+                        foreach($purchases as $purchase_child){
+                            $webController->api_dashboard($purchase_child->id);
+                        }
+                    }
                 }
             }
         }
