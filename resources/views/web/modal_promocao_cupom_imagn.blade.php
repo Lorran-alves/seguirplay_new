@@ -8,15 +8,15 @@
             </div>
             <div class="modal-body text-center" style="padding: 0;">
                 <div class="modal-body p-0">
-                    <!-- Principal imagem -->
+                    <!-- Principal imagem  -->
                     <a href="https://whatsapp.com/channel/0029Vb0Hhba72WTvfc2ugV2s/161">
-                        <img src="{{ asset('web_assets/img/pubs/canal/enquet.png') }}" 
+                        <img src="{{ asset('web_assets/img/pubs/canal/canalgrand.png') }}" 
                              class="media-object img-responsive img-thumbnail">
                     </a> 
                 </div> 
                 <!-- Principal Imagem grande com cupom 
                 <div class="carousel-inner rounded">
-                    <img src="{{ asset('web_assets/img/pubs/canal/consu.png') }}" 
+                    <img src="{{ asset('web_assets/img/pubs/canal/namorado.png') }}" 
                          class="d-block w-100 img-promocao coupon-image-principal"
                          alt="Cupom de Desconto"
                          style="cursor: pointer;">
@@ -37,13 +37,13 @@
                          alt="Cupom de Desconto"
                          style="cursor: pointer;"> -->
                 </div>
-                <!-- Segunda imagem pequeno com cupom -->
+                <!-- Segunda imagem pequeno com cupom
                             <div class="carousel-inner rounded">
                                 <img src="{{ asset('web_assets/img/pubs/canal/viralcupm.gif') }}" 
                          class="d-block w-100 img-promocao coupon-image-carrossel"
                          alt="Cupom de Desconto"
                          style="cursor: pointer;">
-                </div> 
+                </div> -->
             
                 <!-- Carrossel -->
                 <div class="modall-body p-0">
@@ -57,13 +57,13 @@
                                      onclick="window.location.href='https://www.seguirplay.com/app'"
                                      style="cursor: pointer;"> 
                             </div>
-                            <!-- Terceira imagem com link 
+                            <!-- Terceira imagem com link -->
                             <div class="carousel-item">
                                 <img src="{{ asset('web_assets/img/pubs/canal/viralcupm.gif') }}" 
                                      class="d-block w-100 img-promocao coupon-image-carrossel"
                                      alt="Cupom de Desconto"
                                      style="cursor: pointer;"> 
-                            </div> -->
+                            </div> 
                             <!-- Quarto imagem com link -->
                             <div class="carousel-item">
                                 <img src="{{ asset('web_assets/img/pubs/canal/viral.gif') }}" 
@@ -97,7 +97,7 @@
 <script>
     // Função para copiar cupom principal
     function copiarCupomPrincipal() {
-        const cupom = 'SUPERDIA30';
+        const cupom = 'BEIJOSEGUIDO';
         navigator.clipboard.writeText(cupom)
             .then(() => {
                 alert(`🎉 Cupom "${cupom}" copiado para a área de transferência!`);

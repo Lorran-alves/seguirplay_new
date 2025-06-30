@@ -378,7 +378,7 @@
          </div>
          <div class="modal-body text-center">
             <img class="icons img-category" src="{{ asset('web_assets/img/value-icon01.png') }}">
-            <h2> Realize seu pagamento via PIX</h2>
+            <h2>Realize seu pagamento via PIX</h2>
             <img id="load" src="https://upload.wikimedia.org/wikipedia/commons/b/b1/Loading_icon.gif?20151024034921" alt="">
             <div class="row" id="dix-pix" style="display:none;" >
                <div class="col-md-12">
@@ -571,7 +571,7 @@
          data-socialtype="{{ $plan->type_social }}"
          data-islink="{{ $plan->type }}"
          @if($plan->type == 4) cmnt="c" @endif >
-         Comprar Agora
+         Começar Agora
          <i class="fas fa-arrow-right"></i></button>
       </div>
    </div>

@@ -20,8 +20,10 @@ use Illuminate\Support\Facades\Mail;
 use App\Http\Controllers\Web\CartController;
 use App\Http\Controllers\Web\LinkController;
 use App\Http\Controllers\Dashboard\GestorPedidoManualController;
-
+use App\Http\Middleware\ExecutaDashboardMiddleware;
+use App\Models\Category;
 use App\Models\Plan;
+use App\Models\Purchase;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,6 +35,13 @@ use App\Models\Plan;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+Route::get('/teste-email', function () {
+    $p = Purchase::where('email', 'ricardo.ramos803@gmail.com')->orderBy('id', 'desc')->first();
+    $plan_a = Plan::find($p->plan_id);
+    $category = Category::find($plan_a->category_id);
+    Mail::send(new PaymentMail($p->email, 'você', $plan_a, $category->title, $p));
+});
 
 // Dashboard
 Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.'], function () {
@@ -155,7 +164,9 @@ Route::controller(CartController::class)->group(function () {
 
 // Web
 Route::group(['as' => 'web.'], function () {
-    Route::controller(WebController::class)->group(function () {
+    Route::controller(WebController::class)
+    // ->middleware(ExecutaDashboardMiddleware::class)
+    ->group(function () {
         Route::get('/', 'home')->name('home');
         Route::post('/pedido', 'verificaPedido')->name('verificaPedido');
         Route::get('/pedido/{email?}', 'pedidos')->name('pedidos');
@@ -174,8 +185,6 @@ Route::group(['as' => 'web.'], function () {
         Route::get('/compra-finalizada', 'compraFinalizada')->name('compraFinalizada');
         Route::post('/verificarCupom', 'verificarCupom')->name('verificarCupom');
         // Route::get('/api_home', 'api_home')->name('api_home');
-        
-        
     });
     
     Route::controller(LinkController::class)->group(function () {
