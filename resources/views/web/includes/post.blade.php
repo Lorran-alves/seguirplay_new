@@ -1623,6 +1623,8 @@
 
             $('paymentForm__cardholderName').val(nomeCompleto);
             $('paymentForm__identificationNumber').val(cpf);
+            
+            let formValid = false;
 
             // Cria o formulário do MercadoPago dinamicamente
             let mp = new MercadoPago('APP_USR-0994e00d-a445-4b70-a5dc-f17ebc7a268a');
@@ -1673,8 +1675,30 @@
                         if (error) return console.warn("Form Mounted handling error: ", error);
                         console.log("Form mounted");
                     },
+                    onValidityChange: function(data) {
+                        formValid = data.valid;    
+                    }
                     onSubmit: event => {
                         event.preventDefault();
+
+                        if (!formValid) {
+                            const formDataRaw = cardForm.getCardFormData();
+
+                            // Verifica se o formulário está válido
+                            const mensagensErro = [];
+
+                            for (const campo in formDataRaw.fields) {
+                                if (!formDataRaw.fields[campo].valid) {
+                                    mensagensErro.push(getErrorMessage(campo));
+                                }
+                            }
+
+                            if (mensagensErro.length > 0) {
+                                alert("Corrija os seguintes erros:\n\n" + mensagensErro.join("\n"));
+                            }
+
+                            return;
+                        }
 
                         const {
                             paymentMethodId: payment_method_id,
@@ -1697,28 +1721,28 @@
                         formData.append('_token', "{{ csrf_token() }}");
 
                         $.ajax({
-                        url: urlProcessPaymentCard, // Sua rota Laravel para processar o pagamento
-                        method: 'POST',
-                        data: formData,
-                        processData: false,
-                        contentType: false,
-                        beforeSend: function () {
-                            $('#loading').css('display', 'flex'); // Mostra o loading
-                        },
-                        success: function (data) {
-                            console.log('Resposta do pagamento:', data);
-                            if (data.success) {
-                                window.location.href = urlRedirectSuccess;
+                            url: urlProcessPaymentCard, // Sua rota Laravel para processar o pagamento
+                            method: 'POST',
+                            data: formData,
+                            processData: false,
+                            contentType: false,
+                            beforeSend: function () {
+                                $('#loading').css('display', 'flex'); // Mostra o loading
+                            },
+                            success: function (data) {
+                                console.log('Resposta do pagamento:', data);
+                                if (data.success) {
+                                    window.location.href = urlRedirectSuccess;
+                                }
+                            },
+                            error: function (xhr, status, error) {
+                                console.error('Erro ao enviar pagamento:', error);
+                                // alert('Erro na requisição AJAX');
+                            },
+                            complete: function () {
+                                $('#loading').css('display', 'none'); // Mostra o loading
                             }
-                        },
-                        error: function (xhr, status, error) {
-                            console.error('Erro ao enviar pagamento:', error);
-                            // alert('Erro na requisição AJAX');
-                        },
-                        complete: function () {
-                            $('#loading').css('display', 'none'); // Mostra o loading
-                        }
-                    });
+                        });
                     },
                     onFetching: (resource) => {
                         console.log("Fetching resource: ", resource);
@@ -1743,6 +1767,23 @@
         });  
    
    }
+
+   function getErrorMessage(campo) {
+        const mensagens = {
+            cardNumber: "Número do cartão inválido.",
+            expirationDate: "Data de validade inválida.",
+            securityCode: "Código de segurança inválido.",
+            cardholderName: "Nome do titular é obrigatório.",
+            issuer: "Banco emissor inválido.",
+            installments: "Selecione a quantidade de parcelas.",
+            identificationType: "Selecione o tipo de documento.",
+            identificationNumber: "Número do CPF inválido.",
+            cardholderEmail: "E-mail inválido.",
+        };
+
+        return mensagens[campo] || "Campo inválido: " + campo;
+    }
+
    
    function cardCart(cpf, nomeCompleto, dataNascimento) {
    
