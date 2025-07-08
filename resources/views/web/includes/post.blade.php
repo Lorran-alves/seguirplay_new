@@ -1678,25 +1678,6 @@
                     onSubmit: event => {
                         event.preventDefault();
 
-                      
-                        const formDataRaw = cardForm.getCardFormData();
-
-                        // Verifica se o formulário está válido
-                        const mensagensErro = [];
-
-                        for (const campo in formDataRaw.fields) {
-                            if (!formDataRaw.fields[campo].valid) {
-                                mensagensErro.push(getErrorMessage(campo));
-                            }
-                        }
-
-                        if (mensagensErro.length > 0) {
-                            alert("Corrija os seguintes erros:\n\n" + mensagensErro.join("\n"));
-                            return;
-                        }
-
-                            // Se não houver erros, prossegue com o pagamento
-
                         const {
                             paymentMethodId: payment_method_id,
                             issuerId: issuer_id,
