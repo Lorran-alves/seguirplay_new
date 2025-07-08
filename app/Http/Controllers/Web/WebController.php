@@ -26,7 +26,6 @@ class WebController extends Controller
 {
     public function home()
     {
-
         $plans = Plan::with('category')->get();
 
 
@@ -323,6 +322,67 @@ class WebController extends Controller
         return $valorLiquido;
     }
 
+    public function atualizarStatusPedidosNaAPi(){
+        Log::info('atualizaStatusPedidosNaAPi() method started.');
+        $reembolsos = ['Refunded', 'Canceled', "Completed"];
+        
+        $dashboard = new Dashboard;
+        $period = $dashboard->getPeriod();
+
+        $orders = Order::whereNotIn('status', $reembolsos)
+            ->whereHas('purchase', function ($query) {
+                $query->where('created_at', '>=', Carbon::now()->subDays(60));
+            })->get();
+
+        $dashboard = new Dashboard;
+
+        foreach ($orders as $o) {
+            Log::info('atualizaStatusPedidosNaAPi() Processing Order ID: ' . $o->id);
+            $p = Purchase::find($o->purchase_id);
+            if ($p == null) continue;
+            $plan = Plan::find($p->plan_id);
+
+            $provedor = Provedor::where('valor', $plan->provedor)->first();
+
+            if (!isset($provedor->name)) {
+                Log::error('atualizaStatusPedidosNaAPi() Provedor not found for Plan ID: ' . $plan->id);
+                continue;
+            }
+
+            $api = new ProviderAPI($provedor->url, $provedor->token);
+
+            $status_r = $api->status($o->order_id); # return status, charge, remains, start count, currency
+
+            if (isset($status_r->status)) {
+                $oo = Order::find($o->id);
+                $oo->status = $status_r->status;
+                $oo->save();
+
+                $reembolsos = ['Refunded', 'Canceled'];
+
+                $purchase = $oo->purchase;
+                if($status_r->status === "Refunded"){
+                    $purchase->status = 'erro';
+                } else  if ($status_r->status === "Canceled") {
+                    $purchase->status = 'cancelled';
+                } else {
+                    $purchase->status = 'send';
+                }
+
+                //subtrair desepesas em caso de reembolso
+                if (in_array($status_r->status, $reembolsos) && $oo->period == $period) {
+                    Log::info('atualizaStatusPedidosNaAPi() Reembolso detectado para Order ID: ' . $o->id);
+                    $dashboard->subtrairDespesa($oo->charge, $oo->period, $p->price, $p->price_sale, $p->email);
+
+                    //colocar status como erro
+                    $p->status = 'erro';
+                    $p->save();
+                }
+            }
+            Log::info('atualizaStatusPedidosNaAPi() Processing completed for Order ID: ' . $o->id);
+        }
+    }
+
     public function api()
     {
         $dashboard = new Dashboard;
@@ -337,14 +397,18 @@ class WebController extends Controller
                 ->first();
 
             if (empty($u)) {
+                Log::info('api() method aborted. No approved purchases found.');
                 return;
             }
+
+            Log::info('api() method executing for Purchase ID: ' . $u->id);
 
             $plan_a = Plan::find($u->plan_id);
 
             $provedor = Provedor::where('valor', $plan_a->provedor)->first();
 
             if (!isset($provedor->name)) {
+                Log::error('Provedor not found for Plan ID: ' . $plan_a->id);
                 return false;
             }
 
@@ -433,7 +497,7 @@ class WebController extends Controller
                         $u->save();
                     }
 
-                    Log::error('Erro na função api(): ' . $order_r);
+                    Log::error('Erro na função api(): '  . json_encode($order_r));
                 }
             } else {
                 $order_a = array(
@@ -505,7 +569,7 @@ class WebController extends Controller
                         $u->save();
                     }
 
-                    Log::error('Erro na função api(): ' . $order_r);
+                    Log::error('Erro na função api(): '  . json_encode($order_r));
                 }
             }
             //echo('ok');
@@ -513,50 +577,6 @@ class WebController extends Controller
         } catch (\Throwable $e) {
             // Captura qualquer erro e registra no log
             Log::error('Erro fatal na função api(): ' . $e->getMessage(), ['exception' => $e]);
-        }
-
-        //ATUALIZANDO STATUS E ATUALIZANDO DESPESAS SE NECESSÁRIO
-
-        $reembolsos = ['Partial', 'Refunded', 'Canceled'];
-
-        $orders = Order::whereNotIn('status', $reembolsos)
-            ->where('status', '<>', 'Completed')
-            ->get();
-
-        $dashboard = new Dashboard;
-
-        foreach ($orders as $o) {
-            var_dump($o->purchase_id);
-            $p = Purchase::find($o->purchase_id);
-            if ($p == null) continue;
-            $plan = Plan::find($p->plan_id);
-
-            $provedor = Provedor::where('valor', $plan->provedor)->first();
-
-            if (!isset($provedor->name)) {
-                continue;
-            }
-
-            $api = new ProviderAPI($provedor->url, $provedor->token);
-
-            $status_r = $api->status($o->order_id); # return status, charge, remains, start count, currency
-
-            if (isset($status_r->status)) {
-
-                $oo = Order::find($o->id);
-                $oo->status = $status_r->status;
-                $oo->save();
-
-                //subtrair desepesas em caso de reembolso
-                if (in_array($status_r->status, $reembolsos) && $oo->period == $period) {
-
-                    $dashboard->subtrairDespesa($oo->charge, $oo->period, $p->price, $p->price_sale, $p->email);
-
-                    //colocar status como erro
-                    $p->status = 'erro';
-                    $p->save();
-                }
-            }
         }
     }
 
@@ -906,8 +926,6 @@ class WebController extends Controller
 
                 $order_r = $api->order($order_a); # Subscriptions
 
-
-
                 if (!isset($order_r->error) && $order_r != null) {
                     $status_r = $api->status($order_r->order); # return status, charge, remains, start count, currency
 
@@ -915,7 +933,6 @@ class WebController extends Controller
                     while (!isset($status_r->currency)) {
                         sleep(5); // Espera 5 segundos antes de tentar novamente
                         $status_r = $api->status($order_r->order); // Tenta obter o status novamente
-
                     }
 
                     if ($status_r->currency == 'USD') {
@@ -1008,11 +1025,16 @@ class WebController extends Controller
                 return redirect()->back()->withSuccess('Pedido abortado!');
             }
 
+            $u->status = "processing";
+            $u->save();
+
             $plan_a = Plan::find($u->plan_id);
 
             $provedor = Provedor::where('valor', $plan_a->provedor)->first();
 
             if (!isset($provedor->name)) {
+                $u->status = "approved";
+                $u->save();
                 return redirect()->back()->withErrors(['Provedor não encontrado']);
             }
 

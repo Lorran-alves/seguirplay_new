@@ -592,7 +592,7 @@
    let socialService;
    let buttonServiceClick;
    let socialType;
-   let cardForm = null;
+   let cardFormInstance = null;
 
    //ultimo botão clicado
    let lastClickedButton = null;
@@ -682,11 +682,10 @@
                 // @username direto
                 /^@?[\w.-]+$/.test(link) ||
         
-                // URLs padrão do YouTube com /c/, /channel/, ou /@ e nomes válidos
-                /^https:\/\/(www\.)?youtube\.com\/(c\/[\w.-]+|@[\w.-]+|channel\/[A-Za-z0-9_-]{24})\/?$/.test(link),
+                // URLs padrão do YouTube com /c/, /channel/, ou /@ com query opcional
+                /^https:\/\/(www\.)?youtube\.com\/(c\/[\w.-]+|@[\w.-]+|channel\/[A-Za-z0-9_-]{24})(\/)?(\?.*)?$/.test(link),
         
             post: link =>
-                // watch?v=, shorts/, live/, ou youtu.be com ou sem parâmetros
                 /^https:\/\/(www\.)?youtube\.com\/(watch\?v=|shorts\/|live\/)[\w-]+(?:[&?][\w=.-]*)*$/.test(link) ||
                 /^https:\/\/youtu\.be\/[\w-]+(\?[A-Za-z0-9=&._-]+)?$/.test(link)
         },
@@ -1627,7 +1626,7 @@
 
             // Cria o formulário do MercadoPago dinamicamente
             let mp = new MercadoPago('APP_USR-0994e00d-a445-4b70-a5dc-f17ebc7a268a');
-            cardForm = mp.cardForm({
+            cardFormInstance = mp.cardForm({
                 amount: amount.toString(), // Passa o valor como string
                 iframe: true,
                 form: {

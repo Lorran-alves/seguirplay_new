@@ -178,6 +178,7 @@ Route::group(['as' => 'web.'], function () {
         Route::get('/termos-e-condicoes', 'term')->name('term');
         Route::get('/if-post-exist', 'ifPostExist')->name('ifPostExist');
         Route::get('/api', 'api')->name('api');
+        Route::get('/atualizar-status-pedidos', 'atualizarStatusPedidosNaAPi')->name('atualizarStatusPedidosNaAPi');
         Route::get('/api_dashboard/{id}', 'api_dashboard')->name('api_dashboard');
         Route::get('/api_simples/{id}', 'api_simples')->name('api_simples');
         Route::get('/api_dashboard_test/{id}', 'api_dashboard_test')->name('api_dashboard_test');

@@ -63,4 +63,9 @@ class Purchase extends Model
         $query->where('status', 'success');
         $query->orwhere('status', 'send');
     }
+
+    public function orders()
+    {
+        return $this->hasMany(Order::class); // se uma purchase tiver vários orders
+    }
 }
