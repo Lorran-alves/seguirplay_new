@@ -1675,30 +1675,27 @@
                         if (error) return console.warn("Form Mounted handling error: ", error);
                         console.log("Form mounted");
                     },
-                    onValidityChange: function(data) {
-                        formValid = data.valid;    
-                    },
                     onSubmit: event => {
                         event.preventDefault();
 
-                        if (!formValid) {
-                            const formDataRaw = cardForm.getCardFormData();
+                      
+                        const formDataRaw = cardForm.getCardFormData();
 
-                            // Verifica se o formulário está válido
-                            const mensagensErro = [];
+                        // Verifica se o formulário está válido
+                        const mensagensErro = [];
 
-                            for (const campo in formDataRaw.fields) {
-                                if (!formDataRaw.fields[campo].valid) {
-                                    mensagensErro.push(getErrorMessage(campo));
-                                }
+                        for (const campo in formDataRaw.fields) {
+                            if (!formDataRaw.fields[campo].valid) {
+                                mensagensErro.push(getErrorMessage(campo));
                             }
+                        }
 
-                            if (mensagensErro.length > 0) {
-                                alert("Corrija os seguintes erros:\n\n" + mensagensErro.join("\n"));
-                            }
-
+                        if (mensagensErro.length > 0) {
+                            alert("Corrija os seguintes erros:\n\n" + mensagensErro.join("\n"));
                             return;
                         }
+
+                            // Se não houver erros, prossegue com o pagamento
 
                         const {
                             paymentMethodId: payment_method_id,
