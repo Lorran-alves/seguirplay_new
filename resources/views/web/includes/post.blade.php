@@ -1677,7 +1677,7 @@
                     },
                     onValidityChange: function(data) {
                         formValid = data.valid;    
-                    }
+                    },
                     onSubmit: event => {
                         event.preventDefault();
 
