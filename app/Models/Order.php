@@ -16,6 +16,7 @@ class Order extends Model
         'purchase_id',
         'period',
     ];
+    
     public $timestamps = false;
     
     public function plan()

@@ -4,7 +4,7 @@
 
             <div class="col-lg-4">
                 <img src="{{ asset('web_assets/img/logo_footer.png') }}">
-                <p>Turbine as suas redes sociais conquistando mais seguidores e engajamentos com a Seguir Play. A maneira mais rápida e segura de alcançar os seus objetivos.</p>
+                <p>Potencialize as suas redes sociais e expanda seu engajamento com a Seguir Play. Uma forma eficiente e segura de alcançar os seus objetivos.</p>
             </div>
 
             <div class="col-lg">

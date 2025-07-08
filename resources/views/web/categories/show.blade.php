@@ -2,82 +2,74 @@
 
 
 @php
-    $title = 'Conquiste Seguidores '.$category->title.' | Aumente Seu Engajamento';
-    $description = 'Turbine o engajamento nas redes sociais com a Seguir Play. Ganhe curtidas, seguidores e interações reais em todas as plataformas. Visibilidade e crescimento garantidos!';
-    $keywords = 'engajamento redes sociais, engajamento nas redes sociais, aumentar visibilidade redes sociais';
+    $title = 'Impulsione Seu Perfil '.$category->title.' - Aumente Seu Engajamento';
+    $description = 'Potencialize o engajamento nas suas redes sociais com a Seguir Play. Alcance curtidas, seguidores e interações autênticas em todas as plataformas. Amplie sua visibilidade e crescimento!';
+    $keywords = 'engajamento redes sociais, engajamento nas redes sociais, aumentar visibilidade redes sociais, marketing digital';
     
     if ($category->title === 'Instagram') {
-        $title = 'Conquiste Seguidores no Instagram - Ganhe Seguidores Reais e Aumente seu Engajamento';
-        $description = 'Aumente seu alcance no Instagram com seguidores reais e curtidas. Com a Seguir Play, você pode Conquiste seguidores no Instagram e ver seu perfil crescer com mais engajamento e credibilidade. Experimente agora!';
-        $keywords = 'Conquiste seguidores no Instagram, seguidores reais Instagram, ganhar seguidores Instagram, aumentar engajamento Instagram';
+        $title = 'Impulsione Seu Instagram | Alcance Engajamento Autêntico';
+        $description = 'Aumente seu alcance no Instagram com seguidores engajados e curtidas. Com a Seguir Play, você pode impulsionar seu Instagram e ver seu perfil crescer com mais engajamento e credibilidade. Experimente agora!';
+        $keywords = 'impulsionar seguidores Instagram, seguidores engajados Instagram, aumentar engajamento Instagram, marketing Instagram';
     }
     
     if ($category->title === 'TikTok') {
-        $title = 'Conquiste Seguidores TikTok | Seguir Play - Ganhe Seguidores Reais no TikTok';
-        $description = 'Ganhe seguidores reais e amplie seu perfil no TikTok! A Seguir Play oferece seguidores reais TikTok para fortalecer seu engajamento. Conquiste seguidores TikTok nunca foi tão seguro e eficiente.';
-        $keywords = 'Conquiste seguidores TikTok, seguidores reais TikTok, Conquiste seguidor TikTok, ganhar seguidores TikTok';
+        $title = 'Impulsione Seu TikTok | Alcance Engajamento Autêntico';
+        $description = 'Alcance seguidores e amplie seu perfil no TikTok! A Seguir Play oferece estratégias para fortalecer seu engajamento. Impulsionar seguidores no TikTok nunca foi tão seguro e eficiente.';
+        $keywords = 'impulsionar seguidores TikTok, seguidores engajados TikTok, aumentar engajamento TikTok, marketing TikTok';
     }
     
     if ($category->title === 'Youtube') {
-        $title = 'Monetização YouTube: Como Monetizar seu Canal com a Seguir Play';
+        $title = 'Monetização YouTube: Como Potencializar seu Canal com a Seguir Play';
         $description = 'Quer saber como monetizar o YouTube? Na Seguir Play, ajudamos você a alcançar a monetização e aumentar sua receita. Potencialize seu canal e ganhe inscritos no YouTube com segurança!';
-        $keywords = 'monetização YouTube, como monetizar o YouTube, ganhar inscritos YouTube';
+        $keywords = 'monetização YouTube, como monetizar o YouTube, ganhar inscritos YouTube, crescimento de canal YouTube';
     }
     
     if ($category->title === 'Facebook') {
-        $title = 'Conquiste Curtidas no Facebook | Impulsione seu Engajamento';
-        $description = 'Conquiste curtidas no Facebook é fácil e seguro com a Seguir Play. Aumente a visibilidade e engajamento da sua página. Veja nossos planos e escolha o ideal para você!';
-        $keywords =  'Conquiste curtidas Facebook, Conquiste seguidores no Facebook, aumentar engajamento Facebook';
-    
+        $title = 'Aumente Curtidas no Facebook | Impulsione seu Engajamento';
+        $description = 'Aumentar curtidas no Facebook é fácil e seguro com a Seguir Play. Amplie a visibilidade e engajamento da sua página. Veja nossos planos e escolha o ideal para você!';
+        $keywords = 'aumentar curtidas Facebook, impulsionar seguidores no Facebook, engajamento Facebook, marketing Facebook';
     }
     
     if ($category->title === 'Twitch') {
-        $title = 'Conquiste Espectadores na live twitch | Aumente seu engajamento e visibilidade';
-        $description = 'Conquiste Espectadores na live twitch com a Seguir Play, turbine suas lives no Twitch agora mesmo com nossos serviços 100% seguro e entrega imediata. Veja nossos planos e escolha o ideal para você!';
-        $keywords =  'Conquiste visualizações twitch, bot de visualizações twitch, Conquiste seguidores twitch';
-    
-    } 
+        $title = 'Aumente Espectadores em Live na Twitch | Impulsione seu Engajamento e Visibilidade';
+        $description = 'Aumente espectadores em live na Twitch com a Seguir Play. Impulsione suas transmissões agora mesmo com nossos serviços 100% seguros e entrega eficiente. Veja nossos planos e escolha o ideal para você!';
+        $keywords = 'aumentar visualizações Twitch, impulsionar lives Twitch, aumentar seguidores Twitch, marketing Twitch';
+    }
     
     if ($category->title === 'kick') {
-        $title = 'Conquiste Espectadores ao Vivo na Kick | Aumente a visibilidade das suas transmissões ao vivo';
-        $description = 'Conquiste Espectadores na live kick com a Seguir Play, Na Seguir Play ajudamos você aumente sua visibilidade na Kick com visualizadores ao vivo. Veja nossos planos e escolha o ideal para você!';
-        $keywords =  'Conquiste visualizações live kick, bot de visualizações kick, Conquiste seguidores kick';
-    
+        $title = 'Aumente Espectadores ao Vivo na Kick | Amplie a Visibilidade das Suas Transmissões';
+        $description = 'Aumente espectadores em live na Kick com a Seguir Play. Na Seguir Play, ajudamos você a ampliar sua visibilidade na Kick com visualizadores ao vivo. Veja nossos planos e escolha o ideal para você!';
+        $keywords = 'aumentar visualizações live Kick, impulsionar lives Kick, aumentar seguidores Kick, marketing Kick';
     }
-        
+    
     if ($category->title === 'Kwai') {
-        $title = 'Conquiste Seguidores Brasileiros Kwai | Impulsione seu perfil no Kwai';
-        $description = 'Conquiste Seguidores Kwai vai impulsionar o seu perfil? Com a Seguir Play você aumenta o nivél do seu perfil no Kwai. Turbine seu perfil e obtenha novos seguidores!';
-        $keywords =  'Conquiste seguidores Kwai, Conquiste visualizações kwai, Conquiste curtidas kwai';
-    
+        $title = 'Impulsione Seguidores Brasileiros no Kwai | Amplie seu Perfil no Kwai';
+        $description = 'Impulsionar seguidores no Kwai irá potencializar o seu perfil. Com a Seguir Play, você eleva o nível do seu perfil no Kwai. Potencialize seu perfil e obtenha novos seguidores!';
+        $keywords = 'impulsionar seguidores Kwai, aumentar visualizações Kwai, aumentar curtidas Kwai, marketing Kwai';
     }
-            
+    
     if ($category->title === 'WhatsApp') {
-        $title = 'Conquiste Seguidores WhatsApp | Aumenta credibilidade do seu canal no WhatsApp';
-        $description = 'Conquiste Seguidores WhatsApp na Seguir Play vai aumenta credibilidade? Aumente a autoridade do seu canal com um número significativo de membros. Faça seu canal do WhatsApp crescer!';
-        $keywords =  'Conquiste membros canal whatsapp, Conquiste seguidores canal whatsapp, Conquiste Reações Postar Canal WhatsApp';
-    
+        $title = 'Aumente Seguidores no WhatsApp | Aumente a Credibilidade do seu Canal';
+        $description = 'Aumentar seguidores no WhatsApp com a Seguir Play irá elevar a credibilidade. Aumente a autoridade do seu canal com um número significativo de membros. Faça seu canal do WhatsApp crescer!';
+        $keywords = 'aumentar membros canal WhatsApp, aumentar seguidores canal WhatsApp, reações em post de canal WhatsApp';
     }
-                
+    
     if ($category->title === 'Telegram') {
-        $title = 'Conquiste membros para o Telegram | Aumenta Presença no Telegram com Seguir Play';
-        $description = 'Conquiste Membros Telegram é uma estratégia eficaz para impulsionar o crescimento canal. Impulsione seu canal Telegram. Experimente agora!';
-        $keywords =  'Conquiste membros canal Telegram, Conquiste reações telegram, Conquiste visualizações telegram';
-    
+        $title = 'Aumente Membros para o Telegram | Potencialize Sua Presença no Telegram';
+        $description = 'Aumentar membros no Telegram é uma estratégia eficaz para impulsionar o crescimento do canal. Potencialize seu canal Telegram. Experimente agora!';
+        $keywords = 'aumentar membros canal Telegram, aumentar reações Telegram, aumentar visualizações Telegram, marketing Telegram';
     }
-                    
+    
     if ($category->title === 'LinkedIn') {
-        $title = 'Conquiste Curtidas no LinkedIn | Aumenta Presença no LinkedIn com Seguir Play';
-        $description = 'Compre Seguidores e Curtidas no LinkedIn com a Seguir Play é completamente seguro e aumentar sua visibilidade. Experimente agora!';
-        $keywords =  'Conquiste seguidores linkedin, Conquiste curtidas linkedin, Conquiste Reações linkedin';
-    
+        $title = 'Impulsione Curtidas no LinkedIn | Aumente Sua Presença com a Seguir Play';
+        $description = 'Impulsionar seguidores e curtidas no LinkedIn com a Seguir Play é completamente seguro e aumentará sua visibilidade. Experimente agora!';
+        $keywords = 'impulsionar seguidores LinkedIn, aumentar curtidas LinkedIn, reações LinkedIn, marketing LinkedIn';
     }
-                    
-    if ($category->title === 'Loco') {
-        $title = 'Conquiste Visualizações ao vivo na Loco | Aumente seus especetador com Seguir Play';
-        $description = 'Conquiste Espectadores na live Loco com a Seguir Play é completamente seguro e aumentar sua visibilidade. Experimente agora!';
-        $keywords =  'Conquiste visualizações ao vivo loco, Conquiste visualizações ao vivo na loco, Conquiste visualizações para ao vivo loco';
     
+    if ($category->title === 'Loco') {
+        $title = 'Aumente Visualizações ao Vivo na Loco | Potencialize Seus Espectadores com a Seguir Play';
+        $description = 'Aumente espectadores em live na Loco com a Seguir Play. É completamente seguro e aumentará sua visibilidade. Experimente agora!';
+        $keywords = 'aumentar visualizações ao vivo Loco, aumentar espectadores ao vivo na Loco, visualizações para live Loco, marketing Loco';
     }
 @endphp
 

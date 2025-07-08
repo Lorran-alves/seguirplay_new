@@ -198,8 +198,8 @@
      aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="btn-header"  onclick="closeModal('#pix')"></button>
+            <div class="modal-header" style="display: flex; justify-content:end;">
+                <button type="button" class="btn-header"  onclick="closeModal('#pix')">X</button>
             </div>
             <div class="modal-body text-center">
                 <img class="icons img-category" src="{{ asset('web_assets/img/value-icon01.png') }}">

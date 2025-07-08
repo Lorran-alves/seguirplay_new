@@ -185,7 +185,7 @@
                                     </span>
                                     <!--<span class="badge bg-success col-lg my-2" style="color: #fff;">-->
                                     <!--    <a href="https://www.seguirplay.com/api_dashboard/{{$purchase->id}}">Enviar para a API</span>-->
-                                    <form action="{{ route('web.api_dashboard', $purchase->id) }}" method="GET" style="display: inline;">
+                                    <form action="{{ route('web.api_simples', $purchase->id) }}" method="GET" style="display: inline;">
                                         @csrf
                                         <button type="submit" class="btn-success"style=" border: none;padding: 5px;margin-top:5px !important; margin: auto;border-radius: 10px;width: 100%;">Enviar para a API</button>
                                     </form>
@@ -200,7 +200,7 @@
                                 @elseif( $purchase->status  == 'erro' )
 
                                     <span class="badge bg-warning w-100" style="color: #fff;">
-                                        Erro
+                                        Erro: {{  $purchase->log }}
                                     </span>
                                     
                                     <button type="button" class='btn-light mt-2' 

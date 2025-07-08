@@ -281,7 +281,7 @@ class PurchaseController extends Controller
             $cupomRequest = new Request([
                 'cupom' => $cupomDigitado,
                 'categoria' => $categoria->id ?? 0,
-                'plan' => $plan->id ?? 0,
+                'plano' => $plan->id ?? 0,
                 'email' => $request->email ?? null,
             ]);
 

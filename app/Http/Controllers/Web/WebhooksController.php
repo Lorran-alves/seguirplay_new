@@ -3,9 +3,7 @@
 namespace App\Http\Controllers\Web;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Http\Request;
-
 use App\Http\Controllers\Controller;
-
 use App\Models\Purchase;
 
 class WebhooksController extends Controller
@@ -48,7 +46,14 @@ class WebhooksController extends Controller
                     ]);
                     
                     $webController = new WebController();
-                    $webController->api_dashboard($purchase_id);
+                    $webController->api_simples($purchase_id);
+
+                    $purchases = Purchase::where('purchase_pai_id', $purchase_id)->get();
+                    if($purchases->count() > 0){
+                        foreach($purchases as $purchase_child){
+                            $webController->api_simples($purchase_child->id);
+                        }
+                    }
                 }
             }
         }

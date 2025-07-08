@@ -218,7 +218,7 @@
     </div>
     <div class="buttons">
       <button class="button" data-bs-toggle="modal" data-bs-target="#pedidoModal">Informações do Pedido</button>
-      <a href="{{ route('web.pedidos')}}" class="button">Acompanhar Pedido</a>
+      <a href="{{ route('web.pedidos', ['email' => $purchase->email])}}" class="button">Acompanhar Pedido</a>
       <a href="https://seguirplay.bio.link/" class="button">Suporte</a>
       <a href="{{ route('web.home')}}" class="button back-home">Voltar para Página Inicial</a>
     </div>
@@ -336,25 +336,6 @@
     
       // Executar a função após o carregamento da página
       document.addEventListener('DOMContentLoaded', captureAndSendEvents);
-    </script>
-    <script>
-     document.addEventListener("DOMContentLoaded", function () {
-        console.log('teste');
-    
-        // Usa a mesma rota definida no Blade
-        const url = "{{ route('web.api_simples', $purchase->id) }}";
-    
-        fetch(url)
-          .then(response => {
-            
-          })
-          .then(data => {
-            console.log('Requisição para /api concluída com sucesso:', data);
-          })
-          .catch(error => {
-            console.error('Erro ao fazer requisição para /api:', error);
-          });
-      });
     </script>
 </body>
 </html>
