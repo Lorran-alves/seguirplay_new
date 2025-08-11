@@ -257,6 +257,7 @@ class WebController extends Controller
             'Pending'      => ['status1', 'Organizando Para Entregar'],
             'Processing'   => ['status1', 'Preparando o Pedido'],
             'Partial'      => ['status0', 'Ops, algo deu errado!'], // rembolsado
+            'Parcial'      => ['status0', 'Ops, algo deu errado!'], // rembolsado
             'In progress'  => ['status2', 'Em processamento de entrega'],
             'Refunded'     => ['status0', 'Ops, algo deu errado!'], // rembolsado
             'Completed'    => ['status3', 'Concluido a entregar'],
@@ -302,7 +303,7 @@ class WebController extends Controller
     {
         // Define as taxas de juros para cada método
         $taxas = [
-            'pix' => 0.99 / 100,
+            'pix' => 0.60 / 100,
             'account_money' => 4.99 / 100,
             'master' => 4.98 / 100,
         ];
@@ -324,14 +325,14 @@ class WebController extends Controller
 
     public function atualizarStatusPedidosNaAPi(){
         Log::info('atualizaStatusPedidosNaAPi() method started.');
-        $reembolsos = ['Refunded', 'Canceled', "Completed"];
+        $reembolsos = ['Refunded', 'Canceled', 'Parcial', 'Partial'];
         
         $dashboard = new Dashboard;
         $period = $dashboard->getPeriod();
 
         $orders = Order::whereNotIn('status', $reembolsos)
             ->whereHas('purchase', function ($query) {
-                $query->where('created_at', '>=', Carbon::now()->subDays(60));
+                $query->where('created_at', '>=', Carbon::now()->subDays(1));
             })->get();
 
         $dashboard = new Dashboard;
@@ -358,12 +359,10 @@ class WebController extends Controller
                 $oo->status = $status_r->status;
                 $oo->save();
 
-                $reembolsos = ['Refunded', 'Canceled'];
-
                 $purchase = $oo->purchase;
                 if($status_r->status === "Refunded"){
                     $purchase->status = 'erro';
-                } else  if ($status_r->status === "Canceled") {
+                } else  if ($status_r->status === "Canceled" || $status_r->status === "Partial" || $status_r->status === "Parcial") {
                     $purchase->status = 'cancelled';
                 } else {
                     $purchase->status = 'send';

@@ -70,11 +70,20 @@
         <div class="row footer">
 
             <div class="col-lg-4">
-               <img src="{{ asset('web_assets/img/cards.png') }}">
+               
+               <a href="https://transparencyreport.google.com/safe-browsing/search?url=seguirplay.com&hl=pt_BR"><img src="{{ asset('web_assets/img/logotipo-google-safe-browsing.svg') }}"  height="28" ></a>
+               <a href="https://www.siteconfiavel.com.br/site/seguirplay-com?id=6876e6dc3d9eaecd82c2764f"><img src="{{ asset('web_assets/img/siteconfiavel.svg') }}" height="28"></a>
+               <a href="https://www.mercadopago.com.br/"><img src="{{ asset('web_assets/img/mercado_pago.svg') }}"  height="28"></a>
+               <img src="{{ asset('web_assets/img/pix.svg') }}" height="28">
+               <img src="{{ asset('web_assets/img/cartvisa.svg') }}" height="28">
+               <img src="{{ asset('web_assets/img/cartmst.svg') }}" height="28">
+               
+               
             </div>
 
             <div class="col-lg-8 text-end mauto">
-                <p>Copyright © {{ date('Y') }} {{ config('app.name') }}. Todos os direitos reservados. </p>
+                <p>Copyright © {{ date('Y') }} {{ config('app.name') }} LDTA CNPJ: 42.299.542/0001-57. Todos os direitos reservados.</p>
+                
             </div>
         </div>
         <div style="text-align:center">

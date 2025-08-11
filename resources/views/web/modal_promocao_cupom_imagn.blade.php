@@ -9,8 +9,8 @@
             <div class="modal-body text-center" style="padding: 0;">
                 <div class="modal-body p-0">
                     <!-- Principal imagem  -->
-                    <a href="https://whatsapp.com/channel/0029Vb0Hhba72WTvfc2ugV2s/161">
-                        <img src="{{ asset('web_assets/img/pubs/canal/canalgrand.png') }}" 
+                    <a href="https://seguirplay.com/loja/">
+                        <img src="{{ asset('web_assets/img/pubs/canal/shopee-ofertas.jpg') }}" 
                              class="media-object img-responsive img-thumbnail">
                     </a> 
                 </div> 

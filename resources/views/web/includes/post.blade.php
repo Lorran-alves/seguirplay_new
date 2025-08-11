@@ -352,7 +352,7 @@
             <img class="icons img-category" src="{{ asset('web_assets/img/value-icon01.png') }}">
             <h2 class="userInstagram"></h2>
             <button id="btnPIX" class="mb-3">Pagar com PIX - R$ <span class="valor-botao-pix" style="color: white"></span> <i class="fas fa-arrow-right"></i></button>
-            <button id="btnCard" class="mb-3">Pagar com Cartão - R$ <span class="valor-botao-cartao" style="color: white"></span> <i class="fas fa-arrow-right"></i></button>
+            <!--<button id="btnCard" class="mb-3">Pagar com Cartão - R$ <span class="valor-botao-cartao" style="color: white"></span> <i class="fas fa-arrow-right"></i></button>-->
             <p class="modal_paragraf">
                <b>
                   Como pagar pelo PIX ou Cartão de Crédito
@@ -379,7 +379,7 @@
          <div class="modal-body text-center">
             <img class="icons img-category" src="{{ asset('web_assets/img/value-icon01.png') }}">
             <h2>Realize seu pagamento via PIX</h2>
-            <img id="load" src="https://upload.wikimedia.org/wikipedia/commons/b/b1/Loading_icon.gif?20151024034921" alt="">
+            <img id="load" src="{{ asset('web_assets/img/loandig.gif') }}" alt="">
             <div class="row" id="dix-pix" style="display:none;" >
                <div class="col-md-12">
                   <img src="" id="img-pix" width="100%" alt="">
@@ -677,18 +677,23 @@
                     /^https:\/\/(www\.)?kwai\.com\/(@[\w.-]+\/video|short-video)\/[\w-]+\/?(?:\?.*)?$/.test(link) ||
                     /^https:\/\/k\.kwai\.com\/p\/[\w-]+\/?(?:\?.*)?$/.test(link)
         },
+        // alterado 07/08/2025 "Ricardo"
         youtube: {
-            profile: link =>
-                // @username direto
-                /^@?[\w.-]+$/.test(link) ||
+                profile: link =>
+                // Desabilitado: entrada direta tipo @usuario
+                // /^@?[\w.-]+$/.test(link) ||
         
-                // URLs padrão do YouTube com /c/, /channel/, ou /@ com query opcional
-                /^https:\/\/(www\.)?youtube\.com\/(c\/[\w.-]+|@[\w.-]+|channel\/[A-Za-z0-9_-]{24})(\/)?(\?.*)?$/.test(link),
-        
-            post: link =>
-                /^https:\/\/(www\.)?youtube\.com\/(watch\?v=|shorts\/|live\/)[\w-]+(?:[&?][\w=.-]*)*$/.test(link) ||
-                /^https:\/\/youtu\.be\/[\w-]+(\?[A-Za-z0-9=&._-]+)?$/.test(link)
+                // Permitido:
+                // - https://youtube.com/@usuario
+                // - https://youtube.com/@usuario?si=...
+                // - https://www.youtube.com/channel/UCvHJUYpIcWRyF5Qk47nm_KA
+                /^https:\/\/(www\.)?youtube\.com\/(@[\w.-]+(\?.*)?|channel\/[A-Za-z0-9_-]{24})(\/)?(\?.*)?$/.test(link),
+                
+                post: link =>
+                    /^https:\/\/(www\.)?youtube\.com\/(watch\?v=|shorts\/|live\/)[\w-]+(?:[&?][\w=.-]*)*$/.test(link) ||
+                    /^https:\/\/youtu\.be\/[\w-]+(\?[A-Za-z0-9=&._-]+)?$/.test(link)
         },
+
         facebook: {
             profile: link =>
                 // 1. Formato genérico de nome de usuário
@@ -781,17 +786,33 @@
        }
        };
    
-    // Verificação adicional para impedir QR PIX
-    const lowerInput = input.toLowerCase();
-    if (lowerInput.includes("pix") && lowerInput.includes("qr")) {
+    // Função para detectar códigos Pix
+    const isPixCode = input => {
+        const cleaned = input.trim().toLowerCase();
+        const possiblePix =
+            cleaned.startsWith('000201') ||
+            cleaned.includes('br.gov.bcb.pix') ||
+            /^[0-9]{20,}$/.test(cleaned) ||
+            /[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}/.test(cleaned) && cleaned.includes('pix') ||
+            cleaned.includes('5204') && cleaned.includes('5405') && cleaned.includes('6304');
+        return possiblePix;
+    };
+    
+    // Impede links Pix
+    if (isPixCode(input)) {
         voltarAoModal(2);
-        alert('Ah, parece que você colou um QR Code do Pix. 😅 Para continuar, insira um link do conteúdo — links de pagamento não são aceitos por aqui.');
+        alert('Ah, parece que você colou um QR Code do Pix. 😅 Para continuar, insira um link do conteúdo — QR Code do PIX de pagamento não são aceitos por aqui.');
         setTimeout(() => {
             voltarAoModal(2);
         }, 300);
         return false;
     }
-   
+    
+    // Validação normal com os validators
+    if (validators[social] && validators[social][type]) {
+        isValid = validators[social][type](input);
+    }
+
    
    if (validators[social] && validators[social][type]) {
        isValid = validators[social][type](input);

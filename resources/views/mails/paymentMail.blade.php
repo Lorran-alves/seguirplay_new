@@ -304,8 +304,9 @@ table, td { color: #000000; } #u_body a { color: #0000ee; text-decoration: under
                         <tbody>
                             <tr>
                                 <td style="padding: 15px; border-bottom: 1px solid #f0f0f0; font-family: 'Alata', sans-serif;">
-                                    <p style="font-weight: bold; color: #781F60; margin-bottom: 5px;">Item:</p>
+                                    <p style="font-weight: bold; color: #781F60; margin-bottom: 5px;">Categoria:</p>
                                     <p class="item-name" style="font-weight: bold; color: #952852;">{{$category}}</p>
+                                    <p style="font-weight: bold; color: #781F60; margin-bottom: 5px;">Serviço:</p>
                                     <p class="item-description" style="color: #781F60; font-size: 13px; margin-bottom: 10px;">{{$servico}}</p>
 
                                     <p style="font-weight: bold; color: #781F60; margin-bottom: 5px;">Quantidade Adquirida:</p>

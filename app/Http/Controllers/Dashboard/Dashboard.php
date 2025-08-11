@@ -88,6 +88,7 @@ class Dashboard extends Controller
     public function __construct()
     {   
         $this->period = $this->getPeriod();
+        
         $modelDashboard = ModelDashboard::firstOrCreate(['period' => $this->period], [
             'period' => $this->period,
             'total_sales' => 0,
