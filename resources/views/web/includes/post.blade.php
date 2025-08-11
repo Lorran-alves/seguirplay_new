@@ -1256,6 +1256,8 @@
         window.location.reload();
        }
 
+        // Remove todos os inputs de comentário dinâmicos ao fechar modal
+        $("input[cmnt='d']").remove();
 
     }
    
