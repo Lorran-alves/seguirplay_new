@@ -281,9 +281,8 @@
                <input type="hidden" name="plano_id" value="">
                <input type="hidden" name="categoria_id" value="">
                <input type="hidden" name="cmnt_q">
-               <input type="hidden" id="amount" value="100.00">
                <input type="hidden" id="amount" value="">
-               <button>Continuar <i class="fas fa-arrow-right"></i></button>
+               <button id="continueButtonPurchase">Continuar <i class="fas fa-arrow-right"></i></button>
                <button>Adicionar ao carrinho<i class="fas fa-arrow-right"></i></button>
             </form>
             <p class="modal_paragraf">Você devera colocar o <b>NÚMERO VALIDO</b> ou <b>WhatsApp</b> com DDD e número, assim podemos entra em contato caso tenha algum dúvida sobre seu pedido</p>
@@ -620,12 +619,12 @@
    const input = $('#linkEmbed').val().trim();
    
    if (social === '') {
-      if(cookies){
-               $("#modalCart").modal('show');
-           }else{
-               // Abrir o Modal 1
-               $('#passo02').modal('show');
-           }
+        if(!cookies || mostrarComentarios){
+             // Abrir o Modal 1
+            $('#passo02').modal('show');
+        }else{
+            $("#modalCart").modal('show');
+        }
        return;
    }
    
@@ -905,23 +904,29 @@
            e.remove()
        })
        
-       for(i = 1; i <= quant; i++){
-           $('input[name="quantity"]').after('<input type="text" name="cmnt_'+i+'" placeholder="Comentário" cmnt="d" required> ')
-       }
-       $('input[name="cmnt_q"]').val(quant)
+        for(i = 1; i <= quant; i++){
+            $('input[name="quantity"]').after('<input type="text" name="cmnt_'+i+'" placeholder="Comentário" cmnt="d" required> ')
+        }
+        $('input[name="cmnt_q"]').val(quant)
        
-       if(quant > 0){
-           mostrarComentarios = true; 
-       }
-       
-       if(cookies){
+        if(quant > 0){
+            mostrarComentarios = true; 
+        }
+
+        //mostrar botao continueButtonPurchase
+        $("#continueButtonPurchase").show();
+
+        if(cookies){
+
+            // ocutar campo de continuar 
+            $("#continueButtonPurchase").hide();
            // se tiver cookies ele ocuta o campo email e telefone
            $('.ocutar-campos').hide()
            $("#inputEmail").attr("type", 'hidden');
            $("#phone").attr("type", 'hidden');
            $(".iti").hide(); // Isso oculta o elemento de mascara do telefone
            $('.continuar-fluxo-normal').hide()
-       }
+        }
        
    })
    
