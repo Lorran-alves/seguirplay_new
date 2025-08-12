@@ -619,14 +619,15 @@
    const input = $('#linkEmbed').val().trim();
    
    if (social === '') {
-        if(!cookies || mostrarComentarios){
-             // Abrir o Modal 1
-            $('#passo02').modal('show');
-        }else{
-            $("#modalCart").modal('show');
-        }
        return;
    }
+
+    if(!cookies || mostrarComentarios){
+        // Abrir o Modal 1
+        $('#passo02').modal('show');
+    }else{
+        $("#modalCart").modal('show');
+    }
    
    let isValid = false;
    
