@@ -619,13 +619,14 @@
    const input = $('#linkEmbed').val().trim();
    
    if (social === '') {
+        if(!cookies || mostrarComentarios){
+             // Abrir o Modal 1
+            $('#passo02').modal('show');
+        }else{
+            $("#modalCart").modal('show');
+        }
        return;
    }
-
-    if(!cookies || mostrarComentarios){
-        // Abrir o Modal 1
-        $('#passo02').modal('show');
-    }
    
    let isValid = false;
    
@@ -854,28 +855,33 @@
                }, 300);
                return;
            }
-
-            if(!cookies || mostrarComentarios){
-                // Abrir o Modal 1
-                $('#passo02').modal('show');
-            }
+           
+           if(cookies){
+               $("#modalCart").modal('show');
+           }else{
+               // Abrir o Modal 1
+               $('#passo02').modal('show');
+           }
        }).fail(function () {
-            if(!cookies || mostrarComentarios){
-                // Abrir o Modal 1
-                $('#passo02').modal('show');
-            }
+           if(cookies){
+               $("#modalCart").modal('show');
+           }else{
+               // Abrir o Modal 1
+               $('#passo02').modal('show');
+           }
        });
    
        return;
    }
    
-    if(!cookies || mostrarComentarios){
-        // Abrir o Modal 1
-        $('#passo02').modal('show');
-    }else{
-        $("#modalCart").modal('show'); 
-    }
-    }
+   // ✅ Se não for Instagram perfil, só mostra o modal normalmente
+   if(cookies){
+               $("#modalCart").modal('show');
+           }else{
+               // Abrir o Modal 1
+               $('#passo02').modal('show');
+           }
+   }
    
    function clear_link(social, input) {
    if (social !== 'instagram' || !input) return null;
