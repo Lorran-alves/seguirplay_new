@@ -856,33 +856,31 @@
                }, 300);
                return;
            }
-           
-           if(cookies){
-               $("#modalCart").modal('show');
-           }else{
-               // Abrir o Modal 1
-               $('#passo02').modal('show');
-           }
+
+            if(!cookies || mostrarComentarios){
+                // Abrir o Modal 1
+                $('#passo02').modal('show');
+            }else{
+                    $("#modalCart").modal('show'); 
+            }
        }).fail(function () {
-           if(cookies){
-               $("#modalCart").modal('show');
-           }else{
-               // Abrir o Modal 1
-               $('#passo02').modal('show');
-           }
+            if(!cookies || mostrarComentarios){
+                // Abrir o Modal 1
+                $('#passo02').modal('show');
+            }else{
+                    $("#modalCart").modal('show'); 
+            }
        });
    
        return;
    }
    
-   // ✅ Se não for Instagram perfil, só mostra o modal normalmente
-   if(cookies){
-               $("#modalCart").modal('show');
-           }else{
-               // Abrir o Modal 1
-               $('#passo02').modal('show');
-           }
-   }
+    if(!cookies || mostrarComentarios){
+        // Abrir o Modal 1
+        $('#passo02').modal('show');
+    }else{
+            $("#modalCart").modal('show'); 
+    }
    
    function clear_link(social, input) {
    if (social !== 'instagram' || !input) return null;
