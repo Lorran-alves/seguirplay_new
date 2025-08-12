@@ -625,8 +625,6 @@
     if(!cookies || mostrarComentarios){
         // Abrir o Modal 1
         $('#passo02').modal('show');
-    }else{
-        $("#modalCart").modal('show');
     }
    
    let isValid = false;
@@ -860,15 +858,11 @@
             if(!cookies || mostrarComentarios){
                 // Abrir o Modal 1
                 $('#passo02').modal('show');
-            }else{
-                    $("#modalCart").modal('show'); 
             }
        }).fail(function () {
             if(!cookies || mostrarComentarios){
                 // Abrir o Modal 1
                 $('#passo02').modal('show');
-            }else{
-                    $("#modalCart").modal('show'); 
             }
        });
    
@@ -876,11 +870,11 @@
    }
    
     if(!cookies || mostrarComentarios){
-            // Abrir o Modal 1
-            $('#passo02').modal('show');
-        }else{
-                $("#modalCart").modal('show'); 
-        }
+        // Abrir o Modal 1
+        $('#passo02').modal('show');
+    }else{
+        $("#modalCart").modal('show'); 
+    }
     }
    
    function clear_link(social, input) {
