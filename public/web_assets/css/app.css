@@ -310,9 +310,38 @@ header h1, header p{
 	border: none;
 }
 
+/********** ATUALIZAÇÃO BLOG ****************/
 
+        .card-title a {
+            color: #000;
+            font-size: 1.25rem;
+            font-weight: 600;
+            text-decoration: none;
+        }
+        .card-title a:hover {
+            text-decoration: underline;
+        }
+        .card-text {
+            font-size: 0.95rem;
+            color: #6c757d;
+        }
+        .card-footer a {
+            font-weight: 600;
+            background-color:#ff7200;
+            border: none;
+            color: #fff;
+            padding: 15px;
+            border-radius:100px;
+        }
 
+        .card-footer a:hover {
+            font-weight: 600;
+            background-color:#c7681a;
+            border: none;
+            color: #fff;
+        }
 
+/********** MODAL DE PROMOÇÕES ****************/
 
 
 
@@ -841,7 +870,7 @@ table td{
     }
 
     .footer img{
-    	width: 100%;
+    	width: 30%;
     }
 
     footer{

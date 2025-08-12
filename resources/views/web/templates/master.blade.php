@@ -48,13 +48,11 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js" defer></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.12/js/utils.js" defer></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.12/js/intlTelInput.min.js" defer></script>
-    
-    <!-- Efeito natal -->
-    <script src="https://code.createjs.com/createjs-2015.11.26.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+
 
     <!-- BLOG 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>-->
-
     <style>
         .card-title a {
             color: #000;
@@ -87,44 +85,24 @@
     </style>
     
     <!-- Bootstrap JavaScript -->
-                <script>
-                    const apiUrl = "https://blog.seguirplay.com//wp-json/wp/v2/posts?per_page=3&_embed"; // Inclui '_embed' para carregar imagens destacadas
-            
-                    fetch(apiUrl)
-                        .then(response => response.json())
-                        .then(posts => {
-                            let postsHtml = ""; // Variável para armazenar o HTML das postagens
-            
-                            posts.forEach(post => {
-                                // Obtém a URL da imagem destacada embutida
-                                const featuredImage = post._embedded && post._embedded['wp:featuredmedia'] 
-                                    ? post._embedded['wp:featuredmedia'][0].source_url 
-                                    : "https://via.placeholder.com/300x200"; // Imagem de placeholder caso não exista
-            
-                                // Criação do HTML para cada postagem
-                                postsHtml += `
-                                    <div class="col-md-4">
-                                        <div class="card h-100 shadow-sm">
-                                            <img src="${featuredImage}" class="card-img-top" alt="${post.title.rendered}" style="height: 200px; object-fit: cover;">
-                                            <div class="card-body">
-                                                <h5 class="card-title"><a href="${post.link}" target="_blank">${post.title.rendered}</a></h5>
-                                                <p class="card-text">${post.excerpt.rendered.replace(/<[^>]*>?/gm, '').substring(0, 120)}</p>
-                                            </div>
-                                            <div class="card-footer bg-transparent">
-                                                <a href="${post.link}" target="_blank" class="btn btn-outline-primary w-100">Leia mais</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                `;
-                            });
-            
-                            // Exibe os posts no container
-                            document.getElementById("blog-posts").innerHTML = postsHtml;
-                        }) .catch(error => console.error("Erro ao carregar API:", error));
-                </script>
+
     <!-- End BLOG -->
+    
+    <!-- TikTok Pixel Code Start -->
+    <script>
+    !function (w, d, t) {
+      w.TiktokAnalyticsObject=t;var ttq=w[t]=w[t]||[];ttq.methods=["page","track","identify","instances","debug","on","off","once","ready","alias","group","enableCookie","disableCookie","holdConsent","revokeConsent","grantConsent"],ttq.setAndDefer=function(t,e){t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}};for(var i=0;i<ttq.methods.length;i++)ttq.setAndDefer(ttq,ttq.methods[i]);ttq.instance=function(t){for(
+    var e=ttq._i[t]||[],n=0;n<ttq.methods.length;n++)ttq.setAndDefer(e,ttq.methods[n]);return e},ttq.load=function(e,n){var r="https://analytics.tiktok.com/i18n/pixel/events.js",o=n&&n.partner;ttq._i=ttq._i||{},ttq._i[e]=[],ttq._i[e]._u=r,ttq._t=ttq._t||{},ttq._t[e]=+new Date,ttq._o=ttq._o||{},ttq._o[e]=n||{};n=document.createElement("script")
+    ;n.type="text/javascript",n.async=!0,n.src=r+"?sdkid="+e+"&lib="+t;e=document.getElementsByTagName("script")[0];e.parentNode.insertBefore(n,e)};
+    
+    
+      ttq.load('D19JOJ3C77U5358112VG');
+      ttq.page();
+    }(window, document, 'ttq');
+    </script>
+    <!-- TikTok Pixel Code End -->
   
-   <!-- TikTok Pixel Code Start -->
+    <!-- TikTok Pixel Code Start -->
     <script>
     !function (w, d, t) {
     w.TiktokAnalyticsObject=t;var ttq=w[t]=w[t]||[];ttq.methods=["page","track","identify","instances","debug","on","off","once","ready","alias","group","enableCookie","disableCookie","holdConsent","revokeConsent","grantConsent"],ttq.setAndDefer=function(t,e){t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}};for(var i=0;i<ttq.methods.length;i++)ttq.setAndDefer(ttq,ttq.methods[i]);ttq.instance=function(t){for(
@@ -192,90 +170,12 @@
     })(window,document,'script','dataLayer','GTM-KK8CVLZ');</script>
     <!-- End Google Tag Manager -->
 
-    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    
 
     </head>
     <body>
       
-    <!-- Efeito natal 
-    
-    <style>
-    canvas {
-     background: transparent;
-     bottom: 0;
-     left: 0;
-     pointer-events: none;
-     position: fixed;
-     right: 0;
-     top: 0;
-    }
-    </style>
-    
-    <script>
-    var amount = 40; // quantidade de neve caindo ao mesmo tempo
-    var speed = 5; // velocidade de queda
-    
-    var canvas = document.createElement("canvas");
-    canvas.setAttribute("id", "snowCanvas");
-    document.body.appendChild(canvas);
-    
-    var canvas = document.getElementById("snowCanvas");
-    var stage = new createjs.Stage("snowCanvas");
-    
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-    
-    window.addEventListener("resize", function() {
-       canvas.width = window.innerWidth;
-       canvas.height = window.innerHeight;
-     stage.update();
-    });
-    
-    createjs.Ticker.setFPS(60); // FPS da animação, quanto mais, melhor, porém consome mais CPU
-    createjs.Ticker.addEventListener("tick", stage);
-    
-    function Particle(x, y, dx, dy, rad, alpha) {
-     this.x = x;
-     this.y = y;
-     this.dx = dx;
-     this.dy = dy;
-     this.rad = rad;
-     this.alpha = alpha;
-    
-     var circle = new createjs.Shape();
-     stage.addChild(circle);
-     circle.graphics
-      .beginFill("rgba(255,255,255,"+this.alpha+")")
-      .drawCircle(0, 0, this.rad);
-     circle.x = this.x;
-     circle.y = this.y;
-    
-     createjs.Ticker.addEventListener("tick", function() {
-      if (circle.y - rad > innerHeight || circle.x + rad > innerWidth || circle.x - rad < 0) {
-       circle.y = 0 - rad
-       circle.x = x
-      }
-    
-      circle.x += dx;
-      circle.y += dy;
-     })
-    }
-    
-    var circleArray = [];
-    
-    for (var i = 0; i < amount; i++){
-     var rad = Math.random() * 3;
-     var alpha = (70+(Math.random()*0.5))/100;
-     var x = Math.random() * (innerWidth - rad * 2) + rad;
-     var y = Math.random() * (innerHeight - rad * 2) + rad;
-     var dx = (Math.random() - 0.5);
-     var dy = (Math.random() + 0.5) * speed;
-    
-     circleArray.push(new Particle(x, y, dx, dy, rad, alpha));
-    }
-    </script>
-    <!-- End Efeito natal -->
-    
+
 
     <!-- Google Tag Manager (noscript) -->
     <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WCDXT43S"
@@ -340,6 +240,8 @@
     <script src="https://sdk.mercadopago.com/js/v2"></script>
     <script src="{{ asset(mix('web_assets/js/scripts.js')) }}"></script>
     <script src="{{ asset('web_assets/js/mercadopago.js') }}"></script>
+    <script src="{{ asset('web_assets/js/blog/script.js') }}"></script>
+    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <!-- Blog-->
     <script src="https://seguirplay.com/blog/js/external_blog_script.js"></script>

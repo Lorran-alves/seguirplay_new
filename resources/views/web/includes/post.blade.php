@@ -281,9 +281,8 @@
                <input type="hidden" name="plano_id" value="">
                <input type="hidden" name="categoria_id" value="">
                <input type="hidden" name="cmnt_q">
-               <input type="hidden" id="amount" value="100.00">
                <input type="hidden" id="amount" value="">
-               <button>Continuar <i class="fas fa-arrow-right"></i></button>
+               <button id="continueButtonPurchase">Continuar <i class="fas fa-arrow-right"></i></button>
                <button>Adicionar ao carrinho<i class="fas fa-arrow-right"></i></button>
             </form>
             <p class="modal_paragraf">Você devera colocar o <b>NÚMERO VALIDO</b> ou <b>WhatsApp</b> com DDD e número, assim podemos entra em contato caso tenha algum dúvida sobre seu pedido</p>
@@ -352,7 +351,7 @@
             <img class="icons img-category" src="{{ asset('web_assets/img/value-icon01.png') }}">
             <h2 class="userInstagram"></h2>
             <button id="btnPIX" class="mb-3">Pagar com PIX - R$ <span class="valor-botao-pix" style="color: white"></span> <i class="fas fa-arrow-right"></i></button>
-            <button id="btnCard" class="mb-3">Pagar com Cartão - R$ <span class="valor-botao-cartao" style="color: white"></span> <i class="fas fa-arrow-right"></i></button>
+            <!--<button id="btnCard" class="mb-3">Pagar com Cartão - R$ <span class="valor-botao-cartao" style="color: white"></span> <i class="fas fa-arrow-right"></i></button>-->
             <p class="modal_paragraf">
                <b>
                   Como pagar pelo PIX ou Cartão de Crédito
@@ -379,7 +378,7 @@
          <div class="modal-body text-center">
             <img class="icons img-category" src="{{ asset('web_assets/img/value-icon01.png') }}">
             <h2>Realize seu pagamento via PIX</h2>
-            <img id="load" src="https://upload.wikimedia.org/wikipedia/commons/b/b1/Loading_icon.gif?20151024034921" alt="">
+            <img id="load" src="{{ asset('web_assets/img/loandig.gif') }}" alt="">
             <div class="row" id="dix-pix" style="display:none;" >
                <div class="col-md-12">
                   <img src="" id="img-pix" width="100%" alt="">
@@ -620,12 +619,12 @@
    const input = $('#linkEmbed').val().trim();
    
    if (social === '') {
-      if(cookies){
-               $("#modalCart").modal('show');
-           }else{
-               // Abrir o Modal 1
-               $('#passo02').modal('show');
-           }
+        if(!cookies || mostrarComentarios){
+             // Abrir o Modal 1
+            $('#passo02').modal('show');
+        }else{
+            $("#modalCart").modal('show');
+        }
        return;
    }
    
@@ -677,18 +676,23 @@
                     /^https:\/\/(www\.)?kwai\.com\/(@[\w.-]+\/video|short-video)\/[\w-]+\/?(?:\?.*)?$/.test(link) ||
                     /^https:\/\/k\.kwai\.com\/p\/[\w-]+\/?(?:\?.*)?$/.test(link)
         },
+        // alterado 07/08/2025 "Ricardo"
         youtube: {
-            profile: link =>
-                // @username direto
-                /^@?[\w.-]+$/.test(link) ||
+                profile: link =>
+                // Desabilitado: entrada direta tipo @usuario
+                // /^@?[\w.-]+$/.test(link) ||
         
-                // URLs padrão do YouTube com /c/, /channel/, ou /@ com query opcional
-                /^https:\/\/(www\.)?youtube\.com\/(c\/[\w.-]+|@[\w.-]+|channel\/[A-Za-z0-9_-]{24})(\/)?(\?.*)?$/.test(link),
-        
-            post: link =>
-                /^https:\/\/(www\.)?youtube\.com\/(watch\?v=|shorts\/|live\/)[\w-]+(?:[&?][\w=.-]*)*$/.test(link) ||
-                /^https:\/\/youtu\.be\/[\w-]+(\?[A-Za-z0-9=&._-]+)?$/.test(link)
+                // Permitido:
+                // - https://youtube.com/@usuario
+                // - https://youtube.com/@usuario?si=...
+                // - https://www.youtube.com/channel/UCvHJUYpIcWRyF5Qk47nm_KA
+                /^https:\/\/(www\.)?youtube\.com\/(@[\w.-]+(\?.*)?|channel\/[A-Za-z0-9_-]{24})(\/)?(\?.*)?$/.test(link),
+                
+                post: link =>
+                    /^https:\/\/(www\.)?youtube\.com\/(watch\?v=|shorts\/|live\/)[\w-]+(?:[&?][\w=.-]*)*$/.test(link) ||
+                    /^https:\/\/youtu\.be\/[\w-]+(\?[A-Za-z0-9=&._-]+)?$/.test(link)
         },
+
         facebook: {
             profile: link =>
                 // 1. Formato genérico de nome de usuário
@@ -781,17 +785,33 @@
        }
        };
    
-    // Verificação adicional para impedir QR PIX
-    const lowerInput = input.toLowerCase();
-    if (lowerInput.includes("pix") && lowerInput.includes("qr")) {
+    // Função para detectar códigos Pix
+    const isPixCode = input => {
+        const cleaned = input.trim().toLowerCase();
+        const possiblePix =
+            cleaned.startsWith('000201') ||
+            cleaned.includes('br.gov.bcb.pix') ||
+            /^[0-9]{20,}$/.test(cleaned) ||
+            /[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}/.test(cleaned) && cleaned.includes('pix') ||
+            cleaned.includes('5204') && cleaned.includes('5405') && cleaned.includes('6304');
+        return possiblePix;
+    };
+    
+    // Impede links Pix
+    if (isPixCode(input)) {
         voltarAoModal(2);
-        alert('Ah, parece que você colou um QR Code do Pix. 😅 Para continuar, insira um link do conteúdo — links de pagamento não são aceitos por aqui.');
+        alert('Ah, parece que você colou um QR Code do Pix. 😅 Para continuar, insira um link do conteúdo — QR Code do PIX de pagamento não são aceitos por aqui.');
         setTimeout(() => {
             voltarAoModal(2);
         }, 300);
         return false;
     }
-   
+    
+    // Validação normal com os validators
+    if (validators[social] && validators[social][type]) {
+        isValid = validators[social][type](input);
+    }
+
    
    if (validators[social] && validators[social][type]) {
        isValid = validators[social][type](input);
@@ -884,23 +904,29 @@
            e.remove()
        })
        
-       for(i = 1; i <= quant; i++){
-           $('input[name="quantity"]').after('<input type="text" name="cmnt_'+i+'" placeholder="Comentário" cmnt="d" required> ')
-       }
-       $('input[name="cmnt_q"]').val(quant)
+        for(i = 1; i <= quant; i++){
+            $('input[name="quantity"]').after('<input type="text" name="cmnt_'+i+'" placeholder="Comentário" cmnt="d" required> ')
+        }
+        $('input[name="cmnt_q"]').val(quant)
        
-       if(quant > 0){
-           mostrarComentarios = true; 
-       }
-       
-       if(cookies){
+        if(quant > 0){
+            mostrarComentarios = true; 
+        }
+
+        //mostrar botao continueButtonPurchase
+        $("#continueButtonPurchase").show();
+
+        if(cookies){
+
+            // ocutar campo de continuar 
+            $("#continueButtonPurchase").hide();
            // se tiver cookies ele ocuta o campo email e telefone
            $('.ocutar-campos').hide()
            $("#inputEmail").attr("type", 'hidden');
            $("#phone").attr("type", 'hidden');
            $(".iti").hide(); // Isso oculta o elemento de mascara do telefone
            $('.continuar-fluxo-normal').hide()
-       }
+        }
        
    })
    
@@ -1235,6 +1261,8 @@
         window.location.reload();
        }
 
+        // Remove todos os inputs de comentário dinâmicos ao fechar modal
+        $("input[cmnt='d']").remove();
 
     }
    
@@ -1623,6 +1651,8 @@
 
             $('paymentForm__cardholderName').val(nomeCompleto);
             $('paymentForm__identificationNumber').val(cpf);
+            
+            let formValid = false;
 
             // Cria o formulário do MercadoPago dinamicamente
             let mp = new MercadoPago('APP_USR-0994e00d-a445-4b70-a5dc-f17ebc7a268a');
@@ -1697,28 +1727,28 @@
                         formData.append('_token', "{{ csrf_token() }}");
 
                         $.ajax({
-                        url: urlProcessPaymentCard, // Sua rota Laravel para processar o pagamento
-                        method: 'POST',
-                        data: formData,
-                        processData: false,
-                        contentType: false,
-                        beforeSend: function () {
-                            $('#loading').css('display', 'flex'); // Mostra o loading
-                        },
-                        success: function (data) {
-                            console.log('Resposta do pagamento:', data);
-                            if (data.success) {
-                                window.location.href = urlRedirectSuccess;
+                            url: urlProcessPaymentCard, // Sua rota Laravel para processar o pagamento
+                            method: 'POST',
+                            data: formData,
+                            processData: false,
+                            contentType: false,
+                            beforeSend: function () {
+                                $('#loading').css('display', 'flex'); // Mostra o loading
+                            },
+                            success: function (data) {
+                                console.log('Resposta do pagamento:', data);
+                                if (data.success) {
+                                    window.location.href = urlRedirectSuccess;
+                                }
+                            },
+                            error: function (xhr, status, error) {
+                                console.error('Erro ao enviar pagamento:', error);
+                                // alert('Erro na requisição AJAX');
+                            },
+                            complete: function () {
+                                $('#loading').css('display', 'none'); // Mostra o loading
                             }
-                        },
-                        error: function (xhr, status, error) {
-                            console.error('Erro ao enviar pagamento:', error);
-                            // alert('Erro na requisição AJAX');
-                        },
-                        complete: function () {
-                            $('#loading').css('display', 'none'); // Mostra o loading
-                        }
-                    });
+                        });
                     },
                     onFetching: (resource) => {
                         console.log("Fetching resource: ", resource);
@@ -1743,6 +1773,23 @@
         });  
    
    }
+
+   function getErrorMessage(campo) {
+        const mensagens = {
+            cardNumber: "Número do cartão inválido.",
+            expirationDate: "Data de validade inválida.",
+            securityCode: "Código de segurança inválido.",
+            cardholderName: "Nome do titular é obrigatório.",
+            issuer: "Banco emissor inválido.",
+            installments: "Selecione a quantidade de parcelas.",
+            identificationType: "Selecione o tipo de documento.",
+            identificationNumber: "Número do CPF inválido.",
+            cardholderEmail: "E-mail inválido.",
+        };
+
+        return mensagens[campo] || "Campo inválido: " + campo;
+    }
+
    
    function cardCart(cpf, nomeCompleto, dataNascimento) {
    
