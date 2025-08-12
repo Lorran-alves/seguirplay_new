@@ -611,277 +611,275 @@
        console.log(socialType);
    }
    
-   function handleUserPurchaseSubmit(e) {
-   e.preventDefault();
-   
-   const type = socialType; // 'profile' ou 'post'
-   const social = socialService; // 'instagram', 'tiktok', etc.
-   const input = $('#linkEmbed').val().trim();
-   
-   if (social === '') {
+    function handleUserPurchaseSubmit(e) {
+        e.preventDefault();
+        
+        const type = socialType; // 'profile' ou 'post'
+        const social = socialService; // 'instagram', 'tiktok', etc.
+        const input = $('#linkEmbed').val().trim();
+        
+        if (social === '') {
+            if(!cookies || mostrarComentarios){
+                // Abrir o Modal 1
+                $('#passo02').modal('show');
+            }
+            return;
+        }
+    
+        let isValid = false;
+        
+        const validators = {
+                instagram: {
+                    profile: link => {
+                        const cleaned = link.trim();
+                        return (
+                            // Valida nomes de usuário (ex: @usuario ou usuario)
+                            /^@?[A-Za-z0-9._]+$/.test(cleaned) ||
+                            // Valida URLs de perfil do Instagram sem parâmetros de consulta
+                            // (ex: https://www.instagram.com/usuario ou https://www.instagram.com/usuario/)
+                            /^https:\/\/(www\.)?instagram\.com\/[A-Za-z0-9._]+\/?$/.test(cleaned) ||
+                            // Adicionado: Valida URLs de perfil do Instagram com parâmetros de consulta
+                            // (ex: https://www.instagram.com/usuario?igsh=xxxx&utm_source=qr)
+                            /^https:\/\/(www\.)?instagram\.com\/[A-Za-z0-9._]+\/?\?.+$/.test(cleaned)
+                        );
+                    },
+                    post: link => /^https:\/\/(www\.)?instagram\.com\/(p|reel|tv)\/[A-Za-z0-9_-]+\/?(?:\?.*)?$/.test(link)
+                },
+                tiktok: {
+                    profile: link =>
+                        // @username direto ou URL de perfil/live
+                        /^@?[\w.-]+$/.test(link) ||
+                        /^https:\/\/(www\.)?tiktok\.com\/@[\w.-]+(\/live)?\/?$/.test(link),
+                
+                    post: link =>
+                        // Vídeos padrão ou links encurtados (vm.tiktok.com)
+                        /^https:\/\/(www\.)?tiktok\.com\/@[\w.-]+\/video\/\d+\/?(?:\?.*)?$/.test(link) ||
+                        /^https:\/\/vm\.tiktok\.com\/[\w/-]+\/?$/.test(link)
+                },
+                kwai: {
+                        profile: link =>
+                        // 1. Formato local: @nome.usuario ou nome.usuario
+                        /^@?[\w.-]+$/.test(link) ||
+                
+                        // 2. Formato web padrão: https://www.kwai.com/@nome.usuario
+                        /^https:\/\/(www\.)?kwai\.com\/@[\w.-]+\/?$/.test(link) ||
+                
+                        // 3. Formato k.kwai.com com barra após @: https://k.kwai.com/u/@/nome.usuario
+                        // (Revertido para [\w.-] para permitir pontos, consistência com o novo padrão)
+                        /^https:\/\/k\.kwai\.com\/u\/@\/[\w.-]+\/?$/.test(link) ||
+                
+                        // 4. NOVO Formato k.kwai.com com nome e código: https://k.kwai.com/u/@nome.usuario/codigoaleatorio
+                        /^https:\/\/k\.kwai\.com\/u\/@[\w.-]+\/[\w-]+\/?$/.test(link),
+                        post: link => // (supondo que a validação de post permanece a mesma da sua solicitação anterior)
+                            /^https:\/\/(www\.)?kwai\.com\/(@[\w.-]+\/video|short-video)\/[\w-]+\/?(?:\?.*)?$/.test(link) ||
+                            /^https:\/\/k\.kwai\.com\/p\/[\w-]+\/?(?:\?.*)?$/.test(link)
+                },
+                // alterado 07/08/2025 "Ricardo"
+                youtube: {
+                        profile: link =>
+                        // Desabilitado: entrada direta tipo @usuario
+                        // /^@?[\w.-]+$/.test(link) ||
+                
+                        // Permitido:
+                        // - https://youtube.com/@usuario
+                        // - https://youtube.com/@usuario?si=...
+                        // - https://www.youtube.com/channel/UCvHJUYpIcWRyF5Qk47nm_KA
+                        /^https:\/\/(www\.)?youtube\.com\/(@[\w.-]+(\?.*)?|channel\/[A-Za-z0-9_-]{24})(\/)?(\?.*)?$/.test(link),
+                        
+                        post: link =>
+                            /^https:\/\/(www\.)?youtube\.com\/(watch\?v=|shorts\/|live\/)[\w-]+(?:[&?][\w=.-]*)*$/.test(link) ||
+                            /^https:\/\/youtu\.be\/[\w-]+(\?[A-Za-z0-9=&._-]+)?$/.test(link)
+                },
+
+                facebook: {
+                    profile: link =>
+                        // 1. Formato genérico de nome de usuário
+                        /^@?[\w.-]+$/.test(link) ||
+                
+                        // 2. Perfil padrão: facebook.com/nome.usuario
+                        /^https:\/\/(www\.)?facebook\.com\/[A-Za-z0-9._-]+\/?$/.test(link) ||
+                
+                        // 3. Perfil por ID numérico: facebook.com/profile.php?id=100001234567890
+                        /^https:\/\/(www\.)?facebook\.com\/profile\.php\?id=\d+(?:&.*)?\/?$/.test(link) ||
+                
+                        // 4. Links de compartilhamento (ex: facebook.com/share/1EWMoC3Wrb/)
+                        /^https:\/\/(www\.)?facebook\.com\/share\/[\w-]+\/?(?:\?.*)?$/.test(link) ||
+                
+                        // 5. NOVO: Links de Grupo: facebook.com/groups/NOME_OU_ID_DO_GRUPO/
+                        /^https:\/\/(www\.)?facebook\.com\/groups\/[A-Za-z0-9._-]+\/?(?:\?.*)?$/.test(link),
+                
+                    post: link =>
+                        // 1. Post padrão: facebook.com/username/posts/IDPOST ou facebook.com/USER_ID/posts/POST_ID/
+                        /^https:\/\/(www\.)?facebook\.com\/[A-Za-z0-9._-]+\/posts\/\d+\/?(?:\?.*)?$/.test(link) ||
+                
+                        // 2. Links de Foto (via fbid): facebook.com/photo/?fbid=IDFBID ou photo.php?fbid=IDFBID
+                        /^https:\/\/(www\.)?facebook\.com\/(?:photo\.php|photo\/)\?(?:[^#]*&)?fbid=\d+(?:&[^#]*)?$/.test(link) ||
+                
+                        // 3. Links de Reel: facebook.com/reel/REEL_ID
+                        /^https:\/\/(www\.)?facebook\.com\/reel\/\d+\/?(?:\?.*)?$/.test(link) ||
+                
+                        // 4. Links de Vídeo (Watch): facebook.com/watch/?v=VIDEO_ID ou facebook.com/watch?v=VIDEO_ID
+                        /^https:\/\/(www\.)?facebook\.com\/watch\/?\?(?:[^#]*&)?v=\d+(?:&[^#]*)?$/.test(link)
+                },            
+                twitch: {
+                    profile: link =>
+                        /^@?[\w]+$/.test(link) ||
+                        /^https:\/\/(www\.)?twitch\.tv\/\w+\/?$/.test(link), // Usando \w para consistência
+                
+                    post: link =>
+                        // 1. Links de Clipes: twitch.tv/USERNAME/clip/CLIP_ID
+                        //    (Também lida com a variação twitch.tv//USERNAME/clip/CLIP_ID)
+                        /^https:\/\/(www\.)?twitch\.tv\/(?:\/)?\w+\/clip\/[\w-]+\/?(?:\?.*)?$/.test(link) ||
+                
+                        // 2. Links de Vídeos (VODs): twitch.tv/videos/VIDEO_ID (numérico)
+                        /^https:\/\/(www\.)?twitch\.tv\/videos\/\d+\/?(?:\?.*)?$/.test(link)
+            },
+            rumble: {
+                profile: link =>
+                    /^https:\/\/(www\.)?rumble\.com\/user\/[A-Za-z0-9_-]+\/?$/.test(link),
+                post: link =>
+                    /^https:\/\/(www\.)?rumble\.com\/[A-Za-z0-9_-]+\.html(?:\?.*)?$/.test(link)
+            },
+            twitter: {
+                profile: link =>
+                    /^@?[\w]+$/.test(link) ||
+                    /^https:\/\/(www\.)?(twitter|x)\.com\/[\w]+\/?$/.test(link),
+                post: link =>
+                    /^https:\/\/(www\.)?(twitter|x)\.com\/[\w]+\/status\/\d+(?:\?.*)?$/.test(link)
+            },
+            kick: {
+                profile: link =>
+                    /^@?[\w]+$/.test(link) ||
+                    /^https:\/\/(www\.)?kick\.com\/[A-Za-z0-9_]+\/?$/.test(link),
+                post: () => false
+            },
+            whatsapp: {
+                profile: link =>
+                    // 1. Links "wa.me" para iniciar conversa com número de telefone
+                    /^https:\/\/wa\.me\/\d{8,15}\/?$/.test(link) ||
+            
+                    // 2. NOVO: Links para Canais do WhatsApp
+                    /^https:\/\/whatsapp\.com\/channel\/[\w.-]+\/?(?:\?.*)?$/.test(link),
+                post: () => false
+            },
+            telegram: {
+                profile: link =>
+                    /^@?[\w\d_]+$/.test(link) ||
+                    /^https:\/\/t\.me\/[\w\d_]+\/?$/.test(link),
+                post: link =>
+                    /^https:\/\/t\.me\/[\w\d_]+\/\d+(?:\?.*)?$/.test(link)
+            },
+            linkedin: {
+                profile: link =>
+                    /^https:\/\/(www\.)?linkedin\.com\/in\/[A-Za-z0-9-]+\/?$/.test(link),
+                post: link =>
+                    /^https:\/\/(www\.)?linkedin\.com\/posts\/[A-Za-z0-9-]+/.test(link)
+            },
+            shopee: {
+                profile: link =>
+                    /^https:\/\/(shopee\.br|shopee\.com\.br)\/(shop|seller)\/\d+/.test(link),
+                post: link =>
+                    /^https:\/\/(shopee\.br|shopee\.com\.br)\/product\/\d+\/\d+/.test(link)
+            }
+            };
+        
+            // Função para detectar códigos Pix
+            const isPixCode = input => {
+                const cleaned = input.trim().toLowerCase();
+                const possiblePix =
+                    cleaned.startsWith('000201') ||
+                    cleaned.includes('br.gov.bcb.pix') ||
+                    /^[0-9]{20,}$/.test(cleaned) ||
+                    /[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}/.test(cleaned) && cleaned.includes('pix') ||
+                    cleaned.includes('5204') && cleaned.includes('5405') && cleaned.includes('6304');
+                return possiblePix;
+            };
+            
+            // Impede links Pix
+            if (isPixCode(input)) {
+                voltarAoModal(2);
+                alert('Ah, parece que você colou um QR Code do Pix. 😅 Para continuar, insira um link do conteúdo — QR Code do PIX de pagamento não são aceitos por aqui.');
+                setTimeout(() => {
+                    voltarAoModal(2);
+                }, 300);
+                return false;
+            }
+            
+            // Validação normal com os validators
+            if (validators[social] && validators[social][type]) {
+                isValid = validators[social][type](input);
+            }
+
+        
+        if (validators[social] && validators[social][type]) {
+            isValid = validators[social][type](input);
+        }
+        
+        // Verificação link's
+        if (!isValid) {
+            voltarAoModal(2);
+            
+            if (type === 'profile') {
+                alert('Opa! Esse link não parece ser de um perfil ou canal válido. Dá uma conferida no formato e tenta colar novamente! 😊');
+            } else if (type === 'post') {
+                alert('Hmm... Esse link não parece levar para uma foto ou vídeo válido. Que tal verificar rapidinho e tentar de novo! 📸🎥');
+            } else {
+                alert('Ei! Precisamos de um link válido para continuar com esse serviço. Dá uma olhadinha no link e tenta de novo! 😉');
+            }
+        
+            setTimeout(() => {
+                voltarAoModal(2);
+            }, 300);
+            
+            return false;
+        }
+    
+        // Se for Instagram + perfil, vamos validar na API
+        if (social === 'instagram' && type === 'profile') {
+            let username = clear_link('instagram', input);
+            
+            $.ajax({
+                url: `https://instagram-premium-api-2023.p.rapidapi.com/v1/user/web_profile_info?username=${username}`,
+                method: 'GET',
+                headers: {
+                    'X-RapidAPI-Key': 'c19b4ece3dmsh5d3d8bd548f5b9fp160874jsn65a2a11324e0',
+                    'X-RapidAPI-Host': 'instagram-premium-api-2023.p.rapidapi.com'
+                }
+            }).done(function (response) {
+                if (response.user.is_private) {
+                    alert('Opa! Parece que o perfil está privado. Para seguirmos com o serviço, você pode deixá-lo público temporariamente? 🔓🙂');
+                    setTimeout(() => {
+                        voltarAoModal(2)
+                    }, 300);
+                    return;
+                }
+                
+                    if(!cookies || mostrarComentarios){
+                        // Abrir o Modal 1
+                    $('#passo02').modal('show');
+                }else{
+                    adicionarCarrinho()
+                }
+            }).fail(function () {
+                if(cookies){
+                    $("#modalCart").modal('show');
+                }else{
+                    // Abrir o Modal 1
+                    $('#passo02').modal('show');
+                }
+            });
+        
+            return;
+        }
+        
+            // ✅ Se não for Instagram perfil, só mostra o modal normalmente
         if(!cookies || mostrarComentarios){
-             // Abrir o Modal 1
+        // Abrir o Modal 1
             $('#passo02').modal('show');
         }else{
-            $("#modalCart").modal('show');
+            adicionarCarrinho()
         }
-       return;
-   }
-   
-   let isValid = false;
-   
-   const validators = {
-        instagram: {
-            profile: link => {
-                const cleaned = link.trim();
-                return (
-                    // Valida nomes de usuário (ex: @usuario ou usuario)
-                    /^@?[A-Za-z0-9._]+$/.test(cleaned) ||
-                    // Valida URLs de perfil do Instagram sem parâmetros de consulta
-                    // (ex: https://www.instagram.com/usuario ou https://www.instagram.com/usuario/)
-                    /^https:\/\/(www\.)?instagram\.com\/[A-Za-z0-9._]+\/?$/.test(cleaned) ||
-                    // Adicionado: Valida URLs de perfil do Instagram com parâmetros de consulta
-                    // (ex: https://www.instagram.com/usuario?igsh=xxxx&utm_source=qr)
-                    /^https:\/\/(www\.)?instagram\.com\/[A-Za-z0-9._]+\/?\?.+$/.test(cleaned)
-                );
-            },
-            post: link => /^https:\/\/(www\.)?instagram\.com\/(p|reel|tv)\/[A-Za-z0-9_-]+\/?(?:\?.*)?$/.test(link)
-        },
-        tiktok: {
-            profile: link =>
-                // @username direto ou URL de perfil/live
-                /^@?[\w.-]+$/.test(link) ||
-                /^https:\/\/(www\.)?tiktok\.com\/@[\w.-]+(\/live)?\/?$/.test(link),
-        
-            post: link =>
-                // Vídeos padrão ou links encurtados (vm.tiktok.com)
-                /^https:\/\/(www\.)?tiktok\.com\/@[\w.-]+\/video\/\d+\/?(?:\?.*)?$/.test(link) ||
-                /^https:\/\/vm\.tiktok\.com\/[\w/-]+\/?$/.test(link)
-        },
-        kwai: {
-                profile: link =>
-                // 1. Formato local: @nome.usuario ou nome.usuario
-                /^@?[\w.-]+$/.test(link) ||
-        
-                // 2. Formato web padrão: https://www.kwai.com/@nome.usuario
-                /^https:\/\/(www\.)?kwai\.com\/@[\w.-]+\/?$/.test(link) ||
-        
-                // 3. Formato k.kwai.com com barra após @: https://k.kwai.com/u/@/nome.usuario
-                // (Revertido para [\w.-] para permitir pontos, consistência com o novo padrão)
-                /^https:\/\/k\.kwai\.com\/u\/@\/[\w.-]+\/?$/.test(link) ||
-        
-                // 4. NOVO Formato k.kwai.com com nome e código: https://k.kwai.com/u/@nome.usuario/codigoaleatorio
-                /^https:\/\/k\.kwai\.com\/u\/@[\w.-]+\/[\w-]+\/?$/.test(link),
-                post: link => // (supondo que a validação de post permanece a mesma da sua solicitação anterior)
-                    /^https:\/\/(www\.)?kwai\.com\/(@[\w.-]+\/video|short-video)\/[\w-]+\/?(?:\?.*)?$/.test(link) ||
-                    /^https:\/\/k\.kwai\.com\/p\/[\w-]+\/?(?:\?.*)?$/.test(link)
-        },
-        // alterado 07/08/2025 "Ricardo"
-        youtube: {
-                profile: link =>
-                // Desabilitado: entrada direta tipo @usuario
-                // /^@?[\w.-]+$/.test(link) ||
-        
-                // Permitido:
-                // - https://youtube.com/@usuario
-                // - https://youtube.com/@usuario?si=...
-                // - https://www.youtube.com/channel/UCvHJUYpIcWRyF5Qk47nm_KA
-                /^https:\/\/(www\.)?youtube\.com\/(@[\w.-]+(\?.*)?|channel\/[A-Za-z0-9_-]{24})(\/)?(\?.*)?$/.test(link),
-                
-                post: link =>
-                    /^https:\/\/(www\.)?youtube\.com\/(watch\?v=|shorts\/|live\/)[\w-]+(?:[&?][\w=.-]*)*$/.test(link) ||
-                    /^https:\/\/youtu\.be\/[\w-]+(\?[A-Za-z0-9=&._-]+)?$/.test(link)
-        },
-
-        facebook: {
-            profile: link =>
-                // 1. Formato genérico de nome de usuário
-                /^@?[\w.-]+$/.test(link) ||
-        
-                // 2. Perfil padrão: facebook.com/nome.usuario
-                /^https:\/\/(www\.)?facebook\.com\/[A-Za-z0-9._-]+\/?$/.test(link) ||
-        
-                // 3. Perfil por ID numérico: facebook.com/profile.php?id=100001234567890
-                /^https:\/\/(www\.)?facebook\.com\/profile\.php\?id=\d+(?:&.*)?\/?$/.test(link) ||
-        
-                // 4. Links de compartilhamento (ex: facebook.com/share/1EWMoC3Wrb/)
-                /^https:\/\/(www\.)?facebook\.com\/share\/[\w-]+\/?(?:\?.*)?$/.test(link) ||
-        
-                // 5. NOVO: Links de Grupo: facebook.com/groups/NOME_OU_ID_DO_GRUPO/
-                /^https:\/\/(www\.)?facebook\.com\/groups\/[A-Za-z0-9._-]+\/?(?:\?.*)?$/.test(link),
-        
-            post: link =>
-                // 1. Post padrão: facebook.com/username/posts/IDPOST ou facebook.com/USER_ID/posts/POST_ID/
-                /^https:\/\/(www\.)?facebook\.com\/[A-Za-z0-9._-]+\/posts\/\d+\/?(?:\?.*)?$/.test(link) ||
-        
-                // 2. Links de Foto (via fbid): facebook.com/photo/?fbid=IDFBID ou photo.php?fbid=IDFBID
-                /^https:\/\/(www\.)?facebook\.com\/(?:photo\.php|photo\/)\?(?:[^#]*&)?fbid=\d+(?:&[^#]*)?$/.test(link) ||
-        
-                // 3. Links de Reel: facebook.com/reel/REEL_ID
-                /^https:\/\/(www\.)?facebook\.com\/reel\/\d+\/?(?:\?.*)?$/.test(link) ||
-        
-                // 4. Links de Vídeo (Watch): facebook.com/watch/?v=VIDEO_ID ou facebook.com/watch?v=VIDEO_ID
-                /^https:\/\/(www\.)?facebook\.com\/watch\/?\?(?:[^#]*&)?v=\d+(?:&[^#]*)?$/.test(link)
-        },            
-        twitch: {
-            profile: link =>
-                /^@?[\w]+$/.test(link) ||
-                /^https:\/\/(www\.)?twitch\.tv\/\w+\/?$/.test(link), // Usando \w para consistência
-        
-            post: link =>
-                // 1. Links de Clipes: twitch.tv/USERNAME/clip/CLIP_ID
-                //    (Também lida com a variação twitch.tv//USERNAME/clip/CLIP_ID)
-                /^https:\/\/(www\.)?twitch\.tv\/(?:\/)?\w+\/clip\/[\w-]+\/?(?:\?.*)?$/.test(link) ||
-        
-                // 2. Links de Vídeos (VODs): twitch.tv/videos/VIDEO_ID (numérico)
-                /^https:\/\/(www\.)?twitch\.tv\/videos\/\d+\/?(?:\?.*)?$/.test(link)
-       },
-       rumble: {
-           profile: link =>
-               /^https:\/\/(www\.)?rumble\.com\/user\/[A-Za-z0-9_-]+\/?$/.test(link),
-           post: link =>
-               /^https:\/\/(www\.)?rumble\.com\/[A-Za-z0-9_-]+\.html(?:\?.*)?$/.test(link)
-       },
-       twitter: {
-           profile: link =>
-               /^@?[\w]+$/.test(link) ||
-               /^https:\/\/(www\.)?(twitter|x)\.com\/[\w]+\/?$/.test(link),
-           post: link =>
-               /^https:\/\/(www\.)?(twitter|x)\.com\/[\w]+\/status\/\d+(?:\?.*)?$/.test(link)
-       },
-       kick: {
-           profile: link =>
-               /^@?[\w]+$/.test(link) ||
-               /^https:\/\/(www\.)?kick\.com\/[A-Za-z0-9_]+\/?$/.test(link),
-           post: () => false
-       },
-       whatsapp: {
-           profile: link =>
-            // 1. Links "wa.me" para iniciar conversa com número de telefone
-            /^https:\/\/wa\.me\/\d{8,15}\/?$/.test(link) ||
-    
-            // 2. NOVO: Links para Canais do WhatsApp
-            /^https:\/\/whatsapp\.com\/channel\/[\w.-]+\/?(?:\?.*)?$/.test(link),
-           post: () => false
-       },
-       telegram: {
-           profile: link =>
-               /^@?[\w\d_]+$/.test(link) ||
-               /^https:\/\/t\.me\/[\w\d_]+\/?$/.test(link),
-           post: link =>
-               /^https:\/\/t\.me\/[\w\d_]+\/\d+(?:\?.*)?$/.test(link)
-       },
-       linkedin: {
-           profile: link =>
-               /^https:\/\/(www\.)?linkedin\.com\/in\/[A-Za-z0-9-]+\/?$/.test(link),
-           post: link =>
-               /^https:\/\/(www\.)?linkedin\.com\/posts\/[A-Za-z0-9-]+/.test(link)
-       },
-       shopee: {
-           profile: link =>
-               /^https:\/\/(shopee\.br|shopee\.com\.br)\/(shop|seller)\/\d+/.test(link),
-           post: link =>
-               /^https:\/\/(shopee\.br|shopee\.com\.br)\/product\/\d+\/\d+/.test(link)
-       }
-       };
-   
-    // Função para detectar códigos Pix
-    const isPixCode = input => {
-        const cleaned = input.trim().toLowerCase();
-        const possiblePix =
-            cleaned.startsWith('000201') ||
-            cleaned.includes('br.gov.bcb.pix') ||
-            /^[0-9]{20,}$/.test(cleaned) ||
-            /[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}/.test(cleaned) && cleaned.includes('pix') ||
-            cleaned.includes('5204') && cleaned.includes('5405') && cleaned.includes('6304');
-        return possiblePix;
-    };
-    
-    // Impede links Pix
-    if (isPixCode(input)) {
-        voltarAoModal(2);
-        alert('Ah, parece que você colou um QR Code do Pix. 😅 Para continuar, insira um link do conteúdo — QR Code do PIX de pagamento não são aceitos por aqui.');
-        setTimeout(() => {
-            voltarAoModal(2);
-        }, 300);
-        return false;
     }
-    
-    // Validação normal com os validators
-    if (validators[social] && validators[social][type]) {
-        isValid = validators[social][type](input);
-    }
-
-   
-   if (validators[social] && validators[social][type]) {
-       isValid = validators[social][type](input);
-   }
-    
-    // Verificação link's
-    if (!isValid) {
-        voltarAoModal(2);
-        
-        if (type === 'profile') {
-            alert('Opa! Esse link não parece ser de um perfil ou canal válido. Dá uma conferida no formato e tenta colar novamente! 😊');
-        } else if (type === 'post') {
-            alert('Hmm... Esse link não parece levar para uma foto ou vídeo válido. Que tal verificar rapidinho e tentar de novo! 📸🎥');
-        } else {
-            alert('Ei! Precisamos de um link válido para continuar com esse serviço. Dá uma olhadinha no link e tenta de novo! 😉');
-        }
-    
-        setTimeout(() => {
-            voltarAoModal(2);
-        }, 300);
-        
-        return false;
-    }
-   
-   // Se for Instagram + perfil, vamos validar na API
-   if (social === 'instagram' && type === 'profile') {
-       let username = clear_link('instagram', input);
-       
-       $.ajax({
-           url: `https://instagram-premium-api-2023.p.rapidapi.com/v1/user/web_profile_info?username=${username}`,
-           method: 'GET',
-           headers: {
-               'X-RapidAPI-Key': 'c19b4ece3dmsh5d3d8bd548f5b9fp160874jsn65a2a11324e0',
-               'X-RapidAPI-Host': 'instagram-premium-api-2023.p.rapidapi.com'
-           }
-       }).done(function (response) {
-           if (response.user.is_private) {
-               alert('Opa! Parece que o perfil está privado. Para seguirmos com o serviço, você pode deixá-lo público temporariamente? 🔓🙂');
-               setTimeout(() => {
-                   voltarAoModal(2)
-               }, 300);
-               return;
-           }
-           
-           if(cookies){
-               $("#modalCart").modal('show');
-           }else{
-               // Abrir o Modal 1
-               $('#passo02').modal('show');
-           }
-       }).fail(function () {
-           if(cookies){
-               $("#modalCart").modal('show');
-           }else{
-               // Abrir o Modal 1
-               $('#passo02').modal('show');
-           }
-       });
-   
-       return;
-   }
-   
-   // ✅ Se não for Instagram perfil, só mostra o modal normalmente
-   if(cookies){
-               $("#modalCart").modal('show');
-           }else{
-               // Abrir o Modal 1
-               $('#passo02').modal('show');
-           }
-   }
    
    function clear_link(social, input) {
    if (social !== 'instagram' || !input) return null;

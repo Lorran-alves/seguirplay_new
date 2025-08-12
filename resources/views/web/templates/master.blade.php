@@ -232,7 +232,7 @@
     
     {{--  modal promoção;  --}}
     {{--@include('web.modal_promocao')--}}
-    @include('web.modal_promocao_cupom_imagn')
+    {{--@include('web.modal_promocao_cupom_imagn')--}}
     
     @include('web.includes.footer')
     
