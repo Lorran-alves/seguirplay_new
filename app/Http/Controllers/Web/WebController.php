@@ -332,7 +332,7 @@ class WebController extends Controller
 
         $orders = Order::whereNotIn('status', $reembolsos)
             ->whereHas('purchase', function ($query) {
-                $query->where('created_at', '>=', Carbon::now()->subDays(1));
+                $query->where('created_at', '>=', Carbon::now()->subDays(10));
             })->get();
 
         $dashboard = new Dashboard;
