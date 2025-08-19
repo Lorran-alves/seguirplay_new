@@ -17,6 +17,7 @@ use App\Mail\PaymentMail;
 use App\Mail\ContactMail;
 use App\Models\Category;
 use App\Models\Cupom;
+use App\Models\CupomUnico;
 use App\Models\Provedor;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
@@ -112,6 +113,22 @@ class WebController extends Controller
                     ->orWhere('validade', '>=', now());
             })
             ->first();
+
+        if (empty($cupom)) {
+            $cupomUnico = CupomUnico::where('nome', $cupomEntrada)
+                ->where('validade', 1)
+                ->first();
+
+            if (empty($cupomUnico)) {
+                return json_encode(['status' => 'error', 'message' => 'Cupom inválido']);
+            }
+
+            return json_encode([
+                'status' => 'success',
+                'message' => 'Cupom válido',
+                'desconto' => $cupomUnico->desconto
+            ]);
+        }
 
         if (empty($cupom)) {
             return json_encode(['status' => 'error', 'message' => 'Cupom inválido']);
