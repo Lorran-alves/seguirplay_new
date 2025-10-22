@@ -1,0 +1,1378 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel de Admin - Seguir Play</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="icon" href="https://seguirplay.com/favicon.ico" type="image/x-icon">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.23/jspdf.plugin.autotable.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        /* Cores da Seguir Play */
+        .gradient-bg { background: linear-gradient(257.28deg, #952852 0.51%, #781F60 104.36%); }
+        .text-seguirlplay-red { color: #FF455B; }
+        .bg-seguirlplay-red { background-color: #FF455B; }
+        .hover\:bg-seguirlplay-red-dark:hover { background-color: #e5384c; }
+        .bg-seguirlplay-orange { background-color: #FF6E04; }
+        .hover\:bg-seguirlplay-orange-dark:hover { background-color: #e66303; }
+        
+        /* Transições e Estilos do Painel */
+        .main-content { transition: margin-left 0.3s ease; }
+        .sidebar { transition: transform 0.3s ease; }
+
+        /* Estilos do Menu Lateral Melhorados */
+        .nav-link {
+            transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out, border-color 0.2s ease-in-out;
+            color: #4a5568;
+            border-left: 3px solid transparent;
+        }
+        .nav-link.active {
+            background-color: #fce7f3;
+            color: #781F60;
+            font-weight: 500;
+            border-left-color: #FF455B;
+        }
+        .nav-link:not(.active):hover {
+            background-color: #f7fafc;
+        }
+
+        /* Estilos do FAQ */
+        .faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.3s ease-out, padding 0.3s ease-out; }
+        .faq-item.active .faq-answer { max-height: 800px; padding-top: 1rem; padding-bottom: 1rem; }
+        .faq-item.active .faq-toggle-icon { transform: rotate(180deg); }
+
+        /* Estilos para o Toggle Switch de "Contatado" */
+        .toggle-checkbox:checked + .toggle-label .toggle-dot {
+            transform: translateX(100%);
+            background-color: #FF455B;
+        }
+        .toggle-checkbox:checked + .toggle-label .toggle-bg {
+            background-color: #fce7f3;
+        }
+        .filter-btn.active {
+            background-color: #781F60;
+            color: white;
+        }
+        .filter-select {
+            border-color: #d1d5db;
+        }
+        /* Estilos do Chat ao Vivo */
+        .chat-message-sent {
+            background-color: #781F60;
+            color: white;
+        }
+        .chat-message-received {
+            background-color: #e5e7eb;
+            color: #1f2937;
+        }
+        .conversation-item.active {
+            background-color: #fce7f3;
+        }
+        .notification-badge {
+            background-color: #FF455B;
+            color: white;
+            border-radius: 50%;
+            padding: 2px 6px;
+            font-size: 0.7rem;
+            position: absolute;
+            top: 5px;
+            right: 5px;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 font-sans">
+
+    <div id="login-screen" class="min-h-screen flex items-center justify-center bg-gray-100 p-4">
+        <div class="bg-white p-8 md:p-12 rounded-2xl shadow-xl w-full max-w-md text-center">
+            <img src="https://seguirplay.com/web_assets/img/logo_footer.png" alt="Logo Seguir Play" class="h-12 md:h-16 mx-auto mb-6">
+            <h1 class="text-2xl md:text-3xl font-bold text-gray-800 mb-2">Acesso Restrito</h1>
+            <p class="text-gray-500 mb-8 text-sm md:text-base">Painel de Administração</p>
+            <button id="google-signin-btn" class="gradient-bg text-white font-bold py-3 px-6 rounded-lg shadow-lg hover:opacity-90 transition-opacity w-full flex items-center justify-center gap-3 text-base">
+                <svg class="w-6 h-6" viewBox="0 0 48 48"><path fill="#FFC107" d="M43.611,20.083H42V20H24v8h11.303c-1.649,4.657-6.08,8-11.303,8c-6.627,0-12-5.373-12-12c0-6.627,5.373-12,12-12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C12.955,4,4,12.955,4,24s8.955,20,20,20s20-8.955,20-20C44,22.659,43.862,21.35,43.611,20.083z"></path><path fill="#FF3D00" d="M6.306,14.691l6.571,4.819C14.655,15.108,18.961,12,24,12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C16.318,4,9.656,8.337,6.306,14.691z"></path><path fill="#4CAF50" d="M24,44c5.166,0,9.86-1.977,13.409-5.192l-6.19-5.238C29.211,35.091,26.715,36,24,36c-5.222,0-9.522-3.447-11.021-8.129l-6.522,5.025C9.505,39.556,16.227,44,24,44z"></path><path fill="#1976D2" d="M43.611,20.083H42V20H24v8h11.303c-0.792,2.237-2.231,4.166-4.087,5.574l6.19,5.238C39.99,35.508,44,30.138,44,24C44,22.659,43.862,21.35,43.611,20.083z"></path></svg>
+                <span>Entrar com Google</span>
+            </button>
+            <p id="login-error" class="text-red-500 mt-4 text-sm"></p>
+        </div>
+    </div>
+
+    <div id="dashboard" class="hidden flex">
+        <div id="sidebar" class="sidebar fixed top-0 left-0 h-full w-64 bg-white text-gray-800 p-4 shadow-lg transform -translate-x-full md:translate-x-0 z-40 border-r border-gray-200">
+            <div class="flex items-center mb-6 pb-6 border-b border-gray-200">
+                <img src="https://seguirplay.com/web_assets/img/logo_footer.png" alt="Logo Seguir Play" class="h-10">
+            </div>
+
+            <div class="flex items-center mb-8 p-2 rounded-lg">
+                <img id="user-avatar" src="" alt="Avatar do usuário" class="w-10 h-10 rounded-full mr-3">
+                <div>
+                    <p id="user-name" class="font-bold text-sm text-gray-800"></p>
+                    <p id="user-email-sidebar" class="text-xs text-gray-500 truncate"></p>
+                </div>
+            </div>
+
+            <nav class="space-y-2">
+                <a href="#" id="nav-analytics" class="nav-link flex items-center p-3 rounded-lg hidden">
+                    <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
+                    Analytics
+                </a>
+                 <a href="#" id="nav-chat" class="nav-link relative flex items-center p-3 rounded-lg hidden">
+                    <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>
+                    Chat ao Vivo
+                    <span id="chat-notification-badge" class="hidden notification-badge"></span>
+                </a>
+                <a href="#" id="nav-leads" class="nav-link flex items-center p-3 rounded-lg">
+                    <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                    Leads (Chatbot)
+                </a>
+                <a href="#" id="nav-direct" class="nav-link flex items-center p-3 rounded-lg">
+                    <svg class="w-5 h-5 mr-3" fill="currentColor" viewBox="0 0 448 512" aria-hidden="true">
+                        <path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157.1zM223.9 439.6c-33.8 0-66.3-8.8-94.3-25.7l-6.7-4-69.8 18.3L72 363.2l-4.5-7c-18.9-29.4-28.8-63.4-28.8-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7.9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z"/>
+                    </svg>
+                    Interesse em Contato
+                </a>
+                <a href="#" id="nav-faq" class="nav-link flex items-center p-3 rounded-lg">
+                    <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.546-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    FAQ Interno
+                </a>
+            </nav>
+            <div class="absolute bottom-4 left-4 right-4">
+                <button id="logout-btn" class="w-full text-left flex items-center p-3 rounded-lg text-gray-600 hover:bg-red-100 hover:text-red-600 transition-colors">
+                    <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
+                    Sair
+                </button>
+            </div>
+        </div>
+        
+        <main class="main-content flex-1 md:ml-64">
+             <header class="bg-white shadow-sm sticky top-0 z-30">
+                <div class="flex justify-between items-center px-4 md:px-8 py-3">
+                    <div class="flex items-center">
+                        <button id="menu-btn" class="md:hidden p-2 text-gray-600 mr-2">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+                        </button>
+                        <h1 id="page-title" class="text-2xl font-bold text-gray-800">Leads (Chatbot)</h1>
+                    </div>
+                    <div id="admin-controls" class="hidden flex items-center space-x-4">
+                        <button id="manage-access-btn" class="bg-gray-700 text-white font-bold py-2 px-4 rounded-lg shadow-md hover:bg-gray-800 transition-colors">Gerenciar Acesso</button>
+                        <button id="add-faq-btn" class="hidden bg-seguirlplay-red text-white font-bold py-2 px-4 rounded-lg shadow-md hover:bg-seguirlplay-red-dark">
+                            Adicionar FAQ
+                        </button>
+                    </div>
+                </div>
+            </header>
+
+            <div class="p-4 md:p-8">
+                <section id="analytics-section" class="hidden pb-8">
+                    <div class="flex flex-wrap justify-center items-center gap-2 md:gap-4 mb-8">
+                         <button class="filter-btn py-2 px-4 rounded-lg bg-gray-200 hover:bg-gray-300 transition-colors text-sm" data-period="today">Hoje</button>
+                        <div class="flex items-center gap-2">
+                            <select id="day-select" class="filter-select rounded-md border-gray-300 shadow-sm text-sm py-2 px-3"></select>
+                            <select id="month-select" class="filter-select rounded-md border-gray-300 shadow-sm text-sm py-2 px-3"></select>
+                            <select id="year-select" class="filter-select rounded-md border-gray-300 shadow-sm text-sm py-2 px-3"></select>
+                        </div>
+                        <button class="filter-btn py-2 px-4 rounded-lg bg-gray-200 hover:bg-gray-300 transition-colors text-sm active" data-period="all">Tudo</button>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                        <div class="bg-white p-6 rounded-lg shadow-md text-center"><p class="text-sm text-gray-500">Total de Leads</p><p id="total-leads" class="text-3xl font-bold text-gray-800"></p></div>
+                        <div class="bg-white p-6 rounded-lg shadow-md text-center"><p class="text-sm text-gray-500">Total Contatos Diretos</p><p id="total-direct" class="text-3xl font-bold text-gray-800"></p></div>
+                        <div class="bg-white p-6 rounded-lg shadow-md text-center"><p class="text-sm text-gray-500">Total Geral</p><p id="total-geral" class="text-3xl font-bold text-purple-800"></p></div>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                        <div class="bg-white p-6 rounded-lg shadow-md relative h-64"><canvas id="monetization-chart"></canvas></div>
+                        <div class="bg-white p-6 rounded-lg shadow-md relative h-64"><canvas id="interest-chart"></canvas></div>
+                        <div class="bg-white p-6 rounded-lg shadow-md relative h-64"><canvas id="monetization-type-chart"></canvas></div>
+                        <div class="bg-white p-6 rounded-lg shadow-md relative h-64"><canvas id="agent-chart"></canvas></div>
+                    </div>
+                </section>
+                <section id="leads-section" class="pb-8">
+                    <div id="leads-export-controls" class="hidden flex justify-end items-center space-x-2 mb-4">
+                        <span class="text-sm font-medium text-gray-600">Exportar dados:</span>
+                        <button id="export-leads-csv" class="bg-seguirlplay-orange text-white font-bold py-2 px-4 rounded-lg shadow-md hover:bg-seguirlplay-orange-dark transition-colors text-sm">CSV</button>
+                        <button id="export-leads-pdf" class="bg-seguirlplay-red text-white font-bold py-2 px-4 rounded-lg shadow-md hover:bg-seguirlplay-red-dark transition-colors text-sm">PDF</button>
+                    </div>
+                    <div id="leads-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+                </section>
+                
+                <section id="direct-contacts-section" class="hidden pb-8">
+                     <div id="direct-export-controls" class="hidden flex justify-end items-center space-x-2 mb-4">
+                        <span class="text-sm font-medium text-gray-600">Exportar dados:</span>
+                        <button id="export-direct-csv" class="bg-seguirlplay-orange text-white font-bold py-2 px-4 rounded-lg shadow-md hover:bg-seguirlplay-orange-dark transition-colors text-sm">CSV</button>
+                        <button id="export-direct-pdf" class="bg-seguirlplay-red text-white font-bold py-2 px-4 rounded-lg shadow-md hover:bg-seguirlplay-red-dark transition-colors text-sm">PDF</button>
+                    </div>
+                    <div id="direct-contacts-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+                </section>
+                
+                <section id="faq-internal-section" class="hidden pb-8">
+                    <div id="faq-list-container" class="space-y-4"></div>
+                </section>
+                <section id="live-chat-section" class="hidden pb-8">
+                    <!-- Chat layout will be here -->
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <!-- Admin Modal -->
+    <div id="admin-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white p-6 rounded-lg shadow-2xl w-full max-w-5xl absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+            <h2 class="text-2xl font-bold mb-4">Gerenciar Administradores</h2>
+            <div class="mb-4">
+                <input type="email" id="new-admin-email" placeholder="email@exemplo.com" class="w-full border rounded p-2">
+                <button id="add-admin-btn" class="w-full mt-2 gradient-bg text-white font-bold py-2 px-4 rounded hover:opacity-90">Adicionar Admin</button>
+            </div>
+            <div id="admin-list" class="space-y-2 max-h-60 overflow-y-auto"></div>
+            <button id="close-modal-btn" class="mt-4 w-full bg-gray-300 text-gray-800 font-bold py-2 px-4 rounded hover:bg-gray-400">Fechar</button>
+        </div>
+    </div>
+    
+    <div id="faq-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden items-center justify-center">
+        <div class="bg-white p-6 rounded-lg shadow-2xl w-full max-w-lg absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+            <h2 id="faq-modal-title" class="text-2xl font-bold mb-4 text-gray-800">Adicionar Nova Pergunta</h2>
+            <form id="faq-form" class="space-y-4">
+                <div>
+                    <label for="faq-question" class="block text-sm font-medium text-gray-700">Pergunta</label>
+                    <input type="text" id="faq-question" required class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2">
+                </div>
+                <div>
+                    <label for="faq-answer-text" class="block text-sm font-medium text-gray-700">Resposta (Texto)</label>
+                    <textarea id="faq-answer-text" rows="4" required class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2"></textarea>
+                </div>
+                <div>
+                    <label for="faq-video-url" class="block text-sm font-medium text-gray-700">Link do Vídeo (Opcional - YouTube, etc.)</label>
+                    <input type="url" id="faq-video-url" placeholder="https://www.youtube.com/watch?v=..." class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2">
+                </div>
+                <div class="flex justify-end space-x-3 pt-2">
+                    <button type="button" id="close-faq-modal-btn" class="bg-gray-300 text-gray-800 font-bold py-2 px-4 rounded hover:bg-gray-400">Cancelar</button>
+                    <button type="submit" id="save-faq-btn" class="gradient-bg text-white font-bold py-2 px-4 rounded hover:opacity-90">Salvar Pergunta</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div id="confirmation-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden flex items-center justify-center">
+        <div class="bg-white p-6 rounded-lg shadow-2xl w-full max-w-sm text-center">
+            <p id="confirmation-message" class="text-lg mb-4"></p>
+            <div class="flex justify-center gap-4">
+                <button id="confirm-btn" class="bg-red-500 text-white font-bold py-2 px-6 rounded hover:bg-red-600">Confirmar</button>
+                <button id="cancel-btn" class="bg-gray-300 text-gray-800 font-bold py-2 px-6 rounded hover:bg-gray-400">Cancelar</button>
+            </div>
+        </div>
+    </div>
+    <div id="notes-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white p-6 rounded-lg shadow-2xl w-full max-w-lg">
+            <h2 id="notes-modal-title" class="text-2xl font-bold mb-4">Anotações</h2>
+            <div id="notes-list" class="space-y-3 max-h-60 overflow-y-auto mb-4 p-2 bg-gray-50 rounded"></div>
+            <textarea id="new-note-text" class="w-full border rounded p-2" rows="3" placeholder="Adicionar nova anotação..."></textarea>
+            <div class="flex justify-end gap-3 mt-4">
+                <button id="close-notes-modal-btn" class="bg-gray-300 text-gray-800 font-bold py-2 px-4 rounded hover:bg-gray-400">Fechar</button>
+                <button id="save-note-btn" class="gradient-bg text-white font-bold py-2 px-4 rounded hover:opacity-90">Salvar Anotação</button>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
+        import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
+        import { getFirestore, collection, doc, getDoc, setDoc, deleteDoc, onSnapshot, query, orderBy, serverTimestamp, updateDoc, arrayUnion, writeBatch } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
+
+        let superAdminEmail = 'seguirplay.br@gmail.com'; 
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyBDwtRO1005thLEQZlS3zklSFsWJMFrTMY",
+            authDomain: "chatbot-de-monetiza.firebaseapp.com",
+            projectId: "chatbot-de-monetiza",
+            storageBucket: "chatbot-de-monetiza.appspot.com",
+            messagingSenderId: "937922518939",
+            appId: "1:937922518939:web:c1077f492ed9e684400b3e",
+            measurementId: "G-M36VJQJTBG"
+        };
+        
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+        const googleProvider = new GoogleAuthProvider();
+
+        // Elementos UI
+        const loginScreen = document.getElementById('login-screen');
+        const dashboard = document.getElementById('dashboard');
+        const googleSignInBtn = document.getElementById('google-signin-btn');
+        const logoutBtn = document.getElementById('logout-btn');
+        const loginErrorEl = document.getElementById('login-error');
+        const userEmailSidebarEl = document.getElementById('user-email-sidebar');
+        const userNameEl = document.getElementById('user-name');
+        const userAvatarEl = document.getElementById('user-avatar');
+        const adminControls = document.getElementById('admin-controls');
+        const pageTitle = document.getElementById('page-title');
+        const sidebar = document.getElementById('sidebar');
+
+        // Navigações e Seções
+        const navAnalytics = document.getElementById('nav-analytics');
+        const navChat = document.getElementById('nav-chat');
+        const navLeads = document.getElementById('nav-leads');
+        const navDirect = document.getElementById('nav-direct');
+        const navFaq = document.getElementById('nav-faq');
+        const analyticsSection = document.getElementById('analytics-section');
+        const leadsSection = document.getElementById('leads-section');
+        const directContactsSection = document.getElementById('direct-contacts-section');
+        const faqInternalSection = document.getElementById('faq-internal-section');
+        const liveChatSection = document.getElementById('live-chat-section');
+
+        // Admin Management
+        const manageAccessBtn = document.getElementById('manage-access-btn');
+        const adminModal = document.getElementById('admin-modal');
+        const closeModalBtn = document.getElementById('close-modal-btn');
+        const addAdminBtn = document.getElementById('add-admin-btn');
+        const newAdminEmailInput = document.getElementById('new-admin-email');
+        const adminListContainer = document.getElementById('admin-list');
+
+        // FAQ Management
+        const addFaqBtn = document.getElementById('add-faq-btn');
+        const faqModal = document.getElementById('faq-modal');
+        const closeFaqModalBtn = document.getElementById('close-faq-modal-btn');
+        const faqForm = document.getElementById('faq-form');
+        const faqModalTitle = document.getElementById('faq-modal-title');
+        const faqQuestionInput = document.getElementById('faq-question');
+        const faqAnswerTextInput = document.getElementById('faq-answer-text');
+        const faqVideoUrlInput = document.getElementById('faq-video-url');
+        const faqListContainer = document.getElementById('faq-list-container');
+        
+        // Export Buttons
+        const leadsExportControls = document.getElementById('leads-export-controls');
+        const directExportControls = document.getElementById('direct-export-controls');
+        const exportLeadsCsvBtn = document.getElementById('export-leads-csv');
+        const exportLeadsPdfBtn = document.getElementById('export-leads-pdf');
+        const exportDirectCsvBtn = document.getElementById('export-direct-csv');
+        const exportDirectPdfBtn = document.getElementById('export-direct-pdf');
+
+        // Analytics Elements
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const daySelect = document.getElementById('day-select');
+        const monthSelect = document.getElementById('month-select');
+        const yearSelect = document.getElementById('year-select');
+        
+        // Notes Modal
+        const notesModal = document.getElementById('notes-modal');
+        const notesModalTitle = document.getElementById('notes-modal-title');
+        const notesList = document.getElementById('notes-list');
+        const newNoteTextInput = document.getElementById('new-note-text');
+        const saveNoteBtn = document.getElementById('save-note-btn');
+        const closeNotesModalBtn = document.getElementById('close-notes-modal-btn');
+
+        let currentUser = null;
+        let isSuperAdmin = false;
+        let adminUsers = new Map();
+        let leadsUnsubscribe = null;
+        let directContactsUnsubscribe = null;
+        let faqUnsubscribe = null; 
+        let superAdminUnsubscribe = null;
+        let currentUserAdminUnsubscribe = null;
+        let editingFaqId = null;
+        let faqDocs = [];
+        let leadsData = new Map();
+        let directContactsData = new Map();
+        let canEditFaq = false;
+        let canViewAnalytics = false;
+        let canExportData = false;
+        
+        // Chart instances
+        let monetizationChart, interestChart, monetizationTypeChart, agentChart;
+
+        function showAlert(message) {
+            const modal = document.getElementById('confirmation-modal');
+            document.getElementById('confirmation-message').textContent = message;
+            const confirmBtn = document.getElementById('confirm-btn');
+            const cancelBtn = document.getElementById('cancel-btn');
+            cancelBtn.classList.add('hidden');
+            confirmBtn.textContent = 'OK';
+            modal.classList.remove('hidden');
+            const okHandler = () => {
+                modal.classList.add('hidden');
+                cancelBtn.classList.remove('hidden');
+                confirmBtn.textContent = 'Confirmar';
+                confirmBtn.removeEventListener('click', okHandler);
+            };
+            confirmBtn.replaceWith(confirmBtn.cloneNode(true)); 
+            document.getElementById('confirm-btn').addEventListener('click', okHandler);
+        }
+
+        function showConfirmation(message, onConfirm) {
+            const modal = document.getElementById('confirmation-modal');
+            document.getElementById('confirmation-message').textContent = message;
+            modal.classList.remove('hidden');
+            const confirmBtn = document.getElementById('confirm-btn');
+            const cancelBtn = document.getElementById('cancel-btn');
+            cancelBtn.classList.remove('hidden');
+            confirmBtn.textContent = 'Confirmar';
+            const confirmHandler = () => { onConfirm(); closeHandler(); };
+            const closeHandler = () => {
+                modal.classList.add('hidden');
+                confirmBtn.removeEventListener('click', confirmHandler);
+                cancelBtn.removeEventListener('click', closeHandler);
+            };
+            confirmBtn.replaceWith(confirmBtn.cloneNode(true));
+            cancelBtn.replaceWith(cancelBtn.cloneNode(true));
+            document.getElementById('confirm-btn').addEventListener('click', confirmHandler);
+            document.getElementById('cancel-btn').addEventListener('click', closeHandler);
+        }
+
+        async function checkAdmin(user) {
+            if (!user || !user.email) return false;
+            const adminDocRef = doc(db, 'admins', user.email);
+            const adminDoc = await getDoc(adminDocRef);
+            return adminDoc.exists();
+        }
+        
+        function updateUIPermissions() {
+            if (!currentUser) return;
+            isSuperAdmin = currentUser.email === superAdminEmail;
+            
+            const currentUserAdminData = adminUsers.get(currentUser.email);
+            canEditFaq = isSuperAdmin || (currentUserAdminData && currentUserAdminData.faqPermission === 'edit');
+            canViewAnalytics = isSuperAdmin || (currentUserAdminData && currentUserAdminData.analyticsPermission === 'view');
+            canExportData = isSuperAdmin || (currentUserAdminData && currentUserAdminData.exportPermission === 'view');
+            
+            navAnalytics.classList.toggle('hidden', !canViewAnalytics);
+            navChat.classList.toggle('hidden', !isSuperAdmin && (!currentUserAdminData || currentUserAdminData.chatPermission !== 'view'));
+            
+            const activeNav = document.querySelector('.nav-link.active');
+            if (activeNav) {
+                if (activeNav.id === 'nav-leads') showSection('leads');
+                if (activeNav.id === 'nav-direct') showSection('direct');
+                if (activeNav.id === 'nav-faq') showSection('faq');
+                if (activeNav.id === 'nav-analytics' && canViewAnalytics) showSection('analytics');
+                if (activeNav.id === 'nav-chat' && (isSuperAdmin || (currentUserAdminData && currentUserAdminData.chatPermission === 'view'))) showSection('chat');
+            }
+            
+            renderFaqList();
+        }
+        
+        function listenToSuperAdmin() {
+            if (superAdminUnsubscribe) superAdminUnsubscribe();
+            const superAdminRef = doc(db, 'config', 'superAdmin');
+            superAdminUnsubscribe = onSnapshot(superAdminRef, (docSnap) => {
+                if (docSnap.exists() && docSnap.data().email) {
+                    superAdminEmail = docSnap.data().email;
+                } else {
+                    console.warn("Documento de configuração '/config/superAdmin' não encontrado. Usando valor padrão.");
+                    superAdminEmail = 'seguirplay.br@gmail.com';
+                }
+                updateUIPermissions();
+            }, (error) => {
+                console.error("Erro ao ouvir o documento de Super Admin (permissão negada?):", error);
+                loginErrorEl.textContent = "Erro de permissão ao verificar o Super Admin.";
+                superAdminEmail = 'seguirplay.br@gmail.com';
+                updateUIPermissions();
+            });
+        }
+        
+        function listenToCurrentUserAdminDoc(email) {
+            if (currentUserAdminUnsubscribe) currentUserAdminUnsubscribe();
+            currentUserAdminUnsubscribe = onSnapshot(doc(db, 'admins', email), (docSnap) => {
+                if (docSnap.exists()) {
+                    adminUsers.set(email, docSnap.data());
+                }
+                updateUIPermissions();
+            });
+        }
+
+        function setupDashboard(user) {
+            loginScreen.classList.add('hidden');
+            dashboard.classList.remove('hidden');
+            userAvatarEl.src = user.photoURL || 'https://placehold.co/100x100/A0A0A0/FFFFFF?text=SP';
+            userNameEl.textContent = user.displayName || user.email.split('@')[0];
+            userEmailSidebarEl.textContent = user.email;
+            
+            listenToSuperAdmin();
+            listenToCurrentUserAdminDoc(user.email);
+            populateDateFilters();
+            
+            showSection('leads');
+            listenToLeads();
+            listenToDirectContacts();
+            listenToFaq(); 
+        }
+        
+        function showSection(sectionName) {
+            [analyticsSection, leadsSection, directContactsSection, faqInternalSection, liveChatSection].forEach(s => s.classList.add('hidden'));
+            [navAnalytics, navChat, navLeads, navDirect, navFaq].forEach(n => n.classList.remove('active'));
+            addFaqBtn.classList.add('hidden');
+            adminControls.classList.add('hidden');
+            leadsExportControls.classList.add('hidden');
+            directExportControls.classList.add('hidden');
+
+            if (sectionName === 'analytics') {
+                if(!canViewAnalytics) {
+                    showSection('leads');
+                    return;
+                }
+                analyticsSection.classList.remove('hidden');
+                pageTitle.textContent = 'Analytics';
+                navAnalytics.classList.add('active');
+                adminControls.classList.remove('hidden');
+                manageAccessBtn.classList.toggle('hidden', !isSuperAdmin);
+                updateAnalytics('all');
+            } else if (sectionName === 'chat') {
+                liveChatSection.classList.remove('hidden');
+                pageTitle.textContent = 'Chat ao Vivo';
+                navChat.classList.add('active');
+                adminControls.classList.remove('hidden');
+                manageAccessBtn.classList.toggle('hidden', !isSuperAdmin);
+            }
+            else if (sectionName === 'leads' || sectionName === 'direct') {
+                if (isSuperAdmin) adminControls.classList.remove('hidden');
+                manageAccessBtn.classList.toggle('hidden', !isSuperAdmin);
+
+                if (sectionName === 'leads') {
+                    leadsSection.classList.remove('hidden');
+                    leadsExportControls.classList.toggle('hidden', !canExportData);
+                    pageTitle.textContent = 'Leads (Chatbot)';
+                    navLeads.classList.add('active');
+                } else {
+                    directContactsSection.classList.remove('hidden');
+                    directExportControls.classList.toggle('hidden', !canExportData);
+                    pageTitle.textContent = 'Interesse em Contato';
+                    navDirect.classList.add('active');
+                }
+            } else if (sectionName === 'faq') {
+                faqInternalSection.classList.remove('hidden');
+                pageTitle.textContent = 'FAQ Interno';
+                navFaq.classList.add('active');
+                adminControls.classList.remove('hidden');
+                addFaqBtn.classList.toggle('hidden', !canEditFaq);
+                manageAccessBtn.classList.toggle('hidden', !isSuperAdmin);
+            }
+        }
+        
+        onAuthStateChanged(auth, async (user) => {
+            try {
+                if (user) {
+                    const isAdmin = await checkAdmin(user);
+                    if (isAdmin) {
+                        currentUser = user;
+                        setupDashboard(user);
+                    } else {
+                        loginErrorEl.textContent = 'Acesso negado. Você não é um administrador autorizado.';
+                        await signOut(auth);
+                        loginScreen.classList.remove('hidden');
+                        dashboard.classList.add('hidden');
+                    }
+                } else {
+                    currentUser = null;
+                    loginScreen.classList.remove('hidden');
+                    dashboard.classList.add('hidden');
+                    if (leadsUnsubscribe) leadsUnsubscribe();
+                    if (directContactsUnsubscribe) directContactsUnsubscribe();
+                    if (faqUnsubscribe) faqUnsubscribe();
+                    if (superAdminUnsubscribe) superAdminUnsubscribe();
+                    if (currentUserAdminUnsubscribe) currentUserAdminUnsubscribe();
+                }
+            } catch (error) {
+                console.error("Erro no onAuthStateChanged:", error);
+                loginErrorEl.textContent = 'Ocorreu um erro inesperado. Tente recarregar a página.';
+                if (auth.currentUser) await signOut(auth);
+            }
+        });
+
+
+        googleSignInBtn.addEventListener('click', async () => {
+            loginErrorEl.textContent = '';
+            try { await signInWithPopup(auth, googleProvider); } 
+            catch (error) {
+                loginErrorEl.textContent = 'Falha no login. Tente novamente.';
+                console.error("Login error:", error);
+            }
+        });
+
+        logoutBtn.addEventListener('click', async () => await signOut(auth));
+        
+        const closeSidebarOnMobile = () => {
+            if (window.innerWidth < 768) {
+                sidebar.classList.add('-translate-x-full');
+            }
+        }
+
+        navAnalytics.addEventListener('click', (e) => {
+            e.preventDefault();
+            showSection('analytics');
+            closeSidebarOnMobile();
+        });
+        navChat.addEventListener('click', (e) => {
+            e.preventDefault();
+            showSection('chat');
+            closeSidebarOnMobile();
+        });
+        navLeads.addEventListener('click', (e) => { 
+            e.preventDefault(); 
+            showSection('leads'); 
+            closeSidebarOnMobile();
+        });
+        navDirect.addEventListener('click', (e) => { 
+            e.preventDefault(); 
+            showSection('direct'); 
+            closeSidebarOnMobile();
+        });
+        navFaq.addEventListener('click', (e) => { 
+            e.preventDefault(); 
+            showSection('faq');
+            closeSidebarOnMobile();
+        });
+
+        const menuBtn = document.getElementById('menu-btn');
+        menuBtn.addEventListener('click', () => sidebar.classList.toggle('-translate-x-full'));
+        
+        function getMonetizationTypeText(type) {
+            if (!type) return 'N/A';
+            switch (type) {
+                case 'Opção 1': return 'Opção 1';
+                case 'Opção 2': return 'Opção 2';
+                case 'Nenhuma dessas': return 'Nenhuma dessas';
+                default: return type;
+            }
+        }
+
+        function createLeadCard(leadData, id, collectionName) {
+            const card = document.createElement('div');
+            card.className = 'bg-white p-5 rounded-lg shadow-md hover:shadow-xl transition-shadow flex flex-col';
+            const timestamp = leadData.timestamp ? leadData.timestamp.toDate().toLocaleString('pt-BR') : 'Data indisponível';
+            const showDeleteButton = isSuperAdmin ? `<button data-id="${id}" data-collection="${collectionName}" class="delete-btn text-gray-400 hover:text-red-500 transition-colors">&times;</button>` : '';
+            const monetizationText = getMonetizationTypeText(leadData.monetizationType);
+            
+            const canToggleContacted = isSuperAdmin || (leadData.contacted && leadData.contactedBy === currentUser.email);
+            const disabledAttribute = !canToggleContacted && leadData.contacted ? 'disabled' : '';
+            const labelDisabledClass = !canToggleContacted && leadData.contacted ? 'cursor-not-allowed opacity-60' : 'cursor-pointer';
+
+            card.innerHTML = `
+                <div class="flex-grow">
+                    <div class="flex justify-between items-start">
+                        <h3 class="text-lg font-bold text-gray-800 truncate pr-2">${leadData.name}</h3>
+                        ${showDeleteButton}
+                    </div>
+                    <p class="text-sm text-gray-500 mb-4">${timestamp}</p>
+                    <div class="space-y-3 text-sm text-gray-700">
+                        <p><strong>Email:</strong> <a href="mailto:${leadData.email}" class="text-red-500 hover:underline">${leadData.email}</a></p>
+                        <p><strong>WhatsApp:</strong> <a href="https://wa.me/${leadData.phone}" target="_blank" class="text-green-500 hover:underline">${leadData.phone}</a></p>
+                        ${leadData.channelLink ? `<p><strong>Canal:</strong> <a href="${leadData.channelLink}" target="_blank" class="text-blue-500 hover:underline">Visitar Canal</a></p>` : ''}
+                        ${leadData.isMonetized ? `<p><strong>Monetizado:</strong> ${leadData.isMonetized}</p>` : ''}
+                        ${monetizationText !== 'N/A' ? `<p><strong>Tipo:</strong> ${monetizationText}</p>` : ''}
+                        ${leadData.objective ? `<p><strong>Objetivo:</strong> ${leadData.objective}</p>` : ''}
+                    </div>
+                </div>
+                <div class="mt-4 pt-4 border-t border-gray-200 space-y-3">
+                    <div class="flex items-center justify-between">
+                        <label for="contacted-${id}" class="flex items-center text-sm font-medium text-gray-700 ${labelDisabledClass}">
+                            <input type="checkbox" id="contacted-${id}" class="toggle-checkbox sr-only" ${leadData.contacted ? 'checked' : ''} ${disabledAttribute}>
+                            <div class="toggle-label relative flex items-center">
+                                <div class="toggle-bg block bg-gray-200 w-10 h-6 rounded-full transition-colors"></div>
+                                <div class="toggle-dot absolute left-1 top-1 bg-white w-4 h-4 rounded-full transition-transform"></div>
+                            </div>
+                            <span class="ml-3">Contatado</span>
+                        </label>
+                        <span class="text-xs text-gray-400">${leadData.contactedBy ? `por ${leadData.contactedBy.split('@')[0]}`: ''}</span>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <label for="interest-${id}" class="text-sm font-medium text-gray-700">Interesse:</label>
+                        <select id="interest-${id}" class="interest-select text-sm rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                            <option value="pending" ${leadData.interest === 'pending' || !leadData.interest ? 'selected' : ''}>Pendente</option>
+                            <option value="interested" ${leadData.interest === 'interested' ? 'selected' : ''}>Interessado</option>
+                            <option value="not_interested" ${leadData.interest === 'not_interested' ? 'selected' : ''}>Não Interessado</option>
+                        </select>
+                    </div>
+                    <button class="notes-btn w-full text-sm bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 px-4 rounded transition-colors">Anotações</button>
+                </div>
+            `;
+            
+            card.querySelector(`#contacted-${id}`).addEventListener('change', async (e) => {
+                const isChecked = e.target.checked;
+                
+                // If unchecking, ensure permission
+                if (!isChecked) {
+                    const canUncheck = isSuperAdmin || (leadData.contactedBy === currentUser.email);
+                    if (!canUncheck) {
+                        e.target.checked = true; // Revert
+                        showAlert('Apenas o Super Admin ou quem marcou pode desmarcar.');
+                        return;
+                    }
+                }
+                
+                const updateData = {
+                    contacted: isChecked,
+                    contactedBy: isChecked ? currentUser.email : null,
+                    contactedAt: isChecked ? serverTimestamp() : null
+                };
+                await updateDoc(doc(db, collectionName, id), updateData);
+            });
+
+            card.querySelector(`#interest-${id}`).addEventListener('change', async (e) => {
+                await updateDoc(doc(db, collectionName, id), { interest: e.target.value });
+            });
+
+            card.querySelector('.notes-btn').addEventListener('click', () => openNotesModal(id, collectionName));
+
+            if (isSuperAdmin) {
+                card.querySelector('.delete-btn').addEventListener('click', (e) => {
+                    showConfirmation(`Tem certeza que deseja excluir o lead de ${leadData.name}?`, async () => {
+                            await deleteDoc(doc(db, collectionName, id));
+                    });
+                });
+            }
+            return card;
+        }
+
+        function openNotesModal(id, collectionName) {
+            const dataMap = collectionName === 'leads' ? leadsData : directContactsData;
+            const lead = dataMap.get(id);
+            notesModalTitle.textContent = `Anotações para ${lead.name}`;
+            
+            const notes = lead.notes || [];
+            notesList.innerHTML = notes.length > 0
+                ? notes.sort((a,b) => b.timestamp.toDate() - a.timestamp.toDate()).map(note => `
+                    <div class="bg-gray-100 p-3 rounded mb-2">
+                        <p class="text-sm text-gray-800">${note.text}</p>
+                        <p class="text-xs text-gray-500 text-right mt-1">- ${note.author.split('@')[0]} em ${new Date(note.timestamp.toDate()).toLocaleString('pt-BR')}</p>
+                    </div>`).join('')
+                : '<p class="text-sm text-gray-500">Nenhuma anotação ainda.</p>';
+            
+            newNoteTextInput.value = '';
+            notesModal.classList.remove('hidden');
+
+            saveNoteBtn.onclick = async () => {
+                const newNoteText = newNoteTextInput.value.trim();
+                if (newNoteText) {
+                    const newNote = {
+                        text: newNoteText,
+                        author: currentUser.email,
+                        timestamp: new Date()
+                    };
+                    await updateDoc(doc(db, collectionName, id), {
+                        notes: arrayUnion(newNote)
+                    });
+                    notesModal.classList.add('hidden');
+                }
+            };
+        }
+        closeNotesModalBtn.addEventListener('click', () => notesModal.classList.add('hidden'));
+
+        function listenToLeads() {
+            const container = document.getElementById('leads-container');
+            if (leadsUnsubscribe) leadsUnsubscribe();
+            leadsUnsubscribe = onSnapshot(query(collection(db, 'leads'), orderBy("timestamp", "desc")), (snapshot) => {
+                leadsData.clear();
+                snapshot.forEach((doc) => leadsData.set(doc.id, doc.data()));
+                
+                container.innerHTML = '';
+                leadsData.forEach((data, id) => {
+                    container.appendChild(createLeadCard(data, id, 'leads'));
+                });
+            });
+        }
+        
+        function listenToDirectContacts() {
+            const container = document.getElementById('direct-contacts-container');
+            if (directContactsUnsubscribe) directContactsUnsubscribe();
+            directContactsUnsubscribe = onSnapshot(query(collection(db, 'direct_contacts'), orderBy("timestamp", "desc")), (snapshot) => {
+                directContactsData.clear();
+                snapshot.forEach((doc) => directContactsData.set(doc.id, doc.data()));
+
+                container.innerHTML = '';
+                directContactsData.forEach((data, id) => {
+                    container.appendChild(createLeadCard(data, id, 'direct_contacts'));
+                });
+            });
+        }
+        
+        async function handlePromoteToSuperAdmin(newSuperAdminEmail) {
+            const superAdminRef = doc(db, 'config', 'superAdmin');
+            await setDoc(superAdminRef, { email: newSuperAdminEmail });
+            showAlert(`${newSuperAdminEmail} é o novo Super Admin.`);
+        }
+
+        manageAccessBtn.addEventListener('click', () => { adminModal.classList.remove('hidden'); loadAdmins(); });
+        closeModalBtn.addEventListener('click', () => adminModal.classList.add('hidden'));
+        addAdminBtn.addEventListener('click', async () => {
+            const email = newAdminEmailInput.value.trim();
+            if (email) {
+                await setDoc(doc(db, "admins", email), { email: email, faqPermission: 'view', analyticsPermission: 'none', exportPermission: 'none' });
+                newAdminEmailInput.value = '';
+            }
+        });
+
+        function loadAdmins() {
+            onSnapshot(collection(db, 'admins'), (snapshot) => {
+                snapshot.docs.forEach(d => adminUsers.set(d.id, d.data()));
+                
+                adminListContainer.innerHTML = '';
+                snapshot.docs.forEach((doc) => {
+                    const adminData = doc.data();
+                    const email = adminData.email;
+                    const faqPermission = adminData.faqPermission || 'view';
+                    const analyticsPermission = adminData.analyticsPermission || 'none';
+                    const exportPermission = adminData.exportPermission || 'none';
+                    const chatPermission = adminData.chatPermission || 'none';
+                    
+                    const div = document.createElement('div');
+                    div.className = 'grid grid-cols-5 gap-4 items-center p-2 bg-gray-100 rounded';
+                    
+                    let controls = '';
+                    if (email !== superAdminEmail) {
+                         controls = `
+                            <select data-email="${email}" class="permission-select rounded-md border-gray-300 shadow-sm text-sm" data-permission="faqPermission">
+                                <option value="view" ${faqPermission === 'view' ? 'selected' : ''}>Ver FAQ</option>
+                                <option value="edit" ${faqPermission === 'edit' ? 'selected' : ''}>Editar FAQ</option>
+                            </select>
+                            <select data-email="${email}" class="permission-select rounded-md border-gray-300 shadow-sm text-sm" data-permission="analyticsPermission">
+                                <option value="none" ${analyticsPermission === 'none' ? 'selected' : ''}>Sem Analytics</option>
+                                <option value="view" ${analyticsPermission === 'view' ? 'selected' : ''}>Ver Analytics</option>
+                            </select>
+                            <select data-email="${email}" class="permission-select rounded-md border-gray-300 shadow-sm text-sm" data-permission="exportPermission">
+                                <option value="none" ${exportPermission === 'none' ? 'selected' : ''}>Sem Exportar</option>
+                                <option value="view" ${exportPermission === 'view' ? 'selected' : ''}>Pode Exportar</option>
+                            </select>
+                             <select data-email="${email}" class="permission-select rounded-md border-gray-300 shadow-sm text-sm" data-permission="chatPermission">
+                                <option value="none" ${chatPermission === 'none' ? 'selected' : ''}>Sem Chat</option>
+                                <option value="view" ${chatPermission === 'view' ? 'selected' : ''}>Acessar Chat</option>
+                            </select>
+                            <div class="flex items-center justify-end">
+                                <button data-email="${email}" class="promote-admin-btn text-yellow-600 hover:text-yellow-800 ml-2" title="Tornar Super Admin">
+                                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a4 4 0 00-4 4v1H5a1 1 0 00-.993.883L4 8v8a2 2 0 002 2h8a2 2 0 002-2V8a1 1 0 00-1-1h-1V6a4 4 0 00-4-4zm0 2a2 2 0 012 2v1H8V6a2 2 0 012-2z"></path></svg>
+                                </button>
+                                <button data-email="${email}" class="remove-admin-btn text-red-500 hover:text-red-700 ml-4">Remover</button>
+                            </div>
+                         `;
+                    } else {
+                        controls = '<span class="text-sm font-bold text-yellow-600 col-span-4 text-right">Super Admin</span>';
+                    }
+                    
+                    div.innerHTML = `<span class="truncate col-span-1">${email}</span> ${controls}`;
+                    adminListContainer.appendChild(div);
+                });
+                
+                document.querySelectorAll('.remove-admin-btn').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        const emailToRemove = e.currentTarget.dataset.email;
+                        showConfirmation(`Remover ${emailToRemove} da lista de admins?`, async () => {
+                            await deleteDoc(doc(db, "admins", emailToRemove));
+                        });
+                    });
+                });
+                
+                document.querySelectorAll('.promote-admin-btn').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        const emailToPromote = e.currentTarget.dataset.email;
+                        showConfirmation(`Tornar ${emailToPromote} o novo Super Admin? Você perderá seu acesso de Super Admin.`, () => {
+                            handlePromoteToSuperAdmin(emailToPromote);
+                        });
+                    });
+                });
+                
+                document.querySelectorAll('.permission-select').forEach(select => {
+                    select.addEventListener('change', async (e) => {
+                        const email = e.target.dataset.email;
+                        const permissionType = e.target.dataset.permission;
+                        const newPermission = e.target.value;
+                        await updateDoc(doc(db, "admins", email), { [permissionType]: newPermission });
+                    });
+                });
+            });
+        }
+        
+        addFaqBtn.addEventListener('click', () => {
+            if (!canEditFaq) {
+                showAlert('Você não tem permissão para adicionar novas perguntas.');
+                return;
+            }
+            editingFaqId = null;
+            faqModalTitle.textContent = 'Adicionar Nova Pergunta';
+            faqForm.reset();
+            faqModal.classList.remove('hidden');
+        });
+
+        closeFaqModalBtn.addEventListener('click', () => { faqModal.classList.add('hidden'); editingFaqId = null; });
+
+        faqForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            if (!canEditFaq) {
+                showAlert('Você não tem permissão para salvar alterações no FAQ.');
+                return;
+            }
+            const question = faqQuestionInput.value.trim();
+            const answerText = faqAnswerTextInput.value.trim();
+            const videoUrl = faqVideoUrlInput.value.trim();
+            if (!question || !answerText) {
+                showAlert('Pergunta e Resposta são campos obrigatórios.');
+                return;
+            }
+            let faqData = {
+                question, answer: answerText, videoUrl: videoUrl || null,
+                editedBy: currentUser.email, updatedAt: serverTimestamp()
+            };
+            try {
+                if (editingFaqId) {
+                    await setDoc(doc(db, "faq_internal", editingFaqId), faqData, { merge: true });
+                } else {
+                    faqData.createdAt = serverTimestamp();
+                    faqData.order = Date.now();
+                    await setDoc(doc(collection(db, "faq_internal")), faqData);
+                }
+                faqModal.classList.add('hidden');
+                faqForm.reset();
+                editingFaqId = null;
+            } catch (error) {
+                console.error("Erro ao salvar FAQ:", error);
+                showAlert("Ocorreu um erro ao salvar a pergunta.");
+            }
+        });
+        
+        function createFaqItem(faqDoc, index, totalItems) {
+            const id = faqDoc.id;
+            const faqData = faqDoc.data();
+            const item = document.createElement('div');
+            item.className = 'faq-item bg-white rounded-lg shadow-md';
+            const videoEmbedUrl = faqData.videoUrl ? convertToEmbedUrl(faqData.videoUrl) : null;
+            
+            const showUpArrow = index > 0;
+            const showDownArrow = index < totalItems - 1;
+
+            let controlsHtml = '';
+            if (isSuperAdmin) { // Reordenar é apenas para Super Admin
+                controlsHtml += `<div class="flex items-center space-x-2">
+                                <button data-index="${index}" class="reorder-faq-btn up-btn ${showUpArrow ? '' : 'invisible'}" title="Mover para cima">
+                                    <svg class="w-6 h-6 text-gray-400 hover:text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 11l3-3m0 0l3 3m-3-3v8m0-13a9 9 0 110 18 9 9 0 010-18z"></path></svg>
+                                </button>
+                                <button data-index="${index}" class="reorder-faq-btn down-btn ${showDownArrow ? '' : 'invisible'}" title="Mover para baixo">
+                                    <svg class="w-6 h-6 text-gray-400 hover:text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13l-3 3m0 0l-3-3m3 3V8m0 13a9 9 0 110-18 9 9 0 010 18z"></path></svg>
+                                </button>
+                            </div>`;
+            }
+            if (canEditFaq) { // Editar/Excluir para quem tem permissão
+                controlsHtml += `<button data-id="${id}" class="edit-faq-btn text-blue-500 hover:text-blue-700 font-medium">Editar</button>
+                                 <button data-id="${id}" class="delete-faq-btn text-red-500 hover:text-red-700 font-medium">Excluir</button>`;
+            }
+
+            item.innerHTML = `
+                <button type="button" class="faq-question-toggle flex justify-between items-center w-full p-5 text-left font-medium text-gray-800 rounded-lg hover:bg-gray-50 transition-colors">
+                    <span class="text-seguirlplay-red font-bold">${faqData.question}</span>
+                    <svg class="w-5 h-5 flex-shrink-0 transition-transform faq-toggle-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                </button>
+                <div class="faq-answer px-5 text-gray-700">
+                    <p class="mb-4 whitespace-pre-wrap">${faqData.answer}</p>
+                    ${videoEmbedUrl ? `
+                        <div class="mb-4">
+                            <h4 class="font-semibold mb-2">Vídeo de Apoio:</h4>
+                            <div style="position: relative; width: 100%; padding-top: 56.25%;">
+                                <iframe style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" src="${videoEmbedUrl}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen class="rounded-lg"></iframe>
+                            </div>
+                        </div>` : ''}
+                    <div class="pt-4 border-t border-gray-100 flex space-x-4 justify-end items-center">
+                        <span class="text-xs text-gray-400 mr-auto">Última edição: ${faqData.updatedAt ? new Date(faqData.updatedAt.toDate()).toLocaleString('pt-BR') : 'N/A'}</span>
+                        ${controlsHtml}
+                    </div>
+                </div>`;
+            
+            item.querySelector('.faq-question-toggle').addEventListener('click', () => item.classList.toggle('active'));
+
+            if (canEditFaq) {
+                if (isSuperAdmin) {
+                     item.querySelectorAll('.reorder-faq-btn').forEach(btn => {
+                        btn.addEventListener('click', (e) => {
+                            e.stopPropagation();
+                            const currentIndex = parseInt(e.currentTarget.dataset.index, 10);
+                            const direction = e.currentTarget.classList.contains('up-btn') ? 'up' : 'down';
+                            handleFaqReorder(currentIndex, direction);
+                        });
+                    });
+                }
+               
+                const editBtn = item.querySelector('.edit-faq-btn');
+                if(editBtn) editBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    editingFaqId = id;
+                    faqModalTitle.textContent = 'Editar Pergunta';
+                    faqQuestionInput.value = faqData.question;
+                    faqAnswerTextInput.value = faqData.answer;
+                    faqVideoUrlInput.value = faqData.videoUrl || '';
+                    faqModal.classList.remove('hidden');
+                });
+                
+                const deleteBtn = item.querySelector('.delete-faq-btn');
+                if(deleteBtn) deleteBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    showConfirmation(`Tem certeza que deseja excluir a pergunta: "${faqData.question}"?`, async () => {
+                        await deleteDoc(doc(db, "faq_internal", id));
+                    });
+                });
+            }
+            return item;
+        }
+
+        async function handleFaqReorder(currentIndex, direction) {
+            const swapIndex = direction === 'up' ? currentIndex - 1 : currentIndex + 1;
+            if (swapIndex < 0 || swapIndex >= faqDocs.length) return;
+
+            const itemA = faqDocs[currentIndex];
+            const itemB = faqDocs[swapIndex];
+            const orderA = itemA.data().order || (itemA.data().createdAt ? itemA.data().createdAt.toMillis() : 0);
+            const orderB = itemB.data().order || (itemB.data().createdAt ? itemB.data().createdAt.toMillis() : 0);
+            
+            try {
+                const batch = writeBatch(db);
+                const docRefA = doc(db, "faq_internal", itemA.id);
+                batch.update(docRefA, { order: orderB });
+                const docRefB = doc(db, "faq_internal", itemB.id);
+                batch.update(docRefB, { order: orderA });
+                await batch.commit();
+            } catch (error) {
+                console.error("Erro ao reordenar FAQ:", error);
+                showAlert("Não foi possível mudar a ordem da pergunta.");
+            }
+        }
+
+        function convertToEmbedUrl(url) {
+            if (!url) return null;
+            let videoId = null;
+            try {
+                const urlObj = new URL(url);
+                if (urlObj.hostname.includes('youtube.com')) {
+                    videoId = urlObj.searchParams.get('v');
+                } else if (urlObj.hostname.includes('youtu.be')) {
+                    videoId = urlObj.pathname.slice(1);
+                }
+            } catch (e) { return null; }
+            return videoId ? `https://www.youtube.com/embed/${videoId}` : url;
+        }
+        
+        function renderFaqList() {
+            faqListContainer.innerHTML = '';
+            if (faqDocs.length === 0) {
+                faqListContainer.innerHTML = '<p class="text-gray-500">Nenhuma pergunta frequente cadastrada.</p>';
+            }
+            faqDocs.forEach((doc, index) => {
+                faqListContainer.appendChild(createFaqItem(doc, index, faqDocs.length));
+            });
+        }
+
+        function listenToFaq() {
+            if (faqUnsubscribe) faqUnsubscribe();
+            const q = query(collection(db, 'faq_internal'));
+            faqUnsubscribe = onSnapshot(q, (snapshot) => {
+                faqDocs = snapshot.docs.sort((a, b) => {
+                    const orderA = a.data().order || (a.data().createdAt ? a.data().createdAt.toMillis() : 0);
+                    const orderB = b.data().order || (b.data().createdAt ? b.data().createdAt.toMillis() : 0);
+                    return orderA - orderB;
+                });
+                renderFaqList();
+            });
+        }
+        
+        // --- Funções de Exportação ---
+        function exportToCsv(dataArray, filename) {
+            const headers = ["Nome", "Email", "WhatsApp", "Canal", "Monetizado", "Tipo de Monetização", "Objetivo", "Data", "Contatado", "Contatado Por", "Interesse"];
+            const sanitize = (value) => {
+                if (value === null || value === undefined) return '';
+                let str = String(value);
+                if (str.includes(',') || str.includes('"') || str.includes('\n')) {
+                    str = `"${str.replace(/"/g, '""')}"`;
+                }
+                return str;
+            };
+
+            const csvRows = [headers.join(',')];
+            dataArray.forEach(row => {
+                const values = [
+                    sanitize(row.name), sanitize(row.email), sanitize(row.phone),
+                    sanitize(row.channelLink), sanitize(row.isMonetized),
+                    sanitize(getMonetizationTypeText(row.monetizationType)),
+                    sanitize(row.objective),
+                    sanitize(row.timestamp ? row.timestamp.toDate().toLocaleString('pt-BR') : ''),
+                    sanitize(row.contacted ? 'Sim' : 'Não'), sanitize(row.contactedBy), sanitize(row.interest)
+                ];
+                csvRows.push(values.join(','));
+            });
+
+            const csvString = csvRows.join('\n');
+            const blob = new Blob([`\uFEFF${csvString}`], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement("a");
+            const url = URL.createObjectURL(blob);
+            link.setAttribute("href", url);
+            link.setAttribute("download", filename);
+            link.style.visibility = 'hidden';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        function exportToPdf(dataArray, title) {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF({ orientation: 'landscape' });
+
+            doc.setFontSize(18);
+            doc.text(title, 14, 22);
+            doc.setFontSize(11);
+            doc.setTextColor(100);
+            doc.text(`Exportado em: ${new Date().toLocaleString('pt-BR')}`, 14, 30);
+
+            const headers = [["Nome", "Email", "WhatsApp", "Tipo de Monetização", "Data", "Contatado", "Interesse"]];
+            const body = dataArray.map(row => [
+                row.name || '', row.email || '', row.phone || '',
+                getMonetizationTypeText(row.monetizationType) || '',
+                row.timestamp ? row.timestamp.toDate().toLocaleDateString('pt-BR') : '',
+                row.contacted ? `Sim (${row.contactedBy ? row.contactedBy.split('@')[0] : ''})` : 'Não',
+                row.interest || 'Pendente'
+            ]);
+
+            doc.autoTable({
+                head: headers,
+                body: body,
+                startY: 35,
+                theme: 'striped',
+                headStyles: { fillColor: [120, 31, 96] }
+            });
+
+            doc.save(`${title.replace(/\s/g, '_')}.pdf`);
+        }
+        
+        exportLeadsCsvBtn.addEventListener('click', () => {
+            const dataArray = Array.from(leadsData.values());
+            if (dataArray.length > 0) exportToCsv(dataArray, 'leads_chatbot.csv');
+            else showAlert('Não há dados para exportar.');
+        });
+        exportLeadsPdfBtn.addEventListener('click', () => {
+            const dataArray = Array.from(leadsData.values());
+            if (dataArray.length > 0) exportToPdf(dataArray, 'Leads (Chatbot)');
+            else showAlert('Não há dados para exportar.');
+        });
+        exportDirectCsvBtn.addEventListener('click', () => {
+            const dataArray = Array.from(directContactsData.values());
+            if (dataArray.length > 0) exportToCsv(dataArray, 'interesse_contato.csv');
+            else showAlert('Não há dados para exportar.');
+        });
+        exportDirectPdfBtn.addEventListener('click', () => {
+            const dataArray = Array.from(directContactsData.values());
+            if (dataArray.length > 0) exportToPdf(dataArray, 'Interesse em Contato');
+            else showAlert('Não há dados para exportar.');
+        });
+
+        // --- Funções de Analytics ---
+        function updateAnalytics(period) {
+            const allLeads = [...leadsData.values()];
+            const allDirect = [...directContactsData.values()];
+            
+            const now = new Date();
+            let startDate, endDate = new Date();
+
+            if (typeof period === 'object' && period.type === 'customDay') {
+                startDate = new Date(period.year, period.month, period.day);
+                endDate = new Date(period.year, period.month, period.day);
+            } else {
+                switch (period) {
+                    case 'today':
+                        startDate = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+                        break;
+                    case 'all':
+                    default:
+                        startDate = null; 
+                }
+            }
+
+            if (startDate) startDate.setHours(0, 0, 0, 0);
+            endDate.setHours(23, 59, 59, 999);
+
+            const filterByDate = (data) => {
+                if (!data.timestamp) return false;
+                const date = data.timestamp.toDate();
+                if (period === 'all') return true;
+                return date >= startDate && date <= endDate;
+            }
+
+            const filteredLeads = allLeads.filter(filterByDate);
+            const filteredDirect = allDirect.filter(filterByDate);
+            const filteredData = [...filteredLeads, ...filteredDirect];
+
+            document.getElementById('total-leads').textContent = filteredLeads.length;
+            document.getElementById('total-direct').textContent = filteredDirect.length;
+            document.getElementById('total-geral').textContent = filteredData.length;
+            
+            const monetizedCount = filteredData.filter(d => d.isMonetized === 'Sim').length;
+            const notMonetizedCount = filteredData.filter(d => d.isMonetized === 'Não').length;
+            updateChart(monetizationChart, 'monetization-chart', 'Status de Monetização', ['Monetizado', 'Não Monetizado'], [monetizedCount, notMonetizedCount], 'pie');
+
+            const interestedCount = filteredData.filter(d => d.interest === 'interested').length;
+            const notInterestedCount = filteredData.filter(d => d.interest === 'not_interested').length;
+            const pendingCount = filteredData.filter(d => d.interest === 'pending' || !d.interest).length;
+            updateChart(interestChart, 'interest-chart', 'Status de Interesse', ['Interessado', 'Não Interessado', 'Pendente'], [interestedCount, notInterestedCount, pendingCount], 'doughnut');
+
+            const ALL_MONETIZATION_TYPES = ['Opção 1', 'Opção 2', 'Nenhuma dessas'];
+            const monetizationTypes = ALL_MONETIZATION_TYPES.reduce((acc, type) => {
+                acc[type] = 0; return acc;
+            }, {});
+
+            filteredData.forEach(d => {
+                const type = d.monetizationType;
+                if (type === 'Opção 1' || type === 'Opção 2' || type === 'Nenhuma dessas') {
+                    monetizationTypes[type]++;
+                } else if (type) {
+                    monetizationTypes['Nenhuma dessas']++;
+                }
+            });
+            
+            const monetizationTypeLabels = Object.keys(monetizationTypes);
+            const monetizationTypeData = Object.values(monetizationTypes);
+            const monetizationTypeTooltipMap = {
+                'Opção 1': 'Foco em 1.000 inscritos e 4.000 horas.',
+                'Opção 2': 'Foco em 500 inscritos e 3.000 horas.',
+                'Nenhuma dessas': 'Outros objetivos ou não especificado.'
+            };
+            updateChart(monetizationTypeChart, 'monetization-type-chart', 'Tipo de Monetização', monetizationTypeLabels, monetizationTypeData, 'bar', {
+                plugins: { tooltip: { callbacks: { afterLabel: (ctx) => monetizationTypeTooltipMap[ctx.label] || '' }}}
+            });
+            
+            const agentCounts = filteredData.reduce((acc, curr) => {
+                if (curr.contactedBy) {
+                    const agentName = curr.contactedBy.split('@')[0];
+                    acc[agentName] = (acc[agentName] || 0) + 1;
+                }
+                return acc;
+            }, {});
+            const agentLabels = Object.keys(agentCounts);
+            const agentData = Object.values(agentCounts);
+            updateChart(agentChart, 'agent-chart', 'Atendimentos por Funcionário', agentLabels, agentData, 'bar');
+        }
+
+        function deepMerge(target, source) {
+            for (const key in source) {
+                if (source[key] instanceof Object && key in target) {
+                    Object.assign(source[key], deepMerge(target[key], source[key]));
+                }
+            }
+            Object.assign(target || {}, source);
+            return target;
+        }
+
+        function updateChart(chartInstance, canvasId, title, labels, data, type, customOptions = {}) {
+            const ctx = document.getElementById(canvasId).getContext('2d');
+            if (chartInstance) {
+                chartInstance.destroy();
+            }
+
+            const baseOptions = {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { position: type === 'bar' ? 'none' : 'top' },
+                    title: { display: true, text: title, font: { size: 16 } }
+                }
+            };
+            if (type === 'bar') {
+                baseOptions.scales = { 
+                    y: { beginAtZero: true, ticks: { precision: 0 }, grid: { drawOnChartArea: false } },
+                    x: { grid: { display: false } }
+                };
+            }
+            
+            const finalOptions = deepMerge(baseOptions, customOptions);
+
+            const chartConfig = {
+                type: type,
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: title,
+                        data: data,
+                        backgroundColor: type === 'bar' ? '#781F60' : ['#781F60', '#FF455B', '#FF6E04', '#952852', '#FDBA74', '#F0ABFC'],
+                        borderColor: '#fff',
+                        borderWidth: type === 'bar' ? 0 : 2
+                    }]
+                },
+                options: finalOptions
+            };
+            
+            switch(canvasId) {
+                case 'monetization-chart': monetizationChart = new Chart(ctx, chartConfig); break;
+                case 'interest-chart': interestChart = new Chart(ctx, chartConfig); break;
+                case 'monetization-type-chart': monetizationTypeChart = new Chart(ctx, chartConfig); break;
+                case 'agent-chart': agentChart = new Chart(ctx, chartConfig); break;
+            }
+        }
+
+        function populateDayFilter(year, month) {
+            const currentDay = daySelect.value;
+            const daysInMonth = new Date(year, month + 1, 0).getDate();
+            daySelect.innerHTML = '<option value="all">Mês Inteiro</option>';
+            for (let i = 1; i <= daysInMonth; i++) {
+                daySelect.innerHTML += `<option value="${i}">${i}</option>`;
+            }
+            if (daySelect.querySelector(`option[value="${currentDay}"]`)) {
+                daySelect.value = currentDay;
+            } else {
+                daySelect.value = 'all';
+            }
+        }
+
+        function populateDateFilters() {
+            const months = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
+            const now = new Date();
+            const currentYear = now.getFullYear();
+            const currentMonth = now.getMonth();
+
+            monthSelect.innerHTML = months.map((month, index) => `<option value="${index}">${month}</option>`).join('');
+            
+            yearSelect.innerHTML = '';
+            for (let i = 0; i < 5; i++) {
+                const year = currentYear - i;
+                yearSelect.innerHTML += `<option value="${year}">${year}</option>`;
+            }
+            
+            populateDayFilter(currentYear, currentMonth);
+
+            yearSelect.value = currentYear;
+            monthSelect.value = currentMonth;
+            daySelect.value = 'all';
+        }
+
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                filterBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                updateAnalytics(btn.dataset.period);
+                
+                if (btn.dataset.period === 'today' || btn.dataset.period === 'all') {
+                    const now = new Date();
+                    yearSelect.value = now.getFullYear();
+                    monthSelect.value = now.getMonth();
+                    populateDayFilter(now.getFullYear(), now.getMonth());
+                    daySelect.value = (btn.dataset.period === 'today') ? now.getDate() : 'all';
+                }
+            });
+        });
+
+        function handleDateSelectFilter() {
+            filterBtns.forEach(b => b.classList.remove('active'));
+            const day = daySelect.value;
+            const month = parseInt(monthSelect.value, 10);
+            const year = parseInt(yearSelect.value, 10);
+
+            let period;
+            if (day === 'all') {
+                period = { type: 'customDay', day: 'all', month, year };
+            } else {
+                period = { type: 'customDay', day: parseInt(day, 10), month, year };
+            }
+            updateAnalytics(period);
+        }
+
+        daySelect.addEventListener('change', handleDateSelectFilter);
+        monthSelect.addEventListener('change', () => {
+            populateDayFilter(parseInt(yearSelect.value, 10), parseInt(monthSelect.value, 10));
+            handleDateSelectFilter();
+        });
+        yearSelect.addEventListener('change', () => {
+            populateDayFilter(parseInt(yearSelect.value, 10), parseInt(monthSelect.value, 10));
+            handleDateSelectFilter();
+        });
+
+    </script>
+</body>
+</html>
+

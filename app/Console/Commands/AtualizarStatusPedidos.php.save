@@ -1,0 +1,38 @@
+<?php
+
+namespace App\Console\Commands;
+
+use Illuminate\Console\Command;
+
+class AtualizarStatusPedidos extends Command
+{
+    /**
+     * The name and signature of the console command.
+     *
+     * @var string
+     */
+    protected $signature = 'app:atualizar-status-pedidos';
+
+    /**
+     * The console command description.
+     *
+     * @var string
+     */
+    protected $description = 'Atualiza o status dos pedidos consultando a API externa.';
+
+    /**
+     * Execute the console command.
+     */
+    public function handle()
+    {
+        // <<< COLE AQUI DENTRO TODO O CÓDIGO DA FUNÇÃO ANTIGA >>>
+        //
+        // O código que você copiou do WebController.php deve
+        // ser colado nesta área.
+        //
+        // <<< FIM DA ÁREA DE COLAGEM >>>
+
+        $this->info('Tarefa de atualização de status de pedidos executada com sucesso.');
+        return 0;
+    }
+}

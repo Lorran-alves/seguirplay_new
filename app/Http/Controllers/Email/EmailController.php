@@ -63,20 +63,34 @@ class EmailController extends Controller
 
         //enviar email para as pessoas que não finalizaram a compra ontem
         foreach ($emails as $email) {
-            
-            // $email->email = 'lorrangamer81@gmail.com';
-            
-            if (filter_var($email->email, FILTER_VALIDATE_EMAIL)) {
-                Mail::send(new LembreteMailWeek($email->email));
+
+            $emailAddress = trim($email->email);
+
+            // ignora e-mails inválidos ou domínios inexistentes
+            if (!filter_var($emailAddress, FILTER_VALIDATE_EMAIL)) {
+                continue;
             }
 
-            $email_notification = EmailNotification::where('email', $email->email)->first();
+            // valida domínio (evita domínios quebrados tipo gmail.comj)
+            $domain = substr(strrchr($emailAddress, "@"), 1);
+            if (!checkdnsrr($domain, "MX")) {
+                continue;
+            }
+            try {
+                // tenta enviar o email
+                Mail::send(new LembreteMailWeek($email->email));
+                
 
-            $email_notification->send_1_week = now();
-            $email_notification->tot_emails_send = $email_notification->tot_emails_send + 1;
-            $email_notification->save();
+                $email_notification = EmailNotification::where('email', $email->email)->first();
+
+                $email_notification->send_1_week = now();
+                $email_notification->tot_emails_send = $email_notification->tot_emails_send + 1;
+                $email_notification->save();
+            } catch (\Exception $e) {
+                // captura qualquer erro no envio e continua o loop
+                continue;
+            }
         }
-
     }
 
     public function lembreteMonth(){
